@@ -446,7 +446,9 @@
     }
 
     function renderSessionsList(data) {
-        const sorted = data.sort((a,b) => new Date(a.Fecha_Limite) - new Date(b.Fecha_Limite));
+        const activas = data.filter(s => s.Estado_Tarea !== 'Completada');
+        const sorted = activas.sort((a,b) => new Date(a.Fecha_Limite) - new Date(b.Fecha_Limite));
+        
         document.getElementById('sessions-list-container').innerHTML = sorted.map(session => {
             let d = new Date(session.Fecha_Limite);
             let dia = isNaN(d.getTime()) ? "S/F" : d.getDate();
@@ -475,11 +477,11 @@
                         <button class="w-6 h-6 flex items-center justify-center font-mono text-xs hover:bg-surface-container-high transition-colors" onclick="actualizarHorasSesion('${session.ID_Tarea}', ${horas + 1})">+</button>
                     </div>
 
-                    <select class="border-none bg-transparent font-technical-data text-[11px] uppercase tracking-widest focus:ring-0 p-1 cursor-pointer font-medium ${session.Estado_Tarea === 'Completada' ? 'text-tertiary-fixed-dim' : (session.Estado_Tarea === 'En Proceso' ? 'text-primary font-bold' : 'text-technical-label')}" 
+                    <select class="border-none bg-transparent font-technical-data text-[11px] uppercase tracking-widest focus:ring-0 p-1 cursor-pointer font-medium ${session.Estado_Tarea === 'En Proceso' ? 'text-primary font-bold' : 'text-technical-label'}" 
                         onchange="cambiarEstadoSesion('${session.ID_Tarea}', this.value)">
                         <option value="Pendiente" ${session.Estado_Tarea === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
                         <option value="En Proceso" ${session.Estado_Tarea === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
-                        <option value="Completada" ${session.Estado_Tarea === 'Completada' ? 'selected' : ''}>Completada</option>
+                        <option value="Completada">Completada ✔</option>
                     </select>
 
                     <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Tareas_Seguimiento', 'ID_Tarea', '${session.ID_Tarea}', 'tareas')">ELIMINAR</button>
@@ -652,11 +654,32 @@
         e.target.reset();
     }
 
-    // --- LÓGICA DE ACTUALIZACIÓN EN VIVO DE SESIONES ---
+    // --- LÓGICA DE EDICIÓN Y LIMPIEZA DE SESIONES EN VIVO ---
+    function actualizarHorasSesion(idTarea, nuevasHoras) {
+        if (nuevasHoras < 0) return; 
+        const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
+        if (!sesion) return;
+
+        sesion.Horas_Dedicadas = nuevasHoras;
+        renderSessionsList(realSessions);
+    }
+
     async function cambiarEstadoSesion(idTarea, nuevoEstado) {
         const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
         if (!sesion) return;
         
+        let horasFinales = parseInt(sesion.Horas_Dedicadas) || 0;
+
+        if (nuevoEstado === 'Completada') {
+            const inputHoras = prompt(`¿Cuántas horas totales has invertido finalmente en la sesión de ${sesion.Nombre_Cliente}?`, horasFinales);
+            
+            if (inputHoras === null) {
+                renderSessionsList(realSessions); 
+                return;
+            }
+            horasFinales = parseInt(inputHoras) || 0;
+        }
+
         const payload = {
             sheet: "Tareas_Seguimiento",
             action: "UPDATE",
@@ -666,39 +689,24 @@
             Tarea_Descripcion: sesion.Tarea_Descripcion,
             Fecha_Limite: sesion.Fecha_Limite ? sesion.Fecha_Limite.split('T')[0] : '',
             Estado_Tarea: nuevoEstado,
-            Horas_Dedicadas: sesion.Horas_Dedicadas || 0
+            Horas_Dedicadas: horasFinales
         };
         
         try {
+            if (nuevoEstado === 'Completada') {
+                realSessions = realSessions.filter(s => s.ID_Tarea !== idTarea);
+                renderSessionsList(realSessions);
+                renderDashboard();
+            }
+
             await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-            await sincronizarCoreKova();
-            switchPanel('tareas');
-        } catch (e) { console.error("Error al actualizar estado de sesión:", e); }
-    }
-
-    async function actualizarHorasSesion(idTarea, nuevasHoras) {
-        if (nuevasHoras < 0) return;
-        const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
-        if (!sesion) return;
-
-        const payload = {
-            sheet: "Tareas_Seguimiento",
-            action: "UPDATE",
-            ID_Tarea: idTarea,
-            ID_Cliente: sesion.ID_Cliente,
-            Nombre_Cliente: sesion.Nombre_Cliente,
-            Tarea_Descripcion: sesion.Tarea_Descripcion,
-            Fecha_Limite: sesion.Fecha_Limite ? sesion.Fecha_Limite.split('T')[0] : '',
-            Estado_Tarea: sesion.Estado_Tarea || 'Pendiente',
-            Horas_Dedicadas: nuevasHoras
-        };
-
-        try {
-            sesion.Horas_Dedicadas = nuevasHoras;
-            renderSessionsList(realSessions);
-            await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+            
+            if (nuevoEstado !== 'Completada') {
+                await sincronizarCoreKova();
+                switchPanel('tareas');
+            }
         } catch (e) { 
-            console.error("Error al actualizar horas:", e);
+            console.error("Error al procesar el estado de la sesión:", e);
             await sincronizarCoreKova();
         }
     }
