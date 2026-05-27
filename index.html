@@ -216,6 +216,7 @@
                     <th class="py-4 font-medium">ID</th>
                     <th class="py-4 font-medium">Nombre / Artista</th>
                     <th class="py-4 font-medium">Contacto</th>
+                    <th class="py-4 font-medium">País</th>
                     <th class="py-4 font-medium">Socials</th>
                     <th class="py-4 font-medium">Status</th>
                     <th class="py-4 font-medium">Acción</th>
@@ -257,7 +258,7 @@
                     <th class="py-4 font-medium">ID Cliente</th>
                     <th class="py-4 font-medium">Artista / Proyecto</th>
                     <th class="py-4">Servicio</th>
-                    <th class="py-4 text-right font-medium">Monto Total (€)</th>
+                    <th class="py-4 text-right font-medium">Monto Total (+IVA)</th>
                 </tr>
                 </thead>
                 <tbody class="font-technical-data text-technical-data" id="orders-table-body"></tbody>
@@ -312,7 +313,7 @@
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-lead-drawer">
     <header class="flex justify-between items-center mb-16">
         <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVO ARTISTA</h2>
-        <button class="material-symbols-outlined" onclick="toggleDrawer('add-lead-drawer')">close</button>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
     </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarCliente(event)">
         <div class="space-y-2">
@@ -322,6 +323,13 @@
         <div class="space-y-2">
             <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Teléfono</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="telefono" type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">País</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="pais">
+                <option value="España">España</option>
+                <option value="Otro">Otro (Sin IVA)</option>
+            </select>
         </div>
         <div class="space-y-2">
             <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Rol / Especialidad</label>
@@ -346,9 +354,7 @@
             <textarea class="w-full border border-outline-variant/20 focus:border-primary bg-transparent px-4 py-3 focus:ring-0 font-body-main" name="notas" rows="3"></textarea>
         </div>
         <div class="pt-8">
-            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">
-                REGISTRAR EN DIRECTORIO
-            </button>
+            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">REGISTRAR EN DIRECTORIO</button>
         </div>
     </form>
 </aside>
@@ -356,29 +362,25 @@
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-session-drawer">
     <header class="flex justify-between items-center mb-16">
         <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVA SESIÓN</h2>
-        <button class="material-symbols-outlined" onclick="toggleDrawer('add-session-drawer')">close</button>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
     </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarSesion(event)">
         <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">ID Cliente / Artista</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="id_cliente" placeholder="ej: KV-1" required type="text"/>
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Seleccionar Artista</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this, 'session-nombre-display')" required></select>
+            <input type="hidden" name="id_cliente" id="session-id-hidden"/>
+            <input type="hidden" name="nombre_cliente" id="session-nombre-display"/>
         </div>
         <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Nombre Artista</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre_cliente" required type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Descripción de la Tarea / Sesión</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="tarea_descripcion" placeholder="ej: Grabación de Voces / Mezcla analógica" required type="text"/>
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Descripción de la Sesión</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="tarea_descripcion" placeholder="ej: Grabación de Voces" required type="text"/>
         </div>
         <div class="space-y-2">
             <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Fecha de Ejecución</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-technical-data" name="fecha_limite" required type="date"/>
         </div>
         <div class="pt-8">
-            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">
-                AGENDAR EN MAPA DE TRABAJO
-            </button>
+            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">AGENDAR SESIÓN</button>
         </div>
     </form>
 </aside>
@@ -386,29 +388,33 @@
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-order-drawer">
     <header class="flex justify-between items-center mb-16">
         <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR NUEVO PEDIDO</h2>
-        <button class="material-symbols-outlined" onclick="toggleDrawer('add-order-drawer')">close</button>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
     </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPedido(event)">
         <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">ID Cliente (ej: KV-1)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="id_cliente" required type="text"/>
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Seleccionar Artista</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this, 'order-nombre-display')" required></select>
+            <input type="hidden" name="id_cliente" id="order-id-hidden"/>
+            <input type="hidden" name="nombre_cliente" id="order-nombre-display"/>
         </div>
         <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Nombre Artista</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre_cliente" required type="text"/>
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Tarifa / Servicio Contratado</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="servicio" onchange="calcularTarifaEstudio(this)" required>
+                <option value="">Selecciona tarifa...</option>
+                <option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option>
+                <option value="Single Pro">Single Pro — 350€</option>
+                <option value="KOVA Signature">KOVA Signature — 500€</option>
+                <option value="Recording">Recording — 200€</option>
+                <option value="Servicio Personalizado">Servicio Personalizado (Manual)</option>
+            </select>
         </div>
         <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Servicio Contratado</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="servicio" placeholder="PRODUCCIÓN / MEZCLA / MASTERIZACIÓN" required type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Monto Total del Contrato (€)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="monto_total" required type="number" step="0.01"/>
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Monto Base (€)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main font-medium" id="order-monto-input" name="monto_base" readonly required type="number" step="0.01"/>
+            <p class="text-[10px] text-technical-label uppercase mt-1" id="iva-tax-notice">Selecciona un artista y un servicio para calcular tasas.</p>
         </div>
         <div class="pt-8">
-            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">
-                CERRAR PEDIDO
-            </button>
+            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">CERRAR PEDIDO</button>
         </div>
     </form>
 </aside>
@@ -416,25 +422,19 @@
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-payment-drawer">
     <header class="flex justify-between items-center mb-16">
         <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO RECIBIDO</h2>
-        <button class="material-symbols-outlined" onclick="toggleDrawer('add-payment-drawer')">close</button>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
     </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPago(event)">
         <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">ID Pedido Vinculado (ej: ORD-1)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="id_pedido" required type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Nombre Artista</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre_cliente" required type="text"/>
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Seleccionar Pedido Activo</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" id="select-pedidos-dinamico" name="id_pedido" required></select>
         </div>
         <div class="space-y-2">
             <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="cantidad_pagada" placeholder="ej: 100" required type="number" step="0.01"/>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="cantidad_pagada" placeholder="ej: 100.00" required type="number" step="0.01"/>
         </div>
         <div class="pt-8">
-            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">
-                CONFIRMAR ABONO EN CAJA
-            </button>
+            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">CONFIRMAR ABONO EN CAJA</button>
         </div>
     </form>
 </aside>
@@ -451,7 +451,8 @@
         if (!API_URL || API_URL.includes("AQUÍ_PEGA")) return;
 
         try {
-            if (view === 'dashboard' || view === 'ventas' || view === 'orders') {
+            // Sincronizamos las bases financieras cruzadas de Google Sheets
+            if (view === 'dashboard' || view === 'ventas' || view === 'orders' || view === 'tareas') {
                 const responseSales = await fetch(`${API_URL}?sheet=Ventas_Pedidos`, { redirect: "follow" });
                 realSales = await responseSales.json();
                 
@@ -461,25 +462,99 @@
                 const responseTasks = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`, { redirect: "follow" });
                 realSessions = await responseTasks.json();
 
+                const responseClients = await fetch(`${API_URL}?sheet=Clientes_Leads`, { redirect: "follow" });
+                realClients = await responseClients.json();
+
+                // Construimos los menús desplegables inyectando la información asíncrona
+                populateClientesDropdowns();
+                populatePedidosDropdown();
+
                 if (view === 'dashboard') renderDashboard();
                 if (view === 'orders') renderOrdersTable();
                 if (view === 'ventas') renderBillingTable();
+                if (view === 'tareas') renderSessionsList(realSessions);
             }
             
             if (view === 'directorio') {
                 const response = await fetch(`${API_URL}?sheet=Clientes_Leads`, { redirect: "follow" });
                 realClients = await response.json();
                 renderClientsTable(realClients);
-            } else if (view === 'tareas') {
-                const response = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`, { redirect: "follow" });
-                realSessions = await response.json();
-                renderSessionsList(realSessions);
             }
         } catch (error) {
             console.error("Error conectando con KOVA Sheets API:", error);
         }
     }
 
+    // ==========================================
+    // AUTOMATIZACIÓN DE FORMULARIOS DESPLEGABLES
+    // ==========================================
+    function populateClientesDropdowns() {
+        const dropdowns = document.querySelectorAll('.select-clientes-dinamico');
+        dropdowns.forEach(select => {
+            select.innerHTML = '<option value="">Selecciona un artista...</option>' + 
+                realClients.map(c => `<option value="${c.ID_Cliente}" data-nombre="${c.Nombre_Completo}" data-pais="${c.Pais || 'España'}">${c.Nombre_Completo} [${c.ID_Cliente}]</option>`).join('');
+        });
+    }
+
+    function populatePedidosDropdown() {
+        const select = document.getElementById('select-pedidos-dinamico');
+        if (select) {
+            select.innerHTML = '<option value="">Selecciona contrato...</option>' + 
+                realSales.map(s => `<option value="${s.ID_Pedido}">${s.ID_Pedido} — ${s.Nombre_Cliente} (${s.Servicio})</option>`).join('');
+        }
+    }
+
+    function syncNombreCliente(selectElement, hiddenDisplayId) {
+        const option = selectElement.options[selectElement.selectedIndex];
+        const idCliente = selectElement.value;
+        const nombre = option.getAttribute('data-nombre') || '';
+        
+        // Sincronizamos las cajas ocultas del payload de envío
+        if (selectElement.name === 'artista_select') {
+            const form = selectElement.closest('form');
+            form.querySelector('input[name="id_cliente"]').value = idCliente;
+            form.querySelector('input[name="nombre_cliente"]').value = nombre;
+        }
+        calcularImpuestosDinamicos();
+    }
+
+    function calcularTarifaEstudio(selectElement) {
+        const input = document.getElementById('order-monto-input');
+        const tarifas = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
+        
+        if (selectElement.value === "Servicio Personalizado") {
+            input.readOnly = false;
+            input.value = "";
+            input.focus();
+        } else {
+            input.readOnly = true;
+            input.value = tarifas[selectElement.value] || 0;
+        }
+        calcularImpuestosDinamicos();
+    }
+
+    function calcularImpuestosDinamicos() {
+        const orderSelect = document.querySelector('#add-order-drawer select[name="artista_select"]');
+        const input = document.getElementById('order-monto-input');
+        const notice = document.getElementById('iva-tax-notice');
+        
+        if (!orderSelect || orderSelect.selectedIndex <= 0 || !input.value) return;
+        
+        const option = orderSelect.options[orderSelect.selectedIndex];
+        const pais = option.getAttribute('data-pais');
+        const valorBase = parseFloat(input.value) || 0;
+        
+        if (pais === "España") {
+            const conIva = valorBase * 1.21;
+            notice.innerText = `Artista nacional (España) -> Base: ${valorBase}€ + 21% IVA. Total: ${conIva.toFixed(2)}€`;
+        } else {
+            notice.innerText = `Artista internacional -> Exento de IVA. Total: ${valorBase.toFixed(2)}€`;
+        }
+    }
+
+    // ==========================================
+    // COMPONENTES DE PROCESAMIENTO VISUAL
+    // ==========================================
     function renderDashboard() {
         let totalRecaudado = 0;
         let totalPedidos = 0;
@@ -494,132 +569,44 @@
         const accionesList = document.getElementById('dash-acciones-list');
         const pendientes = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3);
         
-        if(pendientes.length === 0) {
-            accionesList.innerHTML = `<li class="text-technical-label uppercase text-xs">Sin acciones urgentes pendientes</li>`;
-        } else {
-            accionesList.innerHTML = pendientes.map(t => `
-                <li class="flex items-start justify-between group">
-                    <div class="flex flex-col gap-1">
-                        <span class="font-body-main text-primary">${t.Tarea_Descripcion || ''}</span>
-                        <span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente || 'DESCONOCIDO'} [${t.ID_Cliente || 'S/ID'}]</span></span>
-                    </div>
-                    <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
-                </li>
-            `).join('');
-        }
+        accionesList.innerHTML = pendientes.length === 0 ? `<li class="text-technical-label uppercase text-xs">Sin acciones urgentes</li>` : 
+            pendientes.map(t => `<li class="flex flex-col gap-1"><span class="font-body-main text-primary">${t.Tarea_Descripcion}</span><span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: ${t.Nombre_Cliente}</span></li>`).join('');
 
         const proyectosList = document.getElementById('dash-proyectos-list');
-        if(realSales.length === 0) {
-            proyectosList.innerHTML = `<li class="text-technical-label uppercase text-xs">Sin proyectos activos registrados</li>`;
-        } else {
-            proyectosList.innerHTML = realSales.slice(0, 3).map(p => `
-                <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
-                    <span class="font-body-main text-primary">${p.Nombre_Cliente || 'ARTISTA'} / PROJECT</span>
-                    <span class="font-technical-data text-[11px] text-technical-label uppercase">${p.Servicio || 'ESTUDIO'}</span>
-                </li>
-            `).join('');
-        }
+        proyectosList.innerHTML = realSales.length === 0 ? `<li class="text-technical-label uppercase text-xs">Sin proyectos activos</li>` :
+            realSales.slice(0, 3).map(p => `<li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4"><span class="font-body-main text-primary">${p.Nombre_Cliente}</span><span class="font-technical-data text-[11px] text-technical-label uppercase">${p.Servicio}</span></li>`).join('');
     }
 
     function renderClientsTable(data) {
         const body = document.getElementById('clients-table-body');
-        if (!body) return;
-        
-        if (data.length === 0) {
-            body.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-technical-label uppercase">Sin registros en el directorio</td></tr>`;
-            return;
+        if (body) {
+            body.innerHTML = data.map(c => `<tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors"><td class="py-6 font-mono font-medium">${c.ID_Cliente || ''}</td><td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td><td class="py-6 font-mono">${c.Telefono || c.Email || ''}</td><td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.Pais || 'España'}</td><td class="py-6 font-mono">${c.Redes_Sociales || ''}</td><td class="py-6 uppercase text-xs font-medium">${c.Estado_Lead || 'POTENCIAL'}</td><td class="py-6"><button class="font-label-caps text-[10px] text-on-surface-variant/60 hover:text-primary tracking-widest">EXPANDIR</button></td></tr>`).join('');
         }
-
-        body.innerHTML = data.map(client => `
-            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors group">
-                <td class="py-6 text-on-surface-variant font-technical-data font-medium">${client.ID_Cliente || ''}</td>
-                <td class="py-6 font-medium">${client.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${client.Rol_Musical || ''}</span></td>
-                <td class="py-6 font-technical-data">${client.Telefono || client.Email || ''}</td>
-                <td class="py-6 font-technical-data">${client.Redes_Sociales || ''}</td>
-                <td class="py-6">
-                    <span class="flex items-center gap-2">
-                        <div class="w-1.5 h-1.5 ${client.Estado_Lead === 'VIP' || client.Estado_Lead === 'Activo' ? 'bg-[#7ed321]' : 'bg-outline'}"></div>
-                        <span class="uppercase text-xs font-medium tracking-wide">${client.Estado_Lead || 'POTENCIAL'}</span>
-                    </span>
-                </td>
-                <td class="py-6">
-                    <button class="font-label-caps text-[10px] text-on-surface-variant/60 hover:text-primary tracking-widest">EXPANDIR</button>
-                </td>
-            </tr>
-        `).join('');
     }
 
     function renderSessionsList(data) {
         const container = document.getElementById('sessions-list-container');
         if (!container) return;
-
-        if (data.length === 0) {
-            container.innerHTML = `<p class="p-10 text-center text-technical-label uppercase">No hay sesiones o tareas asignadas</p>`;
-            return;
-        }
-
-        const sortedData = data.sort((a,b) => new Date(a.Fecha_Limite) - new Date(b.Fecha_Limite));
-
-        container.innerHTML = sortedData.map(session => {
-            let diaLimpio = "S/F";
-            let mesLimpio = "MMS";
-            if (session.Fecha_Limite) {
-                const dateObj = new Date(session.Fecha_Limite);
-                if (!isNaN(dateObj.getTime())) {
-                    diaLimpio = dateObj.getDate();
-                    const meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
-                    mesLimpio = meses[dateObj.getMonth()];
-                }
-            }
-
-            return `
-                <div class="session-row group py-8 flex items-center gap-10 transition-colors hover:bg-surface-container-low/30 px-4">
-                    <div class="w-20 flex flex-col items-center border-r border-outline-variant/30 pr-8 text-center shrink-0">
-                        <span class="font-mono text-3xl font-medium tracking-tighter text-primary">${diaLimpio}</span>
-                        <span class="font-mono text-[10px] tracking-widest text-technical-label font-medium">${mesLimpio}</span>
-                    </div>
-                    
-                    <div class="flex-1 min-w-0">
-                        <span class="font-technical-data text-[10px] text-technical-label uppercase tracking-widest block mb-1">${session.ID_Tarea || 'SESS'} // ID ARTISTA: ${session.ID_Cliente || 'S/ID'}</span>
-                        <h3 class="font-headline-lg text-xl uppercase tracking-widest truncate text-primary font-medium">${session.Nombre_Cliente || 'ARTISTA'}</h3>
-                        <p class="font-body-main text-sm text-on-surface-variant mt-1 uppercase tracking-wide">Fase: ${session.Tarea_Descripcion || ''}</p>
-                    </div>
-                    
-                    <div class="flex flex-col items-end shrink-0">
-                        <div class="flex items-center gap-3">
-                            <span class="font-technical-data text-[11px] uppercase tracking-widest font-medium ${session.Estado_Tarea === 'En Proceso' ? 'text-primary' : 'text-technical-label'}">${session.Estado_Tarea || 'PENDIENTE'}</span>
-                            <div class="w-1.5 h-1.5 ${session.Estado_Tarea === 'En Proceso' ? 'bg-[#7ed321]' : 'bg-outline'}"></div>
-                        </div>
-                        <button class="mt-3 font-label-caps text-[10px] text-technical-label hover:text-primary tracking-widest transition-colors">GESTIONAR</button>
-                    </div>
-                </div>
-            `;
+        const sorted = data.sort((a,b) => new Date(a.Fecha_Limite) - new Date(b.Fecha_Limite));
+        
+        container.innerHTML = sorted.map(session => {
+            let d = new Date(session.Fecha_Limite);
+            let dia = isNaN(d.getTime()) ? "S/F" : d.getDate();
+            let meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+            let mes = isNaN(d.getTime()) ? "MMS" : meses[d.getMonth()];
+            return `<div class="session-row group py-8 flex items-center gap-10 px-4"><div class="w-20 flex flex-col items-center border-r pr-8 text-center shrink-0"><span class="font-mono text-3xl font-medium tracking-tighter text-primary">${dia}</span><span class="font-mono text-[10px] tracking-widest text-technical-label font-medium">${mes}</span></div><div class="flex-1 min-w-0"><span class="font-technical-data text-[10px] text-technical-label uppercase block mb-1">${session.ID_Tarea} // ARTISTA: ${session.ID_Cliente}</span><h3 class="font-headline-lg text-xl uppercase tracking-widest truncate text-primary font-medium">${session.Nombre_Cliente}</h3><p class="font-body-main text-sm text-on-surface-variant mt-1 uppercase">FASE: ${session.Tarea_Descripcion}</p></div><div class="flex flex-col items-end shrink-0"><span class="font-technical-data text-[11px] uppercase tracking-widest font-medium">${session.Estado_Tarea || 'PENDIENTE'}</span><button class="mt-3 font-label-caps text-[10px] text-technical-label hover:text-primary tracking-widest">GESTIONAR</button></div></div>`;
         }).join('');
     }
 
     function renderOrdersTable() {
         const body = document.getElementById('orders-table-body');
-        if (!body) return;
-        
-        if (realSales.length === 0) {
-            body.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-technical-label uppercase">Sin registros en el histórico de contratos</td></tr>`;
-            return;
+        if (body) {
+            body.innerHTML = realSales.map(o => `<tr><td class="py-4 font-mono font-medium">${o.ID_Pedido}</td><td class="py-4 font-mono">${o.ID_Cliente}</td><td class="py-4 uppercase font-medium">${o.Nombre_Cliente}</td><td class="py-4 text-xs font-mono">${o.Servicio}</td><td class="py-4 text-right font-mono font-medium">${parseFloat(o.Monto_Total).toFixed(2)}€</td></tr>`).join('');
         }
-
-        body.innerHTML = realSales.map(o => `
-            <tr class="border-t">
-                <td class="py-4 font-mono font-medium">${o.ID_Pedido}</td>
-                <td class="py-4 font-mono">${o.ID_Cliente}</td>
-                <td class="py-4 uppercase font-medium">${o.Nombre_Cliente}</td>
-                <td class="py-4 text-xs font-mono">${o.Servicio}</td>
-                <td class="py-4 text-right font-mono font-medium">${(parseFloat(o.Monto_Total)||0).toFixed(2)}€</td>
-            </tr>
-        `).join('');
     }
 
     function renderBillingTable() {
-        let totalCaja = 0;
-        let totalPedidos = 0;
+        let totalCaja = 0; let totalPedidos = 0;
         realPayments.forEach(p => totalCaja += (parseFloat(p.Cantidad_Pagada) || 0));
         realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
 
@@ -628,172 +615,77 @@
         document.getElementById('billing-pending').innerText = `€${(totalPedidos - totalCaja).toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
         const body = document.getElementById('billing-table-body');
-        if (!body) return;
-
-        if (realSales.length === 0) {
-            body.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-technical-label uppercase">Sin registros económicos de facturación</td></tr>`;
-            return;
+        if (body) {
+            body.innerHTML = realSales.map(sale => {
+                let abonos = 0; realPayments.forEach(p => { if (p.ID_Pedido === sale.ID_Pedido) abonos += (parseFloat(p.Cantidad_Pagada) || 0); });
+                let contrato = parseFloat(sale.Monto_Total) || 0;
+                let deuda = contrato - abonos;
+                let estado = deuda <= 0 ? 'PAGADO' : 'PENDIENTE';
+                return `<tr class="border-t"><td class="py-5 font-mono font-medium">${sale.ID_Pedido}</td><td class="py-5 uppercase font-medium">${sale.Nombre_Cliente}</td><td class="py-5 text-right font-mono">${contrato.toFixed(2)}€</td><td class="py-5 text-right font-mono text-tertiary-fixed-dim">${abonos.toFixed(2)}€</td><td class="py-5 text-right font-mono ${deuda > 0 ? 'text-error font-medium' : ''}">${deuda.toFixed(2)}€</td><td class="py-5 text-right uppercase text-xs font-medium tracking-wider ${estado === 'PAGADO' ? 'text-tertiary-fixed-dim' : 'text-error'}">${estado}</td></tr>`;
+            }).join('');
         }
-
-        body.innerHTML = realSales.map(sale => {
-            let totalAbonado = 0;
-            realPayments.forEach(p => { 
-                if (p.ID_Pedido === sale.ID_Pedido) totalAbonado += (parseFloat(p.Cantidad_Pagada) || 0); 
-            });
-            
-            let totalContrato = parseFloat(sale.Monto_Total) || 0;
-            let restante = totalContrato - totalAbonado;
-            let estado = restante <= 0 ? 'PAGADO' : 'PENDIENTE';
-
-            return `
-                <tr class="border-t">
-                    <td class="py-5 font-mono font-medium">${sale.ID_Pedido}</td>
-                    <td class="py-5 uppercase font-medium">${sale.Nombre_Cliente}</td>
-                    <td class="py-5 text-right font-mono">${totalContrato.toFixed(2)}€</td>
-                    <td class="py-5 text-right font-mono text-tertiary-fixed-dim">${totalAbonado.toFixed(2)}€</td>
-                    <td class="py-5 text-right font-mono ${restante > 0 ? 'text-error font-medium' : ''}">${restante.toFixed(2)}€</td>
-                    <td class="py-5 text-right uppercase text-xs font-medium tracking-wider ${estado === 'PAGADO' ? 'text-tertiary-fixed-dim' : 'text-error'}">${estado}</td>
-                </tr>`;
-        }).join('');
     }
 
-    function filterRole(role) {
-        const btns = document.querySelectorAll('.filter-btn');
-        btns.forEach(btn => {
-            btn.classList.remove('text-primary', 'border-b', 'border-primary');
-            btn.classList.add('text-on-surface-variant/60');
-        });
-        if (event && event.currentTarget) {
-            event.currentTarget.classList.add('text-primary', 'border-b', 'border-primary');
-            event.currentTarget.classList.remove('text-on-surface-variant/60');
-        }
-
-        if (role === 'Todos') renderClientsTable(realClients);
-        else renderClientsTable(realClients.filter(c => c.Rol_Musical === role));
-    }
-
+    // ==========================================
+    // CAPA LOGICA DE NAVEGACION Y ENVIO POST
+    // ==========================================
     function switchPanel(panelId) {
         document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
         document.getElementById(`panel-${panelId}`).classList.remove('hidden');
-        
         const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
         ids.forEach(id => {
             const btn = document.getElementById(`btn-${id}`);
             const indicator = document.getElementById(`indicator-${id}`);
             if (btn && indicator) {
-                if (id === panelId) {
-                    btn.classList.add('text-primary');
-                    btn.classList.remove('text-on-surface-variant/60');
-                    indicator.classList.remove('hidden');
-                } else {
-                    btn.classList.remove('text-primary');
-                    btn.classList.add('text-on-surface-variant/60');
-                    indicator.classList.add('hidden');
-                }
+                if (id === panelId) { btn.classList.add('text-primary'); indicator.classList.remove('hidden'); }
+                else { btn.classList.remove('text-primary'); indicator.classList.add('hidden'); }
             }
         });
-
         fetchContent(panelId);
     }
 
-    function toggleDrawer(drawerId) {
-        const drawer = document.getElementById(drawerId);
-        const overlay = document.getElementById('drawer-overlay');
-        drawer.classList.toggle('translate-x-full');
-        overlay.classList.toggle('opacity-0');
-        overlay.classList.toggle('pointer-events-none');
-    }
-
-    function closeAllDrawers() {
-        document.getElementById('add-lead-drawer').classList.add('translate-x-full');
-        document.getElementById('add-session-drawer').classList.add('translate-x-full');
-        document.getElementById('add-order-drawer').classList.add('translate-x-full');
-        document.getElementById('add-payment-drawer').classList.add('translate-x-full');
-        const overlay = document.getElementById('drawer-overlay');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-    }
+    function toggleDrawer(id) { document.getElementById(id).classList.toggle('translate-x-full'); document.getElementById('drawer-overlay').classList.toggle('opacity-0'); document.getElementById('drawer-overlay').classList.toggle('pointer-events-none'); }
+    function closeAllDrawers() { document.querySelectorAll('aside').forEach(a => a.classList.add('translate-x-full')); document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none'); }
 
     async function ejecutarPost(payload, nextView) {
         try {
             closeAllDrawers();
-            await fetch(API_URL, {
-                method: 'POST',
-                redirect: "follow",
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
+            await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
             setTimeout(() => { switchPanel(nextView); }, 1200);
-        } catch (e) {
-            console.error("Error en el envío:", e);
+        } catch (e) { console.error(e); }
+    }
+
+    function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notas') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
+    function guardarSesion(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Tareas_Seguimiento", ID_Cliente: f.get('id_cliente'), Nombre_Cliente: f.get('nombre_cliente'), Tarea_Descripcion: f.get('tarea_descripcion'), Fecha_Limite: f.get('fecha_limite'), Estado_Tarea: 'Pendiente' }, 'tareas'); e.target.reset(); }
+    
+    function guardarPedido(e) { 
+        e.preventDefault(); 
+        const f = new FormData(e.target);
+        const idCliente = f.get('id_cliente');
+        const artistaObj = realClients.find(c => c.ID_Cliente === idCliente);
+        const pais = artistaObj ? artistaObj.Pais : 'España';
+        
+        let precioCalculado = parseFloat(f.get('monto_base')) || 0;
+        // Aplicación automática de impuestos según la geolocalización de KOVA
+        if (pais === "España") {
+            precioCalculado = precioCalculado * 1.21; 
         }
+
+        ejecutarPost({ sheet: "Ventas_Pedidos", ID_Cliente: idCliente, Nombre_Cliente: f.get('nombre_cliente'), Servicio: f.get('servicio').toUpperCase(), Monto_Total: precioCalculado.toFixed(2), Estado_Pago: 'Pendiente', Fecha_Pedido: new Date().toISOString().split('T')[0] }, 'orders'); 
+        e.target.reset(); 
+    }
+    
+    function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const pedidoObj = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: pedidoObj ? pedidoObj.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('canvas_pagada') || f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
+
+    function filterRole(role) {
+        const btns = document.querySelectorAll('.filter-btn');
+        btns.forEach(btn => { btn.classList.remove('text-primary', 'border-b', 'border-primary'); btn.classList.add('text-on-surface-variant/60'); });
+        if (event && event.currentTarget) event.currentTarget.classList.add('text-primary', 'border-b', 'border-primary');
+        if (role === 'Todos') renderClientsTable(realClients);
+        else renderClientsTable(realClients.filter(c => c.Rol_Musical === role));
     }
 
-    function guardarCliente(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const payload = {
-            sheet: "Clientes_Leads",
-            Nombre_Completo: formData.get('nombre').toUpperCase(),
-            Telefono: formData.get('telefono') || "",
-            Email: formData.get('email').toLowerCase(),
-            Redes_Sociales: formData.get('social') || "",
-            Estado_Lead: 'Potencial',
-            Rol_Musical: formData.get('rol'),
-            Notas_Anotaciones: formData.get('notas') || "",
-            Fecha_Registro: new Date().toISOString().split('T')[0]
-        };
-        ejecutarPost(payload, 'directorio');
-        event.target.reset();
-    }
-
-    function guardarSesion(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const payload = {
-            sheet: "Tareas_Seguimiento",
-            ID_Cliente: formData.get('id_cliente').toUpperCase().trim(),
-            Nombre_Cliente: formData.get('nombre_cliente').toUpperCase(),
-            Tarea_Descripcion: formData.get('tarea_descripcion'),
-            Fecha_Limite: formData.get('fecha_limite'),
-            Estado_Tarea: 'Pendiente'
-        };
-        ejecutarPost(payload, 'tareas');
-        event.target.reset();
-    }
-
-    function guardarPedido(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const payload = {
-            sheet: "Ventas_Pedidos",
-            ID_Cliente: formData.get('id_cliente').toUpperCase().trim(),
-            Nombre_Cliente: formData.get('nombre_cliente').toUpperCase(),
-            Servicio: formData.get('servicio').toUpperCase(),
-            Monto_Total: formData.get('monto_total'),
-            Estado_Pago: 'Pendiente',
-            Fecha_Pedido: new Date().toISOString().split('T')[0]
-        };
-        ejecutarPost(payload, 'orders');
-        event.target.reset();
-    }
-
-    function guardarPago(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const payload = {
-            sheet: "Pagos_Registro",
-            ID_Pedido: formData.get('id_pedido').toUpperCase().trim(),
-            Nombre_Cliente: formData.get('nombre_cliente').toUpperCase(),
-            Cantidad_Pagada: formData.get('cantidad_pagada'),
-            Fecha_Pago: new Date().toISOString().split('T')[0]
-        };
-        ejecutarPost(payload, 'ventas');
-        event.target.reset();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        switchPanel('dashboard');
-    });
+    document.addEventListener('DOMContentLoaded', () => { switchPanel('dashboard'); });
 </script>
 </body>
 </html>
