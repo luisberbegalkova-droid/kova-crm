@@ -354,6 +354,7 @@
             }
         } catch (error) {
             console.error("Error cargando datos en el CRM de KOVA:", error);
+            alert("Hubo un problema al conectar con la base de datos.");
         }
     }
 
@@ -462,33 +463,6 @@
                     <button class="mt-4 font-label-caps text-[10px] text-technical-label hover:text-primary tracking-[0.2em] transition-colors">GESTIONAR</button>
                 </div>
             </div>
-        `).join('');
-    }
-
-    function renderBillingTable() {
-        let totalFacturado = 0;
-        let totalPendiente = 0;
-
-        realSales.forEach(sale => {
-            const monto = parseFloat(sale.Monto_Total) || 0;
-            if (sale.Estado_Pago === 'Pagado') totalFacturado += monto;
-            if (sale.Estado_Pago === 'Pendiente') totalPendiente += monto;
-        });
-
-        document.getElementById('billing-total').innerText = `€${totalFacturado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
-        document.getElementById('billing-count').innerText = realSales.length;
-        document.getElementById('billing-pending').innerText = `€${totalPendiente.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
-
-        const body = document.getElementById('billing-table-body');
-        if (!body) return;
-
-        body.innerHTML = realSales.map(sale => `
-            <tr class="border-t border-outline-variant/20">
-                <td class="py-6 font-medium">${sale.Nombre_Cliente || 'Desconocido'}</td>
-                <td class="py-6 uppercase">${sale.Servicio || 'Servicio de Estudio'}</td>
-                <td class="py-6 text-right font-technical-data">${(parseFloat(sale.Monto_Total) || 0).toFixed(2)}</td>
-                <td class="py-6 text-right uppercase font-label-caps text-[11px] ${sale.Estado_Pago === 'Pagado' ? 'text-tertiary-fixed-dim' : 'text-error'}">${sale.Estado_Pago || 'PENDIENTE'}</td>
-            </tr>
         `).join('');
     }
 
