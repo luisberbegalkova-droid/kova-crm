@@ -129,6 +129,10 @@
                 <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-tareas" onclick="switchPanel('tareas')">Sessions</button>
             </li>
             <li class="relative">
+                <div class="sidebar-active-indicator hidden" id="indicator-orders"></div>
+                <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-orders" onclick="switchPanel('orders')">Orders</button>
+            </li>
+            <li class="relative">
                 <div class="sidebar-active-indicator hidden" id="indicator-ventas"></div>
                 <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-ventas" onclick="switchPanel('ventas')">Billing</button>
             </li>
@@ -160,7 +164,6 @@
 
 <main class="ml-[280px] pt-20 min-h-screen">
     
-    <!-- DASHBOARD -->
     <section class="p-10 block animate-in fade-in duration-500" id="panel-dashboard">
         <header class="mb-16">
             <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2>
@@ -168,12 +171,12 @@
         </header>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
             <div>
-                <p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Importe Facturación</p>
+                <p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Importe Facturación (Cobrado)</p>
                 <p class="font-display-xl text-display-xl tracking-tighter text-primary" id="dash-facturacion">€0,00</p>
             </div>
             <div>
-                <p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Importe Pedidos en Curso</p>
-                <p class="font-display-xl text-display-xl tracking-tighter text-primary" id="dash-curso">€0,00</p>
+                <p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Pendiente Neto por Cobrar</p>
+                <p class="font-display-xl text-display-xl tracking-tighter text-error" id="dash-curso">€0,00</p>
             </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-16 max-w-full">
@@ -188,7 +191,6 @@
         </div>
     </section>
 
-    <!-- DIRECTORIO -->
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex justify-between items-start mb-10">
             <div>
@@ -224,7 +226,6 @@
         </div>
     </section>
 
-    <!-- SESIONES ACTIVAS (MAPA DE TRABAJO RESHAPED) -->
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex justify-between items-start mb-16">
             <div>
@@ -238,15 +239,45 @@
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
-    <!-- BILLING -->
+    <section class="p-10 hidden animate-in fade-in duration-500" id="panel-orders">
+        <header class="flex justify-between items-start mb-10">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2>
+                <div class="active-tab-line"></div>
+            </div>
+            <button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-order-drawer')">
+                <span class="material-symbols-outlined">add</span> ADD ORDER
+            </button>
+        </header>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
+                <tr>
+                    <th class="py-4 font-medium">ID Pedido</th>
+                    <th class="py-4 font-medium">ID Cliente</th>
+                    <th class="py-4 font-medium">Artista / Proyecto</th>
+                    <th class="py-4">Servicio</th>
+                    <th class="py-4 text-right font-medium">Monto Total (€)</th>
+                </tr>
+                </thead>
+                <tbody class="font-technical-data text-technical-data" id="orders-table-body"></tbody>
+            </table>
+        </div>
+    </section>
+
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
-        <header class="mb-10">
-            <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN</h2>
-            <div class="active-tab-line"></div>
+        <header class="flex justify-between items-start mb-10">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2>
+                <div class="active-tab-line"></div>
+            </div>
+            <button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-payment-drawer')">
+                <span class="material-symbols-outlined">add</span> REGISTRAR PAGO
+            </button>
         </header>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-1 border-b border-outline-variant/20 mb-10 pb-10">
             <div class="p-4">
-                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Total Facturación</p>
+                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Total Caja Recaudada</p>
                 <p class="font-display-xl text-display-xl tracking-tighter" id="billing-total">€0,00</p>
             </div>
             <div class="p-4 border-l border-outline-variant/20">
@@ -254,7 +285,7 @@
                 <p class="font-display-xl text-display-xl tracking-tighter" id="billing-count">0</p>
             </div>
             <div class="p-4 border-l border-outline-variant/20">
-                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Por Cobrar</p>
+                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Pendiente Neto por Cobrar</p>
                 <p class="font-display-xl text-display-xl tracking-tighter text-error" id="billing-pending">€0,00</p>
             </div>
         </div>
@@ -262,10 +293,12 @@
             <table class="w-full text-left">
                 <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
                 <tr>
+                    <th class="py-4 font-medium">Pedido</th>
                     <th class="py-4 font-medium">Artista</th>
-                    <th class="py-4 font-medium">Servicio</th>
-                    <th class="py-4 font-medium text-right">Monto (€)</th>
-                    <th class="py-4 font-medium text-right">Estado</th>
+                    <th class="py-4 text-right font-medium">Monto Contrato (€)</th>
+                    <th class="py-4 text-right font-medium">Total Abonado (€)</th>
+                    <th class="py-4 text-right font-medium">Restante Deuda (€)</th>
+                    <th class="py-4 text-right font-medium">Estado</th>
                 </tr>
                 </thead>
                 <tbody class="font-technical-data text-technical-data" id="billing-table-body"></tbody>
@@ -276,7 +309,6 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
-<!-- DRAWER: NUEVO LEAD -->
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-lead-drawer">
     <header class="flex justify-between items-center mb-16">
         <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVO ARTISTA</h2>
@@ -321,7 +353,6 @@
     </form>
 </aside>
 
-<!-- DRAWER: NUEVA SESIÓN -->
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-session-drawer">
     <header class="flex justify-between items-center mb-16">
         <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVA SESIÓN</h2>
@@ -352,25 +383,86 @@
     </form>
 </aside>
 
+<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-order-drawer">
+    <header class="flex justify-between items-center mb-16">
+        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR NUEVO PEDIDO</h2>
+        <button class="material-symbols-outlined" onclick="toggleDrawer('add-order-drawer')">close</button>
+    </header>
+    <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPedido(event)">
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">ID Cliente (ej: KV-1)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="id_cliente" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Nombre Artista</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre_cliente" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Servicio Contratado</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="servicio" placeholder="PRODUCCIÓN / MEZCLA / MASTERIZACIÓN" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Monto Total del Contrato (€)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="monto_total" required type="number" step="0.01"/>
+        </div>
+        <div class="pt-8">
+            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">
+                CERRAR PEDIDO
+            </button>
+        </div>
+    </form>
+</aside>
+
+<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-payment-drawer">
+    <header class="flex justify-between items-center mb-16">
+        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO RECIBIDO</h2>
+        <button class="material-symbols-outlined" onclick="toggleDrawer('add-payment-drawer')">close</button>
+    </header>
+    <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPago(event)">
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">ID Pedido Vinculado (ej: ORD-1)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="id_pedido" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Nombre Artista</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre_cliente" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-label-caps uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="cantidad_pagada" placeholder="ej: 100" required type="number" step="0.01"/>
+        </div>
+        <div class="pt-8">
+            <button class="w-full bg-primary text-surface font-label-caps text-label-caps uppercase tracking-widest py-4 hover:opacity-90 transition-opacity" type="submit">
+                CONFIRMAR ABONO EN CAJA
+            </button>
+        </div>
+    </form>
+</aside>
+
 <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbw2uLH8vXctnIHw9n94kqE3KbjeVSLjJwR5lJ9XwdS_ZaoZK8cKJL3JIPADqzHe8Zr_/exec";
 
     let realClients = [];
     let realSessions = [];
     let realSales = [];
+    let realPayments = [];
 
     async function fetchContent(view) {
         if (!API_URL || API_URL.includes("AQUÍ_PEGA")) return;
 
         try {
-            if (view === 'dashboard' || view === 'ventas') {
+            if (view === 'dashboard' || view === 'ventas' || view === 'orders') {
                 const responseSales = await fetch(`${API_URL}?sheet=Ventas_Pedidos`, { redirect: "follow" });
                 realSales = await responseSales.json();
+                
+                const responsePayments = await fetch(`${API_URL}?sheet=Pagos_Registro`, { redirect: "follow" });
+                realPayments = await responsePayments.json();
                 
                 const responseTasks = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`, { redirect: "follow" });
                 realSessions = await responseTasks.json();
 
                 if (view === 'dashboard') renderDashboard();
+                if (view === 'orders') renderOrdersTable();
                 if (view === 'ventas') renderBillingTable();
             }
             
@@ -389,17 +481,15 @@
     }
 
     function renderDashboard() {
-        let totalFacturado = 0;
-        let totalCurso = 0;
+        let totalRecaudado = 0;
+        let totalPedidos = 0;
         
-        realSales.forEach(sale => {
-            const monto = parseFloat(sale.Monto_Total) || 0;
-            if (sale.Estado_Pago === 'Pagado') totalFacturado += monto;
-            else totalCurso += monto;
-        });
+        realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
+        realPayments.forEach(p => totalRecaudado += (parseFloat(p.Cantidad_Pagada) || 0));
+        let pendienteNeto = totalPedidos - totalRecaudado;
 
-        document.getElementById('dash-facturacion').innerText = `€${totalFacturado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
-        document.getElementById('dash-curso').innerText = `€${totalCurso.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('dash-curso').innerText = `€${pendienteNeto.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
         const accionesList = document.getElementById('dash-acciones-list');
         const pendientes = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3);
@@ -419,11 +509,10 @@
         }
 
         const proyectosList = document.getElementById('dash-proyectos-list');
-        const enCurso = realSales.slice(0, 3);
-        if(enCurso.length === 0) {
+        if(realSales.length === 0) {
             proyectosList.innerHTML = `<li class="text-technical-label uppercase text-xs">Sin proyectos activos registrados</li>`;
         } else {
-            proyectosList.innerHTML = enCurso.map(p => `
+            proyectosList.innerHTML = realSales.slice(0, 3).map(p => `
                 <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
                     <span class="font-body-main text-primary">${p.Nombre_Cliente || 'ARTISTA'} / PROJECT</span>
                     <span class="font-technical-data text-[11px] text-technical-label uppercase">${p.Servicio || 'ESTUDIO'}</span>
@@ -469,7 +558,6 @@
             return;
         }
 
-        // Ordenamos cronológicamente para armar el mapa de trabajo
         const sortedData = data.sort((a,b) => new Date(a.Fecha_Limite) - new Date(b.Fecha_Limite));
 
         container.innerHTML = sortedData.map(session => {
@@ -486,14 +574,13 @@
 
             return `
                 <div class="session-row group py-8 flex items-center gap-10 transition-colors hover:bg-surface-container-low/30 px-4">
-                    <!-- Calendario Asimétrico Editorial KOVA -->
                     <div class="w-20 flex flex-col items-center border-r border-outline-variant/30 pr-8 text-center shrink-0">
                         <span class="font-mono text-3xl font-medium tracking-tighter text-primary">${diaLimpio}</span>
                         <span class="font-mono text-[10px] tracking-widest text-technical-label font-medium">${mesLimpio}</span>
                     </div>
                     
                     <div class="flex-1 min-w-0">
-                        <span class="font-technical-data text-[10px] text-technical-label uppercase tracking-widest block mb-1">${session.ID_Tarea || 'SESS'} // ARTISTA: ${session.ID_Cliente || 'S/ID'}</span>
+                        <span class="font-technical-data text-[10px] text-technical-label uppercase tracking-widest block mb-1">${session.ID_Tarea || 'SESS'} // ID ARTISTA: ${session.ID_Cliente || 'S/ID'}</span>
                         <h3 class="font-headline-lg text-xl uppercase tracking-widest truncate text-primary font-medium">${session.Nombre_Cliente || 'ARTISTA'}</h3>
                         <p class="font-body-main text-sm text-on-surface-variant mt-1 uppercase tracking-wide">Fase: ${session.Tarea_Descripcion || ''}</p>
                     </div>
@@ -510,31 +597,64 @@
         }).join('');
     }
 
+    function renderOrdersTable() {
+        const body = document.getElementById('orders-table-body');
+        if (!body) return;
+        
+        if (realSales.length === 0) {
+            body.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-technical-label uppercase">Sin registros en el histórico de contratos</td></tr>`;
+            return;
+        }
+
+        body.innerHTML = realSales.map(o => `
+            <tr class="border-t">
+                <td class="py-4 font-mono font-medium">${o.ID_Pedido}</td>
+                <td class="py-4 font-mono">${o.ID_Cliente}</td>
+                <td class="py-4 uppercase font-medium">${o.Nombre_Cliente}</td>
+                <td class="py-4 text-xs font-mono">${o.Servicio}</td>
+                <td class="py-4 text-right font-mono font-medium">${(parseFloat(o.Monto_Total)||0).toFixed(2)}€</td>
+            </tr>
+        `).join('');
+    }
+
     function renderBillingTable() {
-        let totalFacturado = 0;
-        let totalPendiente = 0;
+        let totalCaja = 0;
+        let totalPedidos = 0;
+        realPayments.forEach(p => totalCaja += (parseFloat(p.Cantidad_Pagada) || 0));
+        realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
 
-        realSales.forEach(sale => {
-            const monto = parseFloat(sale.Monto_Total) || 0;
-            if (sale.Estado_Pago === 'Pagado') totalFacturado += monto;
-            if (sale.Estado_Pago === 'Pendiente') totalPendiente += monto;
-        });
-
-        document.getElementById('billing-total').innerText = `€${totalFacturado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('billing-total').innerText = `€${totalCaja.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('billing-count').innerText = realSales.length;
-        document.getElementById('billing-pending').innerText = `€${totalPendiente.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('billing-pending').innerText = `€${(totalPedidos - totalCaja).toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
         const body = document.getElementById('billing-table-body');
         if (!body) return;
 
-        body.innerHTML = realSales.map(sale => `
-            <tr class="border-t border-outline-variant/20">
-                <td class="py-6 font-medium">${sale.Nombre_Cliente || 'Desconocido'}</td>
-                <td class="py-6 uppercase text-xs tracking-wider">${sale.Servicio || 'Servicio de Estudio'}</td>
-                <td class="py-6 text-right font-technical-data font-medium">${(parseFloat(sale.Monto_Total) || 0).toFixed(2)}</td>
-                <td class="py-6 text-right uppercase font-label-caps text-[11px] ${sale.Estado_Pago === 'Pagado' ? 'text-tertiary-fixed-dim' : 'text-error'}">${sale.Estado_Pago || 'PENDIENTE'}</td>
-            </tr>
-        `).join('');
+        if (realSales.length === 0) {
+            body.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-technical-label uppercase">Sin registros económicos de facturación</td></tr>`;
+            return;
+        }
+
+        body.innerHTML = realSales.map(sale => {
+            let totalAbonado = 0;
+            realPayments.forEach(p => { 
+                if (p.ID_Pedido === sale.ID_Pedido) totalAbonado += (parseFloat(p.Cantidad_Pagada) || 0); 
+            });
+            
+            let totalContrato = parseFloat(sale.Monto_Total) || 0;
+            let restante = totalContrato - totalAbonado;
+            let estado = restante <= 0 ? 'PAGADO' : 'PENDIENTE';
+
+            return `
+                <tr class="border-t">
+                    <td class="py-5 font-mono font-medium">${sale.ID_Pedido}</td>
+                    <td class="py-5 uppercase font-medium">${sale.Nombre_Cliente}</td>
+                    <td class="py-5 text-right font-mono">${totalContrato.toFixed(2)}€</td>
+                    <td class="py-5 text-right font-mono text-tertiary-fixed-dim">${totalAbonado.toFixed(2)}€</td>
+                    <td class="py-5 text-right font-mono ${restante > 0 ? 'text-error font-medium' : ''}">${restante.toFixed(2)}€</td>
+                    <td class="py-5 text-right uppercase text-xs font-medium tracking-wider ${estado === 'PAGADO' ? 'text-tertiary-fixed-dim' : 'text-error'}">${estado}</td>
+                </tr>`;
+        }).join('');
     }
 
     function filterRole(role) {
@@ -556,7 +676,7 @@
         document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
         document.getElementById(`panel-${panelId}`).classList.remove('hidden');
         
-        const ids = ['dashboard', 'directorio', 'tareas', 'ventas'];
+        const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
         ids.forEach(id => {
             const btn = document.getElementById(`btn-${id}`);
             const indicator = document.getElementById(`indicator-${id}`);
@@ -572,6 +692,7 @@
                 }
             }
         });
+
         fetchContent(panelId);
     }
 
@@ -586,11 +707,28 @@
     function closeAllDrawers() {
         document.getElementById('add-lead-drawer').classList.add('translate-x-full');
         document.getElementById('add-session-drawer').classList.add('translate-x-full');
+        document.getElementById('add-order-drawer').classList.add('translate-x-full');
+        document.getElementById('add-payment-drawer').classList.add('translate-x-full');
         const overlay = document.getElementById('drawer-overlay');
         overlay.classList.add('opacity-0', 'pointer-events-none');
     }
 
-    async function guardarCliente(event) {
+    async function ejecutarPost(payload, nextView) {
+        try {
+            closeAllDrawers();
+            await fetch(API_URL, {
+                method: 'POST',
+                redirect: "follow",
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+            setTimeout(() => { switchPanel(nextView); }, 1200);
+        } catch (e) {
+            console.error("Error en el envío:", e);
+        }
+    }
+
+    function guardarCliente(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
         const payload = {
@@ -604,51 +742,53 @@
             Notas_Anotaciones: formData.get('notas') || "",
             Fecha_Registro: new Date().toISOString().split('T')[0]
         };
-
-        try {
-            closeAllDrawers();
-            await fetch(API_URL, {
-                method: 'POST',
-                redirect: "follow",
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-            event.target.reset();
-            setTimeout(() => { fetchContent('directorio'); }, 1500);
-        } catch (error) {
-            console.error("Error guardando lead:", error);
-        }
+        ejecutarPost(payload, 'directorio');
+        event.target.reset();
     }
 
-    async function guardarSesion(event) {
+    function guardarSesion(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        
-        // Formatear fecha limpia para la hoja
-        let fechaInput = formData.get('fecha_limite'); 
-        
         const payload = {
             sheet: "Tareas_Seguimiento",
             ID_Cliente: formData.get('id_cliente').toUpperCase().trim(),
             Nombre_Cliente: formData.get('nombre_cliente').toUpperCase(),
             Tarea_Descripcion: formData.get('tarea_descripcion'),
-            Fecha_Limite: fechaInput,
+            Fecha_Limite: formData.get('fecha_limite'),
             Estado_Tarea: 'Pendiente'
         };
+        ejecutarPost(payload, 'tareas');
+        event.target.reset();
+    }
 
-        try {
-            closeAllDrawers();
-            await fetch(API_URL, {
-                method: 'POST',
-                redirect: "follow",
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-            event.target.reset();
-            setTimeout(() => { fetchContent('tareas'); }, 1500);
-        } catch (error) {
-            console.error("Error agendando sesión:", error);
-        }
+    function guardarPedido(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const payload = {
+            sheet: "Ventas_Pedidos",
+            ID_Cliente: formData.get('id_cliente').toUpperCase().trim(),
+            Nombre_Cliente: formData.get('nombre_cliente').toUpperCase(),
+            Servicio: formData.get('servicio').toUpperCase(),
+            Monto_Total: formData.get('monto_total'),
+            Estado_Pago: 'Pendiente',
+            Fecha_Pedido: new Date().toISOString().split('T')[0]
+        };
+        ejecutarPost(payload, 'orders');
+        event.target.reset();
+    }
+
+    function guardarPago(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const payload = {
+            sheet: "Pagos_Registro",
+            ID_Pedido: formData.get('id_pedido').toUpperCase().trim(),
+            Nombre_Cliente: formData.get('nombre_cliente').toUpperCase(),
+            Cantidad_Pagada: formData.get('cantidad_pagada'),
+            Fecha_Pago: new Date().toISOString().split('T')[0]
+        };
+        ejecutarPost(payload, 'ventas');
+        event.target.reset();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
