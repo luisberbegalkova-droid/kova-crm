@@ -105,10 +105,22 @@
         .sidebar-active-indicator { position: absolute; left: 0; width: 2px; height: 100%; background-color: #a1fa49; }
         .session-row:hover .technical-label { color: #000000; }
         .text-technical-label { color: #9a9a9a; }
+        
+        /* Efecto premium de cortina de carga inicial */
+        #kova-initial-loader { position: fixed; inset: 0; background: #ede9e1; z-index: 9999; display: flex; flex-col: justify-center; align-items: center; transition: opacity 0.5s ease; }
     </style>
 </head>
 <body class="font-body-main text-on-surface antialiased">
 
+<!-- CORTINA DE CARGA INICIAL (PRE-FETCH SYNC) -->
+<div id="kova-initial-loader">
+    <div class="text-center">
+        <h1 class="font-label-caps text-sm tracking-[0.3em] text-primary uppercase mb-2 animate-pulse">KOVA RS // SYSTEM</h1>
+        <p class="font-technical-data text-[10px] text-on-surface-variant/60 uppercase tracking-widest">Sincronizando Core con Google Sheets...</p>
+    </div>
+</div>
+
+<!-- NAVIGATION SHELL -->
 <nav class="fixed h-full w-[280px] left-0 top-0 border-r border-outline-variant/20 bg-surface flex flex-col justify-between py-10 z-50">
     <div class="px-10">
         <div class="mb-16">
@@ -145,6 +157,7 @@
     </div>
 </nav>
 
+<!-- TOP BAR -->
 <header class="fixed top-0 right-0 left-[280px] h-20 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20 px-10 flex items-center justify-between z-40">
     <div class="flex items-center gap-6 flex-1">
         <span class="material-symbols-outlined text-on-surface-variant">search</span>
@@ -162,8 +175,10 @@
     </div>
 </header>
 
+<!-- MAIN CONTENT WRAPPER -->
 <main class="ml-[280px] pt-20 min-h-screen">
     
+    <!-- PANEL 0: DASHBOARD -->
     <section class="p-10 block animate-in fade-in duration-500" id="panel-dashboard">
         <header class="mb-16">
             <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2>
@@ -191,6 +206,7 @@
         </div>
     </section>
 
+    <!-- PANEL 1: LEAD DIRECTORY -->
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex justify-between items-start mb-10">
             <div>
@@ -201,24 +217,16 @@
                 <span class="material-symbols-outlined">add</span> ADD LEAD
             </button>
         </header>
-        <div class="flex gap-8 mb-10 border-b border-outline-variant/10 pb-4 overflow-x-auto">
-            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-primary border-b border-primary whitespace-nowrap" onclick="filterRole('Todos')">Todos</button>
-            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Vocalista')">Vocalista</button>
-            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Guitarrista')">Guitarrista</button>
-            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Baterista')">Baterista</button>
-            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Bajista')">Bajista</button>
-            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Productor')">Productor</button>
-        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left">
                 <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
                 <tr>
-                    <th class="py-4 font-medium">ID</th>
-                    <th class="py-4 font-medium">Nombre / Artista</th>
-                    <th class="py-4 font-medium">Contacto</th>
-                    <th class="py-4 font-medium">País</th>
-                    <th class="py-4 font-medium">Socials</th>
-                    <th class="py-4 font-medium">Status</th>
+                    <th class="py-4">ID</th>
+                    <th class="py-4">Nombre / Artista</th>
+                    <th class="py-4">Contacto</th>
+                    <th class="py-4">País</th>
+                    <th class="py-4">Socials</th>
+                    <th class="py-4">Status</th>
                     <th class="py-4 text-right">Acción</th>
                 </tr>
                 </thead>
@@ -227,6 +235,7 @@
         </div>
     </section>
 
+    <!-- PANEL 2: SESSIONS -->
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex justify-between items-start mb-16">
             <div>
@@ -240,6 +249,7 @@
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
+    <!-- PANEL 3: ORDERS -->
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex justify-between items-start mb-10">
             <div>
@@ -254,9 +264,9 @@
             <table class="w-full text-left">
                 <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
                 <tr>
-                    <th class="py-4 font-medium">ID Pedido</th>
-                    <th class="py-4 font-medium">ID Cliente</th>
-                    <th class="py-4 font-medium">Artista / Proyecto</th>
+                    <th class="py-4">ID Pedido</th>
+                    <th class="py-4">ID Cliente</th>
+                    <th class="py-4">Artista / Proyecto</th>
                     <th class="py-4">Servicio</th>
                     <th class="py-4">Deadline</th>
                     <th class="py-4">Vía Pago</th>
@@ -269,6 +279,7 @@
         </div>
     </section>
 
+    <!-- PANEL 4: BILLING -->
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex justify-between items-start mb-10">
             <div>
@@ -297,8 +308,8 @@
             <table class="w-full text-left">
                 <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
                 <tr>
-                    <th class="py-4 font-medium">Pedido</th>
-                    <th class="py-4 font-medium">Artista</th>
+                    <th class="py-4">Pedido</th>
+                    <th class="py-4">Artista</th>
                     <th class="py-4 text-right font-medium">Monto Contrato (€)</th>
                     <th class="py-4 text-right font-medium">Total Abonado (€)</th>
                     <th class="py-4 text-right font-medium">Restante Deuda (€)</th>
@@ -313,91 +324,35 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
+<!-- DRAWERS LATERALES (FORMULARIOS) -->
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-lead-drawer">
-    <header class="flex justify-between items-center mb-16">
-        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVO ARTISTA</h2>
-        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
-    </header>
+    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVO ARTISTA</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarCliente(event)">
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre" required type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="telefono" type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="pais" required>
-                <option value="España">España</option>
-                <option value="Otro">Otro (Internacional / Sin IVA)</option>
-            </select>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="rol">
-                <option value="Vocalista">Vocalista</option>
-                <option value="Guitarrista">Guitarrista</option>
-                <option value="Baterista">Baterista</option>
-                <option value="Bajista">Bajista</option>
-                <option value="Productor">Productor</option>
-            </select>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="email" required type="email"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales (Handle)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="social" placeholder="@username" type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Notas Adicionales</label>
-            <textarea class="w-full border border-outline-variant/20 focus:border-primary bg-transparent px-4 py-3 focus:ring-0 font-body-main" name="notas" rows="3"></textarea>
-        </div>
-        <div class="pt-8">
-            <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">REGISTRAR EN DIRECTORIO</button>
-        </div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre" required type="text"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="telefono" type="text"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="pais" required><option value="España">España</option><option value="Otro">Otro (Internacional / Sin IVA)</option></select></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="email" required type="email"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales (Handle)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="social" placeholder="@username" type="text"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Notas Adicionales</label><textarea class="w-full border border-outline-variant/20 focus:border-primary bg-transparent px-4 py-3 focus:ring-0 font-body-main" name="notes" rows="3"></textarea></div>
+        <div class="pt-8"><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">REGISTRAR EN DIRECTORIO</button></div>
     </form>
 </aside>
 
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-session-drawer">
-    <header class="flex justify-between items-center mb-16">
-        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVA SESIÓN</h2>
-        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
-    </header>
+    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVA SESIÓN</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarSesion(event)">
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Artista</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
-            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Sesión</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="tarea_descripcion" placeholder="ej: Grabación de Voces" required type="text"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Ejecución</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-xs font-technical-data" name="fecha_limite" required type="date"/>
-        </div>
-        <div class="pt-8">
-            <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">AGENDAR SESIÓN</button>
-        </div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Artista</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Sesión</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="tarea_descripcion" placeholder="ej: Grabación de Voces" required type="text"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Ejecución</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-xs font-technical-data" name="fecha_limite" required type="date"/></div>
+        <div class="pt-8"><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">AGENDAR SESIÓN</button></div>
     </form>
 </aside>
 
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-order-drawer">
-    <header class="flex justify-between items-center mb-16">
-        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2>
-        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
-    </header>
+    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPedido(event)">
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
-            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
-        </div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
         <div class="space-y-2">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
             <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="servicio" onchange="tarifaEstudio(this)" required>
@@ -409,14 +364,8 @@
                 <option value="Servicio Personalizado">Servicio Personalizado (Manual)</option>
             </select>
         </div>
-        <div class="space-y-2 hidden" id="wrapper-precio-manual">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main font-medium" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/>
-        </div>
-        <div class="space-y-2">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-xs font-technical-data" name="deadline" required type="date"/>
-        </div>
+        <div class="space-y-2 hidden" id="wrapper-precio-manual"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main font-medium" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-xs font-technical-data" name="deadline" required type="date"/></div>
         <div class="space-y-2">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
             <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="forma_pago" required>
@@ -430,10 +379,7 @@
 </aside>
 
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-payment-drawer">
-    <header class="flex justify-between items-center mb-16">
-        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO</h2>
-        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
-    </header>
+    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPago(event)">
         <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Pedido Activo</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" id="select-pedidos-dinamico" name="id_pedido" required></select></div>
         <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono" name="cantidad_pagada" placeholder="ej: 100.00" required type="number" step="0.01"/></div>
@@ -447,9 +393,13 @@
     let realClients = []; let realSessions = []; let realSales = []; let realPayments = [];
     const TARIFAS = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
 
-    async function fetchContent(view) {
+    // ==========================================
+    // SCONEXIÓN COMPLETA Y UNIFICADA (PRE-FETCH)
+    // ==========================================
+    async function sincronizarCoreKova() {
         if (!API_URL || API_URL.includes("AQUÍ_PEGA")) return;
         try {
+            // Se realiza la descarga masiva paralela de todas las hojas simultáneamente
             const [respSales, respPayments, respTasks, respClients] = await Promise.all([
                 fetch(`${API_URL}?sheet=Ventas_Pedidos`, { redirect: "follow" }).then(r => r.json()),
                 fetch(`${API_URL}?sheet=Pagos_Registro`, { redirect: "follow" }).then(r => r.json()),
@@ -459,17 +409,44 @@
 
             realSales = respSales; realPayments = respPayments; realSessions = respTasks; realClients = respClients;
 
+            // Inyectamos los artistas y pedidos en los formularios
             populateDropdowns();
 
-            if (view === 'dashboard') renderDashboard();
-            if (view === 'orders') renderOrdersTable();
-            if (view === 'ventas') renderBillingTable();
-            if (view === 'tareas') renderSessionsList(realSessions);
-            if (view === 'directorio') renderClientsTable(realClients);
-        } catch (e) { console.error("Sync Error:", e); }
+            // Quitamos la pantalla de carga inicial de golpe
+            const loader = document.getElementById('kova-initial-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 500);
+            }
+        } catch (e) { 
+            console.error("Sync Error Inicial:", e); 
+        }
     }
 
-    // Vinculación dinámica asíncrona entre las hojas y los menús selectores
+    // ==========================================
+    // CONTROL DE MENÚS INSTANTÁNEOS (CERO DELAYS)
+    // ==========================================
+    function switchPanel(panelId) {
+        document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(`panel-${panelId}`).classList.remove('hidden');
+        
+        const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
+        ids.forEach(id => {
+            const btn = document.getElementById(`btn-${id}`); const ind = document.getElementById(`indicator-${id}`);
+            if (btn && ind) { 
+                if (id === panelId) { btn.classList.add('text-primary'); ind.classList.remove('hidden'); } 
+                else { btn.classList.remove('text-primary'); ind.classList.add('hidden'); } 
+            }
+        });
+
+        // El renderizado lee directamente la caché local de variables de forma inmediata
+        if (panelId === 'dashboard') renderDashboard();
+        if (panelId === 'orders') renderOrdersTable();
+        if (panelId === 'ventas') renderBillingTable();
+        if (panelId === 'tareas') renderSessionsList(realSessions);
+        if (panelId === 'directorio') renderClientsTable(realClients);
+    }
+
     function populateDropdowns() {
         document.querySelectorAll('.select-clientes-dinamico').forEach(select => {
             select.innerHTML = '<option value="">Selecciona un artista...</option>' + 
@@ -519,7 +496,7 @@
     }
 
     // ==========================================
-    // SECCIÓN DE RENDERIZADO VISUAL EXCLUSIVO DE STITCH
+    // DETALLES DE MAQUETACIÓN ASIMÉTRICA EDITORIAL
     // ==========================================
     function renderDashboard() {
         let totalRecaudado = 0; let totalPedidos = 0;
@@ -532,7 +509,7 @@
             <li class="flex items-start justify-between group">
                 <div class="flex flex-col gap-1">
                     <span class="font-body-main text-primary">${t.Tarea_Descripcion || ''}</span>
-                    <span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente || 'DESCONOCIDO'} [${t.ID_Cliente || 'S/ID'}]</span></span>
+                    <span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente || 'DESCONOCIDO'}</span></span>
                 </div>
                 <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
             </li>`).join('');
@@ -551,12 +528,7 @@
                 <td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td>
                 <td class="py-6 font-technical-data">${c.Telefono || c.Email || ''}</td>
                 <td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.País || c.Pais || 'España'}</td>
-                <td class="py-6">
-                    <span class="flex items-center gap-2">
-                        <div class="w-1.5 h-1.5 ${c.Estado_Lead === 'VIP' || c.Estado_Lead === 'Activo' ? 'bg-[#7ed321]' : 'bg-outline'}"></div>
-                        <span class="uppercase text-xs font-medium tracking-wide">${c.Estado_Lead || 'POTENCIAL'}</span>
-                    </span>
-                </td>
+                <td class="py-6 font-mono text-xs uppercase">${c.Estado_Lead || 'POTENCIAL'}</td>
                 <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
             </tr>`).join('');
     }
@@ -605,14 +577,14 @@
 
     function renderBillingTable() {
         let totalCaja = 0; let totalPedidos = 0;
-        realPayments.forEach(p => totalCaja += (parseFloat(p.Cantidad_Pagada) || 0));
+        realPayments.forEach(p => totalCaja += (parseFloat(p.Quantity_Paid) || parseFloat(p.Cantidad_Pagada) || 0));
         realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
         document.getElementById('billing-total').innerText = `€${totalCaja.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('billing-count').innerText = realSales.length;
         document.getElementById('billing-pending').innerText = `€${(totalPedidos - totalCaja).toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
         document.getElementById('billing-table-body').innerHTML = realSales.map(sale => {
-            let abonos = 0; realPayments.forEach(p => { if (p.ID_Pedido === sale.ID_Pedido) abonos += (parseFloat(p.Cantidad_Pagada) || 0); });
+            let abonos = 0; realPayments.forEach(p => { if (p.ID_Pedido === sale.ID_Pedido) abonos += (parseFloat(p.Quantity_Paid) || parseFloat(p.Cantidad_Pagada) || 0); });
             let contrato = parseFloat(sale.Monto_Total) || 0;
             let deuda = contrato - abonos;
             
@@ -633,7 +605,7 @@
     }
 
     // ==========================================
-    // MANEJADORES DE OPERACIONES CRUD CON GOOGLE SHEET
+    // OPERACIONES DE ESCRITURA Y BORRADO CORE
     // ==========================================
     async function borrarFilaDirecta(sheetName, idKeyName, idValue, viewToRefresh) {
         if (!confirm(`¿Confirmas que deseas eliminar de forma definitiva el registro ${idValue}?`)) return;
@@ -642,7 +614,9 @@
         
         try {
             await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-            fetchContent(viewToRefresh);
+            // Al alterar los datos forzamos una recarga asíncrona limpia de fondo
+            await sincronizarCoreKova();
+            switchPanel(viewToRefresh);
         } catch (e) { console.error(e); }
     }
 
@@ -650,11 +624,13 @@
         try {
             closeAllDrawers();
             await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-            setTimeout(() => { switchPanel(nextView); }, 500);
+            // Sincronizamos la memoria local de la app antes de pintar la pestaña destino
+            await sincronizarCoreKova();
+            switchPanel(nextView);
         } catch (e) { console.error(e); }
     }
 
-    function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notas') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
+    function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notes') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
     function guardarSesion(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Tareas_Seguimiento", ID_Cliente: f.get('id_cliente'), Nombre_Cliente: f.get('nombre_cliente'), Tarea_Descripcion: f.get('tarea_descripcion'), Fecha_Limite: f.get('fecha_limite'), Estado_Tarea: 'Pendiente' }, 'tareas'); e.target.reset(); }
     
     function guardarPedido(e) { 
@@ -670,16 +646,6 @@
     
     function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
 
-    function switchPanel(panelId) {
-        document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
-        document.getElementById(`panel-${panelId}`).classList.remove('hidden');
-        const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
-        ids.forEach(id => {
-            const btn = document.getElementById(`btn-${id}`); const ind = document.getElementById(`indicator-${id}`);
-            if (btn && ind) { if (id === panelId) { btn.classList.add('text-primary'); ind.classList.remove('hidden'); } else { btn.classList.remove('text-primary'); ind.classList.add('hidden'); } }
-        });
-        fetchContent(panelId);
-    }
     function toggleDrawer(id) { document.getElementById(id).classList.toggle('translate-x-full'); document.getElementById('drawer-overlay').classList.toggle('opacity-0'); document.getElementById('drawer-overlay').classList.toggle('pointer-events-none'); }
     function closeAllDrawers() { document.querySelectorAll('aside').forEach(a => a.classList.add('translate-x-full')); document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none'); }
 
@@ -691,7 +657,15 @@
         else renderClientsTable(realClients.filter(c => c.Rol_Musical === role));
     }
 
-    document.addEventListener('DOMContentLoaded', () => { switchPanel('dashboard'); });
+    // ==========================================
+    // DISPARADOR DE INICIO (PRE-FETCH BOOTSTRAP)
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Primero descargamos y cacheamos toda la base de datos de Sheets de golpe
+        await sincronizarCoreKova();
+        // Abrimos el dashboard al instante leyendo la memoria local limpia
+        switchPanel('dashboard');
+    });
 </script>
 </body>
 </html>
