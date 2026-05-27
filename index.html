@@ -179,12 +179,12 @@
             <div>
                 <h3 class="font-label-caps text-label-caps text-technical-label uppercase tracking-widest border-b border-outline-variant/20 pb-4 mb-8">Acciones Prioritarias</h3>
                 <ul class="space-y-10" id="dash-acciones-list">
-                    </ul>
+                </ul>
             </div>
             <div>
                 <h3 class="font-label-caps text-label-caps text-technical-label uppercase tracking-widest border-b border-outline-variant/20 pb-4 mb-8">Proyectos en Marcha</h3>
                 <ul class="space-y-8" id="dash-proyectos-list">
-                    </ul>
+                </ul>
             </div>
         </div>
     </section>
@@ -220,7 +220,7 @@
                 </tr>
                 </thead>
                 <tbody class="font-technical-data text-technical-data" id="clients-table-body">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </section>
@@ -231,7 +231,7 @@
             <div class="active-tab-line"></div>
         </header>
         <div class="space-y-0" id="sessions-list-container">
-            </div>
+        </div>
     </section>
 
     <section class="p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
@@ -264,7 +264,7 @@
                 </tr>
                 </thead>
                 <tbody class="font-technical-data text-technical-data" id="billing-table-body">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </section>
@@ -319,7 +319,6 @@
     // ==========================================
     // 1. CONFIGURACIÓN DE TU API (GOOGLE SHEETS)
     // ==========================================
-    // ⚠️ INTERCAMBIA LAS COMILLAS POR TU URL DE GOOGLE APPS SCRIPT QUE TERMINA EN /exec
     const API_URL = "https://script.google.com/macros/s/AKfycbw2uLH8vXctnIHw9n94kqE3KbjeVSLjJwR5lJ9XwdS_ZaoZK8cKJL3JIPADqzHe8Zr_/exec";
 
     let realClients = [];
@@ -334,10 +333,10 @@
 
         try {
             if (view === 'dashboard' || view === 'ventas') {
-                const responseSales = await fetch(`${API_URL}?sheet=Ventas_Pedidos`);
+                const responseSales = await fetch(`${API_URL}?sheet=Ventas_Pedidos`, { redirect: "follow" });
                 realSales = await responseSales.json();
                 
-                const responseTasks = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`);
+                const responseTasks = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`, { redirect: "follow" });
                 realSessions = await responseTasks.json();
 
                 if (view === 'dashboard') renderDashboard();
@@ -345,11 +344,11 @@
             }
             
             if (view === 'directorio') {
-                const response = await fetch(`${API_URL}?sheet=Clientes_Leads`);
+                const response = await fetch(`${API_URL}?sheet=Clientes_Leads`, { redirect: "follow" });
                 realClients = await response.json();
                 renderClientsTable(realClients);
             } else if (view === 'tareas') {
-                const response = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`);
+                const response = await fetch(`${API_URL}?sheet=Tareas_Seguimiento`, { redirect: "follow" });
                 realSessions = await response.json();
                 renderSessionsList(realSessions);
             }
@@ -377,7 +376,6 @@
         document.getElementById('dash-facturacion').innerText = `€${totalFacturado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('dash-curso').innerText = `€${totalCurso.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
-        // Cargar las 3 primeras tareas pendientes como prioritarias
         const accionesList = document.getElementById('dash-acciones-list');
         const pendientes = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3);
         
@@ -387,15 +385,14 @@
             accionesList.innerHTML = pendientes.map(t => `
                 <li class="flex items-start justify-between group">
                     <div class="flex flex-col gap-1">
-                        <span class="font-body-main text-primary">${t.Tarea_Descripcion}</span>
-                        <span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente} [${t.ID_Cliente}]</span></span>
+                        <span class="font-body-main text-primary">${t.Tarea_Descripcion || ''}</span>
+                        <span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente || 'DESCONOCIDO'} [${t.ID_Cliente || 'S/ID'}]</span></span>
                     </div>
                     <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
                 </li>
             `).join('');
         }
 
-        // Cargar proyectos en marcha activos desde el histórico de ventas
         const proyectosList = document.getElementById('dash-proyectos-list');
         const enCurso = realSales.slice(0, 3);
         if(enCurso.length === 0) {
@@ -403,8 +400,8 @@
         } else {
             proyectosList.innerHTML = enCurso.map(p => `
                 <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
-                    <span class="font-body-main text-primary">${p.Nombre_Cliente} / PROJECT</span>
-                    <span class="font-technical-data text-[11px] text-technical-label uppercase">${p.Servicio}</span>
+                    <span class="font-body-main text-primary">${p.Nombre_Cliente || 'ARTISTA'} / PROJECT</span>
+                    <span class="font-technical-data text-[11px] text-technical-label uppercase">${p.Servicio || 'ESTUDIO'}</span>
                 </li>
             `).join('');
         }
@@ -450,9 +447,9 @@
         container.innerHTML = data.map(session => `
             <div class="session-row group border-b border-outline-variant/20 py-10 flex items-center justify-between transition-colors hover:bg-white/5">
                 <div class="flex-1">
-                    <span class="font-technical-data text-[10px] text-technical-label uppercase tracking-wider mb-2 block">${session.ID_Tarea || 'SESS'} // ID ARTISTA: ${session.ID_Cliente}</span>
-                    <h3 class="font-headline-lg text-headline-lg uppercase tracking-widest">${session.Nombre_Cliente}</h3>
-                    <p class="font-technical-data text-technical-data text-technical-label uppercase mt-1">TAREA: ${session.Tarea_Descripcion}</p>
+                    <span class="font-technical-data text-[10px] text-technical-label uppercase tracking-wider mb-2 block">${session.ID_Tarea || 'SESS'} // ID ARTISTA: ${session.ID_Cliente || 'S/ID'}</span>
+                    <h3 class="font-headline-lg text-headline-lg uppercase tracking-widest">${session.Nombre_Cliente || 'ARTISTA'}</h3>
+                    <p class="font-technical-data text-technical-data text-technical-label uppercase mt-1">TAREA: ${session.Tarea_Descripcion || ''}</p>
                 </div>
                 <div class="flex-1 text-center">
                     <p class="font-technical-data text-technical-data uppercase tracking-widest">${session.Fecha_Limite || 'SIN FECHA'}</p>
@@ -490,7 +487,7 @@
                 <td class="py-6 font-medium">${sale.Nombre_Cliente || 'Desconocido'}</td>
                 <td class="py-6 uppercase">${sale.Servicio || 'Servicio de Estudio'}</td>
                 <td class="py-6 text-right font-technical-data">${(parseFloat(sale.Monto_Total) || 0).toFixed(2)}</td>
-                <td class="py-6 text-right uppercase font-label-caps text-[11px] ${sale.Estado_Pago === 'Pagado' ? 'text-tertiary-fixed-dim' : 'text-error'}">${sale.Estado_Pago}</td>
+                <td class="py-6 text-right uppercase font-label-caps text-[11px] ${sale.Estado_Pago === 'Pagado' ? 'text-tertiary-fixed-dim' : 'text-error'}">${sale.Estado_Pago || 'PENDIENTE'}</td>
             </tr>
         `).join('');
     }
@@ -504,8 +501,10 @@
             btn.classList.remove('text-primary', 'border-b', 'border-primary');
             btn.classList.add('text-on-surface-variant/60');
         });
-        event.currentTarget.classList.add('text-primary', 'border-b', 'border-primary');
-        event.currentTarget.classList.remove('text-on-surface-variant/60');
+        if (event && event.currentTarget) {
+            event.currentTarget.classList.add('text-primary', 'border-b', 'border-primary');
+            event.currentTarget.classList.remove('text-on-surface-variant/60');
+        }
 
         if (role === 'Todos') {
             renderClientsTable(realClients);
@@ -550,53 +549,51 @@
     // ==========================================
     // 5. ESCRITURA DE DATOS (POST)
     // ==========================================
-        async function guardarCliente(event) {
-            event.preventDefault();
-            if (!API_URL || API_URL.includes("AQUÍ_PEGA")) {
-                alert("Por favor, configura la URL de tu Apps Script primero.");
-                return;
-            }
-
-            const formData = new FormData(event.target);
-            
-            const nuevoClientePayload = {
-                sheet: "Clientes_Leads",
-                ID_Cliente: `KV-${Math.floor(Math.random()*900)+100}`,
-                Nombre_Completo: formData.get('nombre').toUpperCase(),
-                Telefono: formData.get('telefono') || "",
-                Email: formData.get('email').toLowerCase(),
-                Redes_Sociales: formData.get('social') || "",
-                Estado_Lead: 'Potencial',
-                Rol_Musical: formData.get('rol'),
-                Notas_Anotaciones: formData.get('notas') || "",
-                Fecha_Registro: new Date().toISOString().split('T')[0]
-            };
-
-            try {
-                toggleDrawer();
-
-                // Petición estándar compatible con Google Apps Script
-                await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        // Usamos text/plain para saltarnos las restricciones estrictas de CORS preflight de Google
-                        'Content-Type': 'text/plain;charset=utf-8' 
-                    },
-                    body: JSON.stringify(nuevoClientePayload)
-                });
-
-                event.target.reset();
-                
-                // Esperamos un segundo a que Google procese y recargamos el directorio
-                setTimeout(() => { 
-                    fetchContent('directorio'); 
-                }, 1500);
-
-            } catch (error) {
-                console.error("Error guardando el lead:", error);
-                alert("Hubo un problema al conectar con la base de datos.");
-            }
+    async function guardarCliente(event) {
+        event.preventDefault();
+        if (!API_URL || API_URL.includes("AQUÍ_PEGA")) {
+            alert("Por favor, configura la URL de tu Apps Script primero.");
+            return;
         }
+
+        const formData = new FormData(event.target);
+        
+        const nuevoClientePayload = {
+            sheet: "Clientes_Leads",
+            ID_Cliente: `KV-${Math.floor(Math.random()*900)+100}`,
+            Nombre_Completo: formData.get('nombre').toUpperCase(),
+            Telefono: formData.get('telefono') || "",
+            Email: formData.get('email').toLowerCase(),
+            Redes_Sociales: formData.get('social') || "",
+            Estado_Lead: 'Potencial',
+            Rol_Musical: formData.get('rol'),
+            Notas_Anotaciones: formData.get('notas') || "",
+            Fecha_Registro: new Date().toISOString().split('T')[0]
+        };
+
+        try {
+            toggleDrawer();
+
+            await fetch(API_URL, {
+                method: 'POST',
+                redirect: "follow",
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8' 
+                },
+                body: JSON.stringify(nuevoClientePayload)
+            });
+
+            event.target.reset();
+            
+            setTimeout(() => { 
+                fetchContent('directorio'); 
+            }, 1500);
+
+        } catch (error) {
+            console.error("Error guardando el lead:", error);
+            alert("Hubo un problema al conectar con la base de datos.");
+        }
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
         switchPanel('dashboard');
