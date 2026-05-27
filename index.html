@@ -106,7 +106,6 @@
         .session-row:hover .technical-label { color: #000000; }
         .text-technical-label { color: #9a9a9a; }
         
-        /* 🚀 CENTRADO ABSOLUTO DEFINITIVO PARA LA PANTALLA DE ARRANQUE */
         #kova-initial-loader { 
             position: fixed; 
             inset: 0; 
@@ -123,7 +122,6 @@
 </head>
 <body class="font-body-main text-on-surface antialiased">
 
-<!-- CORTINA DE CARGA INICIAL CENTRADA DE FORMA ABSOLUTA -->
 <div id="kova-initial-loader">
     <div class="px-6">
         <h1 class="font-label-caps text-sm tracking-[0.3em] text-primary uppercase mb-2 animate-pulse">KOVA RS // SYSTEM</h1>
@@ -131,7 +129,6 @@
     </div>
 </div>
 
-<!-- TOP MOBILE APP BAR (SOLO VISIBLE EN MÓVILES/TABLETS) -->
 <header class="xl:hidden fixed top-0 left-0 right-0 h-16 bg-surface border-b border-outline-variant/20 px-4 flex items-center justify-between z-50">
     <div class="flex items-center gap-3">
         <button class="material-symbols-outlined p-2 hover:bg-surface-container-low" onclick="toggleMobileSidebar()">menu</button>
@@ -140,7 +137,6 @@
     <div class="w-2 h-2 bg-tertiary-fixed"></div>
 </header>
 
-<!-- NAVIGATION SIDEBAR (RESPONSIVE) -->
 <nav id="kova-sidebar" class="fixed h-full w-[280px] left-0 top-0 border-r border-outline-variant/20 bg-surface flex flex-col justify-between py-10 z-50 -translate-x-full xl:translate-x-0 transition-transform duration-300 ease-in-out">
     <div class="px-10">
         <div class="mb-16 flex justify-between items-start">
@@ -161,15 +157,12 @@
     <div class="px-10"><p class="font-technical-data text-[10px] text-on-surface-variant/40 leading-relaxed uppercase tracking-tighter">EST. 2024 // v1.0<br/>KOVA RECORDING STUDIO</p></div>
 </nav>
 
-<!-- TOP BAR DESKTOP SEARCH -->
 <header class="hidden xl:flex fixed top-0 right-0 left-[280px] h-20 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20 px-10 items-center justify-between z-40">
     <div class="flex items-center gap-6 flex-1"><span class="material-symbols-outlined text-on-surface-variant">search</span><input class="bg-transparent border-none focus:ring-0 font-technical-data text-technical-data w-1/2 uppercase tracking-wider" placeholder="BUSCAR ARTISTA O SESIÓN..." type="text"/></div>
 </header>
 
-<!-- MAIN APP CONTROLLER -->
 <main class="xl:ml-[280px] pt-16 xl:pt-20 min-h-screen">
     
-    <!-- DASHBOARD -->
     <section class="p-4 sm:p-10 block animate-in fade-in duration-500" id="panel-dashboard">
         <header class="mb-10 sm:mb-16"><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2><div class="active-tab-line"></div></header>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-16 mb-12 sm:mb-20">
@@ -182,25 +175,21 @@
         </div>
     </section>
 
-    <!-- DIRECTORIO -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
     </section>
 
-    <!-- SESSIONS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES ACTIVAS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> ADD SESSION</button></header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
-    <!-- ORDERS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
         <div class="overflow-x-auto"><table class="w-full text-left min-w-[750px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right font-medium">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="orders-table-body"></tbody></table></div>
     </section>
 
-    <!-- BILLING -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-outline-variant/20 mb-8 pb-8">
@@ -214,9 +203,8 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
-<!-- DRAWERS RESPONSIVOS (OCUPAN EL 100% EN MÓVILES, 450PX EN ESCRITORIO) -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-lead-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVO ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
+    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre" required type="text"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
@@ -276,6 +264,50 @@
     </form>
 </aside>
 
+<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-order-drawer">
+    <header class="flex justify-between items-center mb-12">
+        <h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR PEDIDO <span id="edit-order-id-title" class="font-mono text-technical-label"></span></h2>
+        <button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button>
+    </header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarPedido(event)">
+        <input type="hidden" name="edit_id_pedido"/>
+        <input type="hidden" name="edit_id_cliente"/>
+        <input type="hidden" name="edit_nombre_cliente"/>
+        
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Proyecto</label>
+            <input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-order-artista" readonly type="text"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_servicio" onchange="tarifaEstudioEdicion(this)" required>
+                <option value="SESION PRO">Sesion Pro (Mezcla + Mastering) — 200€</option>
+                <option value="SINGLE PRO">Single Pro — 350€</option>
+                <option value="KOVA SIGNATURE">KOVA Signature — 500€</option>
+                <option value="RECORDING">Recording — 200€</option>
+                <option value="SERVICIO PERSONALIZADO">Servicio Personalizado (Manual)</option>
+            </select>
+        </div>
+        <div class="space-y-1 hidden" id="wrapper-precio-manual-edit">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-order-monto-input" name="edit_monto_base" type="number" step="0.01" oninput="calcularImpuestosEdicion()"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_deadline" required type="date"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago" required>
+                <option value="100% a entrega">100% a entrega</option>
+                <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
+            </select>
+        </div>
+        <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice-edit"></p></div>
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button>
+    </form>
+</aside>
+
 <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbw2uLH8vXctnIHw9n94kqE3KbjeVSLjJwR5lJ9XwdS_ZaoZK8cKJL3JIPADqzHe8Zr_/exec";
 
@@ -316,7 +348,6 @@
             }
         });
 
-        // Ocultar barra en móviles tras pulsar un menú
         const sidebar = document.getElementById('kova-sidebar');
         if (sidebar) sidebar.classList.add('-translate-x-full');
 
@@ -421,9 +452,11 @@
             let dia = isNaN(d.getTime()) ? "S/F" : d.getDate();
             let meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
             let mes = isNaN(d.getTime()) ? "MMS" : meses[d.getMonth()];
+            let horas = parseInt(session.Horas_Dedicadas) || 0;
+
             return `
-            <div class="session-row group py-6 sm:py-8 flex items-center justify-between hover:bg-surface-container-low/30 px-2 sm:px-4 transition-colors">
-                <div class="flex items-center gap-4 sm:gap-10">
+            <div class="session-row group py-6 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-surface-container-low/30 px-2 sm:px-4 transition-colors gap-4">
+                <div class="flex items-center gap-4 sm:gap-10 flex-1">
                     <div class="w-14 sm:w-20 flex flex-col items-center border-r border-outline-variant/30 pr-4 sm:pr-8 text-center shrink-0">
                         <span class="font-mono text-2xl sm:text-3xl font-medium tracking-tighter text-primary">${dia}</span>
                         <span class="font-mono text-[9px] sm:text-[10px] tracking-widest text-technical-label font-medium">${mes}</span>
@@ -434,8 +467,21 @@
                         <p class="font-body-main text-xs sm:text-sm text-on-surface-variant mt-1 uppercase tracking-wide">FASE: ${session.Tarea_Descripcion || ''}</p>
                     </div>
                 </div>
-                <div class="flex flex-col sm:flex-row items-end sm:items-center gap-2 sm:gap-8 shrink-0">
-                    <span class="font-technical-data text-[10px] sm:text-[11px] uppercase tracking-widest font-medium ${session.Estado_Tarea === 'En Proceso' ? 'text-primary' : 'text-technical-label'}">${session.Estado_Tarea || 'PENDIENTE'}</span>
+                
+                <div class="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 shrink-0 border-t sm:border-0 pt-3 sm:pt-0 border-outline-variant/10">
+                    <div class="flex items-center gap-2 border border-outline-variant/30 bg-surface-container-lowest px-2 py-1">
+                        <button class="w-6 h-6 flex items-center justify-center font-mono text-xs hover:bg-surface-container-high transition-colors" onclick="actualizarHorasSesion('${session.ID_Tarea}', ${horas - 1})">-</button>
+                        <span class="font-technical-data font-medium text-xs w-14 text-center">${horas} HRS</span>
+                        <button class="w-6 h-6 flex items-center justify-center font-mono text-xs hover:bg-surface-container-high transition-colors" onclick="actualizarHorasSesion('${session.ID_Tarea}', ${horas + 1})">+</button>
+                    </div>
+
+                    <select class="border-none bg-transparent font-technical-data text-[11px] uppercase tracking-widest focus:ring-0 p-1 cursor-pointer font-medium ${session.Estado_Tarea === 'Completada' ? 'text-tertiary-fixed-dim' : (session.Estado_Tarea === 'En Proceso' ? 'text-primary font-bold' : 'text-technical-label')}" 
+                        onchange="cambiarEstadoSesion('${session.ID_Tarea}', this.value)">
+                        <option value="Pendiente" ${session.Estado_Tarea === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                        <option value="En Proceso" ${session.Estado_Tarea === 'En Proceso' ? 'selected' : ''}>En Proceso</option>
+                        <option value="Completada" ${session.Estado_Tarea === 'Completada' ? 'selected' : ''}>Completada</option>
+                    </select>
+
                     <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Tareas_Seguimiento', 'ID_Tarea', '${session.ID_Tarea}', 'tareas')">ELIMINAR</button>
                 </div>
             </div>`;
@@ -452,7 +498,11 @@
                 <td class="py-4 font-mono text-xs">${o.Deadline ? o.Deadline.split('T')[0] : 'S/D'}</td>
                 <td class="py-4 uppercase text-[11px] font-medium text-on-surface-variant/70">${o.Forma_Pago || '100% ENTREGA'}</td>
                 <td class="py-4 text-right font-mono font-medium">${parseFloat(o.Monto_Total).toFixed(2)}€</td>
-                <td class="py-4 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Ventas_Pedidos', 'ID_Pedido', '${o.ID_Pedido}', 'orders')">ELIMINAR</button></td>
+                <td class="py-4 text-right flex justify-end gap-4 items-center h-[53px]">
+                    <button class="text-primary font-label-caps text-[10px] tracking-widest hover:underline" onclick="abrirEditorPedido('${o.ID_Pedido}')">EDITAR</button>
+                    <span class="text-outline-variant/30">|</span>
+                    <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Ventas_Pedidos', 'ID_Pedido', '${o.ID_Pedido}', 'orders')">ELIMINAR</button>
+                </td>
             </tr>`).join('');
     }
 
@@ -519,6 +569,139 @@
     }
     
     function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
+
+    // --- LÓGICA DE EDICIÓN DE PEDIDOS ---
+    function abrirEditorPedido(idPedido) {
+        const o = realSales.find(order => order.ID_Pedido === idPedido);
+        if (!o) return;
+
+        document.getElementById('edit-order-id-title').innerText = `#${o.ID_Pedido}`;
+        
+        const form = document.querySelector('#edit-order-drawer form');
+        form.elements['edit_id_pedido'].value = o.ID_Pedido;
+        form.elements['edit_id_cliente'].value = o.ID_Cliente;
+        form.elements['edit_nombre_cliente'].value = o.Nombre_Cliente;
+        document.getElementById('edit-order-artista').value = o.Nombre_Cliente;
+        
+        const servicioUpper = (o.Servicio || "").toUpperCase();
+        if (["SESION PRO", "SINGLE PRO", "KOVA SIGNATURE", "RECORDING"].includes(servicioUpper)) {
+            form.elements['edit_servicio'].value = servicioUpper;
+            document.getElementById('wrapper-precio-manual-edit').classList.add('hidden');
+        } else {
+            form.elements['edit_servicio'].value = "SERVICIO PERSONALIZADO";
+            document.getElementById('wrapper-precio-manual-edit').classList.remove('hidden');
+        }
+
+        const artista = realClients.find(c => c.ID_Cliente === o.ID_Cliente);
+        const pais = artista ? (artista.País || artista.Pais) : 'España';
+        let montoTotal = parseFloat(o.Monto_Total) || 0;
+        let baseCalculada = pais === "España" ? (montoTotal / 1.21) : montoTotal;
+        document.getElementById('edit-order-monto-input').value = baseCalculada.toFixed(2);
+
+        form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
+        form.elements['edit_forma_pago'].value = o.Forma_Pago || '100% a entrega';
+
+        calcularImpuestosEdicion();
+        toggleDrawer('edit-order-drawer');
+    }
+
+    function tarifaEstudioEdicion(select) {
+        const wrapper = document.getElementById('wrapper-precio-manual-edit');
+        const input = document.getElementById('edit-order-monto-input');
+        if (select.value === "SERVICIO PERSONALIZADO") { wrapper.classList.remove('hidden'); input.value = ""; input.focus(); }
+        else { wrapper.classList.add('hidden'); input.value = TARIFAS[select.value.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())] || TARIFAS[select.value] || 0; }
+        calcularImpuestosEdicion();
+    }
+
+    function calcularImpuestosEdicion() {
+        const idCliente = document.querySelector('#edit-order-drawer input[name="edit_id_cliente"]').value;
+        const artista = realClients.find(c => c.ID_Cliente === idCliente);
+        const pais = artista ? (artista.País || artista.Pais) : 'España';
+        const input = document.getElementById('edit-order-monto-input');
+        const notice = document.getElementById('iva-tax-notice-edit');
+        const base = parseFloat(input.value) || 0;
+        
+        notice.classList.remove('hidden');
+        if (pais === "España") {
+            notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>`;
+        } else {
+            notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`;
+        }
+    }
+
+    function actualizarPedido(e) {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        const idCliente = f.get('edit_id_cliente');
+        const artista = realClients.find(c => c.ID_Cliente === idCliente);
+        const pais = artista ? (artista.País || artista.Pais) : 'España';
+        let base = parseFloat(f.get('edit_monto_base')) || 0;
+        if (pais === "España") base = base * 1.21;
+
+        ejecutarPost({
+            sheet: "Ventas_Pedidos",
+            action: "UPDATE",
+            ID_Pedido: f.get('edit_id_pedido'),
+            ID_Cliente: idCliente,
+            Nombre_Cliente: f.get('edit_nombre_cliente'),
+            Servicio: f.get('edit_servicio').toUpperCase(),
+            Monto_Total: base.toFixed(2),
+            Deadline: f.get('edit_deadline'),
+            Forma_Pago: f.get('edit_forma_pago')
+        }, 'orders');
+        e.target.reset();
+    }
+
+    // --- LÓGICA DE ACTUALIZACIÓN EN VIVO DE SESIONES ---
+    async function cambiarEstadoSesion(idTarea, nuevoEstado) {
+        const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
+        if (!sesion) return;
+        
+        const payload = {
+            sheet: "Tareas_Seguimiento",
+            action: "UPDATE",
+            ID_Tarea: idTarea,
+            ID_Cliente: sesion.ID_Cliente,
+            Nombre_Cliente: sesion.Nombre_Cliente,
+            Tarea_Descripcion: sesion.Tarea_Descripcion,
+            Fecha_Limite: sesion.Fecha_Limite ? sesion.Fecha_Limite.split('T')[0] : '',
+            Estado_Tarea: nuevoEstado,
+            Horas_Dedicadas: sesion.Horas_Dedicadas || 0
+        };
+        
+        try {
+            await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+            await sincronizarCoreKova();
+            switchPanel('tareas');
+        } catch (e) { console.error("Error al actualizar estado de sesión:", e); }
+    }
+
+    async function actualizarHorasSesion(idTarea, nuevasHoras) {
+        if (nuevasHoras < 0) return;
+        const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
+        if (!sesion) return;
+
+        const payload = {
+            sheet: "Tareas_Seguimiento",
+            action: "UPDATE",
+            ID_Tarea: idTarea,
+            ID_Cliente: sesion.ID_Cliente,
+            Nombre_Cliente: sesion.Nombre_Cliente,
+            Tarea_Descripcion: sesion.Tarea_Descripcion,
+            Fecha_Limite: sesion.Fecha_Limite ? sesion.Fecha_Limite.split('T')[0] : '',
+            Estado_Tarea: sesion.Estado_Tarea || 'Pendiente',
+            Horas_Dedicadas: nuevasHoras
+        };
+
+        try {
+            sesion.Horas_Dedicadas = nuevasHoras;
+            renderSessionsList(realSessions);
+            await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+        } catch (e) { 
+            console.error("Error al actualizar horas:", e);
+            await sincronizarCoreKova();
+        }
+    }
 
     function toggleDrawer(id) { document.getElementById(id).classList.toggle('translate-x-full'); document.getElementById('drawer-overlay').classList.toggle('opacity-0'); document.getElementById('drawer-overlay').classList.toggle('pointer-events-none'); }
     function closeAllDrawers() { document.querySelectorAll('aside').forEach(a => a.classList.add('translate-x-full')); document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none'); }
