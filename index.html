@@ -123,7 +123,7 @@
 
     <section class="p-10 hidden" id="panel-orders">
         <header class="flex justify-between items-start mb-10"><div><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
-        <div class="overflow-x-auto"><table class="w-full text-left"><thead class="font-label-caps text-label-caps uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">Artista</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right">Monto (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-technical-data" id="orders-table-body"></tbody></table></div>
+        <div class="overflow-x-auto"><table class="w-full text-left"><thead class="font-label-caps text-label-caps uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-technical-data" id="orders-table-body"></tbody></table></div>
     </section>
 
     <section class="p-10 hidden" id="panel-ventas">
@@ -165,11 +165,38 @@
 <aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l p-10 flex flex-col" id="add-order-drawer">
     <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPedido(event)">
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label><select class="w-full border-b bg-transparent px-0 py-2 select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label><select class="w-full border-b bg-transparent px-0 py-2" name="servicio" onchange="tarifaEstudio(this)" required><option value="">Selecciona tarifa...</option><option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option><option value="Single Pro">Single Pro — 350€</option><option value="KOVA Signature">KOVA Signature — 500€</option><option value="Recording">Recording — 200€</option><option value="Servicio Personalizado">Servicio Personalizado (Manual)</option></select></div>
-        <div class="space-y-2 hidden" id="wrapper-precio-manual"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label><input class="w-full border-b bg-transparent px-0 py-2" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label><input class="w-full border-b bg-transparent px-0 py-2 font-mono text-xs" name="deadline" required type="date"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label><select class="w-full border-b bg-transparent px-0 py-2" name="forma_pago" required><option value="Transferencia Bancaria">Transferencia Bancaria</option><option value="Efectivo Cash">Efectivo Cash</option><option value="Mensualidad Suscripción">Mensualidad Suscripción</option></select></div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label>
+            <select class="w-full border-b bg-transparent px-0 py-2 select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
+            <input type="hidden" name="id_cliente"/>
+            <input type="hidden" name="nombre_cliente"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
+            <select class="w-full border-b bg-transparent px-0 py-2" name="servicio" onchange="tarifaEstudio(this)" required>
+                <option value="">Selecciona tarifa...</option>
+                <option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option>
+                <option value="Single Pro">Single Pro — 350€</option>
+                <option value="KOVA Signature">KOVA Signature — 500€</option>
+                <option value="Recording">Recording — 200€</option>
+                <option value="Servicio Personalizado">Servicio Personalizado (Manual)</option>
+            </select>
+        </div>
+        <div class="space-y-2 hidden" id="wrapper-precio-manual">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label>
+            <input class="w-full border-b bg-transparent px-0 py-2" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label>
+            <input class="w-full border-b bg-transparent px-0 py-2 font-mono text-xs" name="deadline" required type="date"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
+            <select class="w-full border-b bg-transparent px-0 py-2" name="forma_pago" required>
+                <option value="100% a entrega">100% a entrega</option>
+                <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
+            </select>
+        </div>
         <div class="pt-4"><p class="text-[11px] font-technical-data uppercase tracking-wider text-primary bg-surface-container-high p-4 border hidden" id="iva-tax-notice"></p></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CERRAR PEDIDO</button>
     </form>
@@ -193,7 +220,6 @@
     async function fetchContent(view) {
         if (!API_URL || API_URL.includes("AQUÍ_PEGA")) return;
         try {
-            // Carga asíncrona optimizada agrupada para reducir tiempos de refresco
             const [respSales, respPayments, respTasks, respClients] = await Promise.all([
                 fetch(`${API_URL}?sheet=Ventas_Pedidos`, { redirect: "follow" }).then(r => r.json()),
                 fetch(`${API_URL}?sheet=Pagos_Registro`, { redirect: "follow" }).then(r => r.json()),
@@ -235,6 +261,7 @@
         calcularImpuestosDinamicos();
     }
 
+    // Lógica inteligente para ocultar/mostrar casillas de precio según tarifa de KOVA RS
     function tarifaEstudio(select) {
         const wrapper = document.getElementById('wrapper-precio-manual');
         const input = document.getElementById('order-monto-input');
@@ -261,9 +288,6 @@
         }
     }
 
-    // ==========================================
-    // RENDERIZADORES DE TABLAS Y LÓGICA DE BORRADO
-    // ==========================================
     function renderDashboard() {
         let totalRecaudado = 0; let totalPedidos = 0;
         realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
@@ -328,7 +352,6 @@
             let contrato = parseFloat(sale.Monto_Total) || 0;
             let deuda = contrato - abonos;
             
-            // 🚀 DYNAMIC FINANCIAL STATUS MAPPING
             let estado = 'PENDIENTE';
             if (deuda <= 0) estado = 'PAGADO';
             else if (abonos > 0 && deuda > 0) estado = 'PARCIAL';
@@ -345,9 +368,6 @@
         }).join('');
     }
 
-    // ==========================================
-    // EJECUTORES GENERALES POST Y BORRADO DE FILAS
-    // ==========================================
     async function borrarFilaDirecta(sheetName, idKeyName, idValue, viewToRefresh) {
         if (!confirm(`¿Confirmas que deseas eliminar de forma definitiva el registro ${idValue}?`)) return;
         const payload = { sheet: sheetName, action: "DELETE" };
@@ -363,7 +383,7 @@
         try {
             closeAllDrawers();
             await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-            setTimeout(() => { switchPanel(nextView); }, 500); // Tiempos optimizados de respuesta
+            setTimeout(() => { switchPanel(nextView); }, 500);
         } catch (e) { console.error(e); }
     }
 
@@ -389,7 +409,7 @@
         const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
         ids.forEach(id => {
             const btn = document.getElementById(`btn-${id}`); const ind = document.getElementById(`indicator-${id}`);
-            if (btn && ind) { if (id === panelId) { btn.classList.add('text-primary'); ind.classList.remove('hidden'); } else { btn.classList.remove('text-primary'); ind.classList.add('hidden'); } }
+            if (btn && ind) { if (id === panelId) { btn.classList.add('text-primary'); ind.classList.remove('hidden'); } else { btn.classList.remove('text-primary'); ind.hidden = true; } }
         });
         fetchContent(panelId);
     }
