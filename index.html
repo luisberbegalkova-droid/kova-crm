@@ -61,16 +61,49 @@
                         "primary-container": "#1c1b1b",
                         "on-tertiary-fixed-variant": "#2a5000"
                     },
-                    "borderRadius": { "DEFAULT": "0px" },
-                    "fontFamily": { "label-caps": ["JetBrains Mono"], "headline-lg": ["Geist"], "body-main": ["Geist"], "display-xl": ["Geist"], "technical-data": ["JetBrains Mono"] }
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1.5rem",
+                        "stack-lg": "4rem",
+                        "stack-md": "2rem",
+                        "page-margin": "2.5rem",
+                        "technical-gap": "0.5rem",
+                        "stack-sm": "1rem"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Geist"],
+                        "body-main": ["Geist"],
+                        "display-xl": ["Geist"],
+                        "technical-data": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-main": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "display-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "technical-data": ["13px", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "500"}]
+                    }
                 },
             },
         }
     </script>
     <style>
         body { background-color: #ede9e1; }
+        .material-symbols-outlined { font-size: 20px; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #9a9a9a40; }
         .active-tab-line { height: 2px; width: 30%; background-color: #7ed321; }
         .sidebar-active-indicator { position: absolute; left: 0; width: 2px; height: 100%; background-color: #a1fa49; }
+        .session-row:hover .technical-label { color: #000000; }
         .text-technical-label { color: #9a9a9a; }
     </style>
 </head>
@@ -83,97 +116,291 @@
             <p class="font-technical-data text-[10px] text-on-surface-variant/60">SYSTEM v1.0</p>
         </div>
         <ul class="space-y-8">
-            <li class="relative"><div class="sidebar-active-indicator" id="indicator-dashboard"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-primary text-left w-full" id="btn-dashboard" onclick="switchPanel('dashboard')">Dashboard</button></li>
-            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-directorio"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-directorio" onclick="switchPanel('directorio')">Lead Directory</button></li>
-            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-tareas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-tareas" onclick="switchPanel('tareas')">Sessions</button></li>
-            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-orders"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-orders" onclick="switchPanel('orders')">Orders</button></li>
-            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-ventas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-ventas" onclick="switchPanel('ventas')">Billing</button></li>
+            <li class="relative">
+                <div class="sidebar-active-indicator" id="indicator-dashboard"></div>
+                <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-primary hover:text-primary transition-all text-left w-full" id="btn-dashboard" onclick="switchPanel('dashboard')">Dashboard</button>
+            </li>
+            <li class="relative">
+                <div class="sidebar-active-indicator hidden" id="indicator-directorio"></div>
+                <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-directorio" onclick="switchPanel('directorio')">Lead Directory</button>
+            </li>
+            <li class="relative">
+                <div class="sidebar-active-indicator hidden" id="indicator-tareas"></div>
+                <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-tareas" onclick="switchPanel('tareas')">Sessions</button>
+            </li>
+            <li class="relative">
+                <div class="sidebar-active-indicator hidden" id="indicator-orders"></div>
+                <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-orders" onclick="switchPanel('orders')">Orders</button>
+            </li>
+            <li class="relative">
+                <div class="sidebar-active-indicator hidden" id="indicator-ventas"></div>
+                <button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-all text-left w-full" id="btn-ventas" onclick="switchPanel('ventas')">Billing</button>
+            </li>
         </ul>
     </div>
-    <div class="px-10"><p class="font-technical-data text-[10px] text-on-surface-variant/40 uppercase tracking-tighter">EST. 2024 // v1.0<br/>KOVA RECORDING STUDIO</p></div>
+    <div class="px-10">
+        <p class="font-technical-data text-[10px] text-on-surface-variant/40 leading-relaxed uppercase tracking-tighter">
+            EST. 2024 // v1.0<br/>KOVA RECORDING STUDIO
+        </p>
+    </div>
 </nav>
 
 <header class="fixed top-0 right-0 left-[280px] h-20 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20 px-10 flex items-center justify-between z-40">
-    <div class="flex items-center gap-6 flex-1"><span class="material-symbols-outlined text-on-surface-variant">search</span><input class="bg-transparent border-none focus:ring-0 font-technical-data text-technical-data w-1/2 uppercase tracking-wider" placeholder="BUSCAR ARTISTA O SESIÓN..." type="text"/></div>
+    <div class="flex items-center gap-6 flex-1">
+        <span class="material-symbols-outlined text-on-surface-variant">search</span>
+        <input class="bg-transparent border-none focus:ring-0 font-technical-data text-technical-data w-1/2 uppercase tracking-wider" placeholder="BUSCAR ARTISTA O SESIÓN..." type="text"/>
+    </div>
+    <div class="flex items-center gap-8">
+        <div class="flex flex-col items-end">
+            <span class="font-technical-data text-[10px] text-on-surface-variant/40 uppercase">System Status</span>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-tertiary-fixed"></div>
+                <span class="font-technical-data text-technical-data">ONLINE</span>
+            </div>
+        </div>
+        <button class="font-label-caps text-label-caps border border-outline-variant/40 px-4 py-2 hover:border-primary transition-colors">EXPORT</button>
+    </div>
 </header>
 
 <main class="ml-[280px] pt-20 min-h-screen">
     
-    <section class="p-10 block" id="panel-dashboard">
-        <header class="mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2><div class="active-tab-line"></div></header>
+    <section class="p-10 block animate-in fade-in duration-500" id="panel-dashboard">
+        <header class="mb-16">
+            <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2>
+            <div class="active-tab-line"></div>
+        </header>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
-            <div><p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Importe Facturación (Cobrado)</p><p class="font-display-xl text-display-xl tracking-tighter text-primary" id="dash-facturacion">€0,00</p></div>
-            <div><p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Pendiente Neto por Cobrar</p><p class="font-display-xl text-display-xl tracking-tighter text-error" id="dash-curso">€0,00</p></div>
+            <div>
+                <p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Importe Facturación (Cobrado)</p>
+                <p class="font-display-xl text-display-xl tracking-tighter text-primary" id="dash-facturacion">€0,00</p>
+            </div>
+            <div>
+                <p class="font-label-caps text-label-caps text-technical-label uppercase mb-4">Pendiente Neto por Cobrar</p>
+                <p class="font-display-xl text-display-xl tracking-tighter text-error" id="dash-curso">€0,00</p>
+            </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-16 max-w-full">
-            <div><h3 class="font-label-caps text-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-8">Acciones Prioritarias</h3><ul class="space-y-10" id="dash-acciones-list"></ul></div>
-            <div><h3 class="font-label-caps text-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-8">Proyectos en Marcha</h3><ul class="space-y-8" id="dash-proyectos-list"></ul></div>
+            <div>
+                <h3 class="font-label-caps text-label-caps text-technical-label uppercase tracking-widest border-b border-outline-variant/20 pb-4 mb-8">Acciones Prioritarias</h3>
+                <ul class="space-y-10" id="dash-acciones-list"></ul>
+            </div>
+            <div>
+                <h3 class="font-label-caps text-label-caps text-technical-label uppercase tracking-widest border-b border-outline-variant/20 pb-4 mb-8">Proyectos en Marcha</h3>
+                <ul class="space-y-8" id="dash-proyectos-list"></ul>
+            </div>
         </div>
     </section>
 
-    <section class="p-10 hidden" id="panel-directorio">
-        <header class="flex justify-between items-start mb-10"><div><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
-        <div class="overflow-x-auto"><table class="w-full text-left"><thead class="font-label-caps text-label-caps uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-technical-data" id="clients-table-body"></tbody></table></div>
+    <section class="p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
+        <header class="flex justify-between items-start mb-10">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2>
+                <div class="active-tab-line"></div>
+            </div>
+            <button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-lead-drawer')">
+                <span class="material-symbols-outlined">add</span> ADD LEAD
+            </button>
+        </header>
+        <div class="flex gap-8 mb-10 border-b border-outline-variant/10 pb-4 overflow-x-auto">
+            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-primary border-b border-primary whitespace-nowrap" onclick="filterRole('Todos')">Todos</button>
+            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Vocalista')">Vocalista</button>
+            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Guitarrista')">Guitarrista</button>
+            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Baterista')">Baterista</button>
+            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Bajista')">Bajista</button>
+            <button class="filter-btn font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 hover:text-primary transition-colors whitespace-nowrap" onclick="filterRole('Productor')">Productor</button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
+                <tr>
+                    <th class="py-4 font-medium">ID</th>
+                    <th class="py-4 font-medium">Nombre / Artista</th>
+                    <th class="py-4 font-medium">Contacto</th>
+                    <th class="py-4 font-medium">País</th>
+                    <th class="py-4 font-medium">Socials</th>
+                    <th class="py-4 font-medium">Status</th>
+                    <th class="py-4 text-right">Acción</th>
+                </tr>
+                </thead>
+                <tbody class="font-technical-data text-technical-data" id="clients-table-body"></tbody>
+            </table>
+        </div>
     </section>
 
-    <section class="p-10 hidden" id="panel-tareas">
-        <header class="flex justify-between items-start mb-16"><div><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES ACTIVAS</h2><div class="active-tab-line"></div></div><button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> ADD SESSION</button></header>
+    <section class="p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
+        <header class="flex justify-between items-start mb-16">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES ACTIVAS</h2>
+                <div class="active-tab-line"></div>
+            </div>
+            <button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-session-drawer')">
+                <span class="material-symbols-outlined">add</span> ADD SESSION
+            </button>
+        </header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
-    <section class="p-10 hidden" id="panel-orders">
-        <header class="flex justify-between items-start mb-10"><div><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
-        <div class="overflow-x-auto"><table class="w-full text-left"><thead class="font-label-caps text-label-caps uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-technical-data" id="orders-table-body"></tbody></table></div>
+    <section class="p-10 hidden animate-in fade-in duration-500" id="panel-orders">
+        <header class="flex justify-between items-start mb-10">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2>
+                <div class="active-tab-line"></div>
+            </div>
+            <button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-order-drawer')">
+                <span class="material-symbols-outlined">add</span> ADD ORDER
+            </button>
+        </header>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
+                <tr>
+                    <th class="py-4 font-medium">ID Pedido</th>
+                    <th class="py-4 font-medium">ID Cliente</th>
+                    <th class="py-4 font-medium">Artista / Proyecto</th>
+                    <th class="py-4">Servicio</th>
+                    <th class="py-4">Deadline</th>
+                    <th class="py-4">Vía Pago</th>
+                    <th class="py-4 text-right font-medium">Monto Total (+IVA)</th>
+                    <th class="py-4 text-right">Acción</th>
+                </tr>
+                </thead>
+                <tbody class="font-technical-data text-technical-data" id="orders-table-body"></tbody>
+            </table>
+        </div>
     </section>
 
-    <section class="p-10 hidden" id="panel-ventas">
-        <header class="flex justify-between items-start mb-10"><div><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-1 border-b mb-10 pb-10">
-            <div class="p-4"><p class="font-label-caps text-on-surface-variant/60 uppercase mb-4">Total Caja Recaudada</p><p class="font-display-xl text-display-xl tracking-tighter" id="billing-total">€0,00</p></div>
-            <div class="p-4 border-l"><p class="font-label-caps text-on-surface-variant/60 uppercase mb-4">Pedidos Realizados</p><p class="font-display-xl text-display-xl tracking-tighter" id="billing-count">0</p></div>
-            <div class="p-4 border-l"><p class="font-label-caps text-on-surface-variant/60 uppercase mb-4">Pendiente Neto por Cobrar</p><p class="font-display-xl text-display-xl tracking-tighter text-error" id="billing-pending">€0,00</p></div>
+    <section class="p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
+        <header class="flex justify-between items-start mb-10">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2>
+                <div class="active-tab-line"></div>
+            </div>
+            <button class="border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center gap-2" onclick="toggleDrawer('add-payment-drawer')">
+                <span class="material-symbols-outlined">add</span> REGISTRAR PAGO
+            </button>
+        </header>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-1 border-b border-outline-variant/20 mb-10 pb-10">
+            <div class="p-4">
+                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Total Caja Recaudada</p>
+                <p class="font-display-xl text-display-xl tracking-tighter" id="billing-total">€0,00</p>
+            </div>
+            <div class="p-4 border-l border-outline-variant/20">
+                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Pedidos Realizados</p>
+                <p class="font-display-xl text-display-xl tracking-tighter" id="billing-count">0</p>
+            </div>
+            <div class="p-4 border-l border-outline-variant/20">
+                <p class="font-label-caps text-label-caps text-on-surface-variant/60 uppercase mb-4">Pendiente Neto por Cobrar</p>
+                <p class="font-display-xl text-display-xl tracking-tighter text-error" id="billing-pending">€0,00</p>
+            </div>
         </div>
-        <div class="overflow-x-auto"><table class="w-full text-left"><thead class="font-label-caps text-label-caps uppercase text-on-surface-variant/60"><tr><th class="py-4">Pedido</th><th class="py-4">Artista</th><th class="py-4 text-right">Monto (€)</th><th class="py-4 text-right">Abonado (€)</th><th class="py-4 text-right">Deuda (€)</th><th class="py-4 text-right">Estado</th></tr></thead><tbody class="font-technical-data text-technical-data" id="billing-table-body"></tbody></table></div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="font-label-caps text-label-caps uppercase tracking-tighter text-on-surface-variant/60">
+                <tr>
+                    <th class="py-4 font-medium">Pedido</th>
+                    <th class="py-4 font-medium">Artista</th>
+                    <th class="py-4 text-right font-medium">Monto Contrato (€)</th>
+                    <th class="py-4 text-right font-medium">Total Abonado (€)</th>
+                    <th class="py-4 text-right font-medium">Restante Deuda (€)</th>
+                    <th class="py-4 text-right font-medium">Estado</th>
+                </tr>
+                </thead>
+                <tbody class="font-technical-data text-technical-data" id="billing-table-body"></tbody>
+            </table>
+        </div>
     </section>
 </main>
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
-<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l p-10 flex flex-col" id="add-lead-drawer">
-    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVO ARTISTA</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
+<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-lead-drawer">
+    <header class="flex justify-between items-center mb-16">
+        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVO ARTISTA</h2>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
+    </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarCliente(event)">
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b bg-transparent px-0 py-2 uppercase" name="nombre" required type="text"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b bg-transparent px-0 py-2" name="telefono" type="text"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b bg-transparent px-0 py-2" name="pais" required><option value="España">España</option><option value="Otro">Otro (Internacional / Sin IVA)</option></select></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b bg-transparent px-0 py-2" name="rol"><option value="Vocalista">Vocalista</option><option value="Productor">Productor</option><option value="Baterista">Baterista</option></select></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email</label><input class="w-full border-b bg-transparent px-0 py-2" name="email" required type="email"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b bg-transparent px-0 py-2" name="social" placeholder="@username" type="text"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">REGISTRAR EN DIRECTORIO</button>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase" name="nombre" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="telefono" type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="pais" required>
+                <option value="España">España</option>
+                <option value="Otro">Otro (Internacional / Sin IVA)</option>
+            </select>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="rol">
+                <option value="Vocalista">Vocalista</option>
+                <option value="Guitarrista">Guitarrista</option>
+                <option value="Baterista">Baterista</option>
+                <option value="Bajista">Bajista</option>
+                <option value="Productor">Productor</option>
+            </select>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="email" required type="email"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales (Handle)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="social" placeholder="@username" type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Notas Adicionales</label>
+            <textarea class="w-full border border-outline-variant/20 focus:border-primary bg-transparent px-4 py-3 focus:ring-0 font-body-main" name="notas" rows="3"></textarea>
+        </div>
+        <div class="pt-8">
+            <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">REGISTRAR EN DIRECTORIO</button>
+        </div>
     </form>
 </aside>
 
-<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l p-10 flex flex-col" id="add-session-drawer">
-    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVA SESIÓN</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
+<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-session-drawer">
+    <header class="flex justify-between items-center mb-16">
+        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">NUEVA SESIÓN</h2>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
+    </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarSesion(event)">
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Artista</label><select class="w-full border-b bg-transparent px-0 py-2 select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Sesión</label><input class="w-full border-b bg-transparent px-0 py-2" name="tarea_descripcion" placeholder="ej: Grabación de Voces" required type="text"/></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Ejecución</label><input class="w-full border-b bg-transparent px-0 py-2 font-mono text-xs" name="fecha_limite" required type="date"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">AGENDAR SESIÓN</button>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Artista</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
+            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Sesión</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="tarea_descripcion" placeholder="ej: Grabación de Voces" required type="text"/>
+        </div>
+        <div class="space-y-2">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Ejecución</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-xs font-technical-data" name="fecha_limite" required type="date"/>
+        </div>
+        <div class="pt-8">
+            <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">AGENDAR SESIÓN</button>
+        </div>
     </form>
 </aside>
 
-<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l p-10 flex flex-col" id="add-order-drawer">
-    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
+<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-order-drawer">
+    <header class="flex justify-between items-center mb-16">
+        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
+    </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPedido(event)">
         <div class="space-y-2">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label>
-            <select class="w-full border-b bg-transparent px-0 py-2 select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
-            <input type="hidden" name="id_cliente"/>
-            <input type="hidden" name="nombre_cliente"/>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
+            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
         </div>
         <div class="space-y-2">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
-            <select class="w-full border-b bg-transparent px-0 py-2" name="servicio" onchange="tarifaEstudio(this)" required>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="servicio" onchange="tarifaEstudio(this)" required>
                 <option value="">Selecciona tarifa...</option>
                 <option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option>
                 <option value="Single Pro">Single Pro — 350€</option>
@@ -184,30 +411,33 @@
         </div>
         <div class="space-y-2 hidden" id="wrapper-precio-manual">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label>
-            <input class="w-full border-b bg-transparent px-0 py-2" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main font-medium" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/>
         </div>
         <div class="space-y-2">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label>
-            <input class="w-full border-b bg-transparent px-0 py-2 font-mono text-xs" name="deadline" required type="date"/>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-xs font-technical-data" name="deadline" required type="date"/>
         </div>
         <div class="space-y-2">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
-            <select class="w-full border-b bg-transparent px-0 py-2" name="forma_pago" required>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" name="forma_pago" required>
                 <option value="100% a entrega">100% a entrega</option>
                 <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
             </select>
         </div>
-        <div class="pt-4"><p class="text-[11px] font-technical-data uppercase tracking-wider text-primary bg-surface-container-high p-4 border hidden" id="iva-tax-notice"></p></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CERRAR PEDIDO</button>
+        <div class="pt-4"><p class="text-[11px] font-technical-data uppercase tracking-wider text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden" id="iva-tax-notice"></p></div>
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">CERRAR PEDIDO</button>
     </form>
 </aside>
 
-<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l p-10 flex flex-col" id="add-payment-drawer">
-    <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
+<aside class="fixed top-0 right-0 h-full w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-10 flex flex-col" id="add-payment-drawer">
+    <header class="flex justify-between items-center mb-16">
+        <h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO</h2>
+        <button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button>
+    </header>
     <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPago(event)">
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Pedido Activo</label><select class="w-full border-b bg-transparent px-0 py-2" id="select-pedidos-dinamico" name="id_pedido" required></select></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label><input class="w-full border-b bg-transparent px-0 py-2 font-mono" name="cantidad_pagada" placeholder="ej: 100.00" required type="number" step="0.01"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CONFIRMAR ABONO</button>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Pedido Activo</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main" id="select-pedidos-dinamico" name="id_pedido" required></select></div>
+        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono" name="cantidad_pagada" placeholder="ej: 100.00" required type="number" step="0.01"/></div>
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest hover:opacity-90 transition-opacity" type="submit">CONFIRMAR ABONO</button>
     </form>
 </aside>
 
@@ -239,6 +469,7 @@
         } catch (e) { console.error("Sync Error:", e); }
     }
 
+    // Vinculación dinámica asíncrona entre las hojas y los menús selectores
     function populateDropdowns() {
         document.querySelectorAll('.select-clientes-dinamico').forEach(select => {
             select.innerHTML = '<option value="">Selecciona un artista...</option>' + 
@@ -261,7 +492,6 @@
         calcularImpuestosDinamicos();
     }
 
-    // Lógica inteligente para ocultar/mostrar casillas de precio según tarifa de KOVA RS
     function tarifaEstudio(select) {
         const wrapper = document.getElementById('wrapper-precio-manual');
         const input = document.getElementById('order-monto-input');
@@ -288,6 +518,9 @@
         }
     }
 
+    // ==========================================
+    // SECCIÓN DE RENDERIZADO VISUAL EXCLUSIVO DE STITCH
+    // ==========================================
     function renderDashboard() {
         let totalRecaudado = 0; let totalPedidos = 0;
         realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
@@ -295,47 +528,78 @@
         document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('dash-curso').innerText = `€${(totalPedidos - totalRecaudado).toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
-        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3).map(t => `<li><span class="font-body-main text-primary">${t.Tarea_Descripcion}</span><br><span class="text-[11px] text-technical-label uppercase">ARTISTA: ${t.Nombre_Cliente}</span></li>`).join('');
-        document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 3).map(p => `<li class="border-b border-outline-variant/5 pb-2"><span class="font-body-main text-primary">${p.Nombre_Cliente}</span><br><span class="text-[11px] text-technical-label uppercase">${p.Servicio}</span></li>`).join('');
+        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3).map(t => `
+            <li class="flex items-start justify-between group">
+                <div class="flex flex-col gap-1">
+                    <span class="font-body-main text-primary">${t.Tarea_Descripcion || ''}</span>
+                    <span class="font-technical-data text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente || 'DESCONOCIDO'} [${t.ID_Cliente || 'S/ID'}]</span></span>
+                </div>
+                <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
+            </li>`).join('');
+            
+        document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 3).map(p => `
+            <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
+                <span class="font-body-main text-primary">${p.Nombre_Cliente || 'ARTISTA'} / PROJECT</span>
+                <span class="font-technical-data text-[11px] text-technical-label uppercase">${p.Servicio || 'ESTUDIO'}</span>
+            </li>`).join('');
     }
 
     function renderClientsTable(data) {
         document.getElementById('clients-table-body').innerHTML = data.map(c => `
-            <tr class="border-t hover:bg-surface-container-low transition-colors">
-                <td class="py-5 font-mono font-medium">${c.ID_Cliente}</td>
-                <td class="py-5 font-medium">${c.Nombre_Completo}</td>
-                <td class="py-5 font-mono text-xs">${c.Telefono || c.Email}</td>
-                <td class="py-5 text-xs uppercase font-medium">${c.País || c.Pais || 'España'}</td>
-                <td class="py-5 font-mono text-xs">${c.Estado_Lead || 'POTENCIAL'}</td>
-                <td class="py-5 text-right"><button class="text-error font-label-caps text-[10px] hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
+            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors group">
+                <td class="py-6 text-on-surface-variant font-technical-data font-medium">${c.ID_Cliente || ''}</td>
+                <td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td>
+                <td class="py-6 font-technical-data">${c.Telefono || c.Email || ''}</td>
+                <td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.País || c.Pais || 'España'}</td>
+                <td class="py-6">
+                    <span class="flex items-center gap-2">
+                        <div class="w-1.5 h-1.5 ${c.Estado_Lead === 'VIP' || c.Estado_Lead === 'Activo' ? 'bg-[#7ed321]' : 'bg-outline'}"></div>
+                        <span class="uppercase text-xs font-medium tracking-wide">${c.Estado_Lead || 'POTENCIAL'}</span>
+                    </span>
+                </td>
+                <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
             </tr>`).join('');
     }
 
     function renderSessionsList(data) {
-        document.getElementById('sessions-list-container').innerHTML = data.map(s => {
-            let d = new Date(s.Fecha_Limite);
+        const sorted = data.sort((a,b) => new Date(a.Fecha_Limite) - new Date(b.Fecha_Limite));
+        document.getElementById('sessions-list-container').innerHTML = sorted.map(session => {
+            let d = new Date(session.Fecha_Limite);
+            let dia = isNaN(d.getTime()) ? "S/F" : d.getDate();
+            let meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+            let mes = isNaN(d.getTime()) ? "MMS" : meses[d.getMonth()];
             return `
-            <div class="py-6 flex items-center justify-between px-4">
-                <div class="flex items-center gap-8">
-                    <div class="w-16 shrink-0 text-center border-r"><span class="font-mono text-2xl font-medium">${isNaN(d.getTime())?'S/F':d.getDate()}</span></div>
-                    <div><h3 class="font-medium uppercase">${s.Nombre_Cliente}</h3><p class="text-xs text-technical-label font-mono">TAREA: ${s.Tarea_Descripcion}</p></div>
+            <div class="session-row group py-8 flex items-center justify-between hover:bg-surface-container-low/30 px-4 transition-colors">
+                <div class="flex items-center gap-10">
+                    <div class="w-20 flex flex-col items-center border-r border-outline-variant/30 pr-8 text-center shrink-0">
+                        <span class="font-mono text-3xl font-medium tracking-tighter text-primary">${dia}</span>
+                        <span class="font-mono text-[10px] tracking-widest text-technical-label font-medium">${mes}</span>
+                    </div>
+                    <div class="min-w-0">
+                        <span class="font-technical-data text-[10px] text-technical-label uppercase tracking-widest block mb-1">${session.ID_Tarea || 'SESS'} // ID: ${session.ID_Cliente || 'S/ID'}</span>
+                        <h3 class="font-headline-lg text-xl uppercase tracking-widest truncate text-primary font-medium">${session.Nombre_Cliente || 'ARTISTA'}</h3>
+                        <p class="font-body-main text-sm text-on-surface-variant mt-1 uppercase tracking-wide">FASE: ${session.Tarea_Descripcion || ''}</p>
+                    </div>
                 </div>
-                <button class="text-error font-label-caps text-[10px] hover:underline" onclick="borrarFilaDirecta('Tareas_Seguimiento', 'ID_Tarea', '${s.ID_Tarea}', 'tareas')">ELIMINAR</button>
+                <div class="flex items-center gap-8">
+                    <span class="font-technical-data text-[11px] uppercase tracking-widest font-medium ${session.Estado_Tarea === 'En Proceso' ? 'text-primary' : 'text-technical-label'}">${session.Estado_Tarea || 'PENDIENTE'}</span>
+                    <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Tareas_Seguimiento', 'ID_Tarea', '${session.ID_Tarea}', 'tareas')">ELIMINAR</button>
+                </div>
             </div>`;
         }).join('');
     }
 
     function renderOrdersTable() {
         document.getElementById('orders-table-body').innerHTML = realSales.map(o => `
-            <tr class="border-t">
+            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
                 <td class="py-4 font-mono font-medium">${o.ID_Pedido}</td>
                 <td class="py-4 font-mono text-xs">${o.ID_Cliente}</td>
                 <td class="py-4 uppercase font-medium">${o.Nombre_Cliente}</td>
                 <td class="py-4 font-mono text-xs">${o.Servicio}</td>
                 <td class="py-4 font-mono text-xs">${o.Deadline ? o.Deadline.split('T')[0] : 'S/D'}</td>
-                <td class="py-4 uppercase text-[11px] font-medium text-on-surface-variant/70">${o.Forma_Pago || 'BANCO'}</td>
+                <td class="py-4 uppercase text-[11px] font-medium text-on-surface-variant/70">${o.Forma_Pago || '100% ENTREGA'}</td>
                 <td class="py-4 text-right font-mono font-medium">${parseFloat(o.Monto_Total).toFixed(2)}€</td>
-                <td class="py-4 text-right"><button class="text-error font-label-caps text-[10px] hover:underline" onclick="borrarFilaDirecta('Ventas_Pedidos', 'ID_Pedido', '${o.ID_Pedido}', 'orders')">ELIMINAR</button></td>
+                <td class="py-4 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Ventas_Pedidos', 'ID_Pedido', '${o.ID_Pedido}', 'orders')">ELIMINAR</button></td>
             </tr>`).join('');
     }
 
@@ -357,7 +621,7 @@
             else if (abonos > 0 && deuda > 0) estado = 'PARCIAL';
 
             return `
-                <tr class="border-t">
+                <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
                     <td class="py-5 font-mono font-medium">${sale.ID_Pedido}</td>
                     <td class="py-5 uppercase font-medium">${sale.Nombre_Cliente}</td>
                     <td class="py-5 text-right font-mono">${contrato.toFixed(2)}€</td>
@@ -368,6 +632,9 @@
         }).join('');
     }
 
+    // ==========================================
+    // MANEJADORES DE OPERACIONES CRUD CON GOOGLE SHEET
+    // ==========================================
     async function borrarFilaDirecta(sheetName, idKeyName, idValue, viewToRefresh) {
         if (!confirm(`¿Confirmas que deseas eliminar de forma definitiva el registro ${idValue}?`)) return;
         const payload = { sheet: sheetName, action: "DELETE" };
@@ -409,12 +676,20 @@
         const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
         ids.forEach(id => {
             const btn = document.getElementById(`btn-${id}`); const ind = document.getElementById(`indicator-${id}`);
-            if (btn && ind) { if (id === panelId) { btn.classList.add('text-primary'); ind.classList.remove('hidden'); } else { btn.classList.remove('text-primary'); ind.hidden = true; } }
+            if (btn && ind) { if (id === panelId) { btn.classList.add('text-primary'); ind.classList.remove('hidden'); } else { btn.classList.remove('text-primary'); ind.classList.add('hidden'); } }
         });
         fetchContent(panelId);
     }
     function toggleDrawer(id) { document.getElementById(id).classList.toggle('translate-x-full'); document.getElementById('drawer-overlay').classList.toggle('opacity-0'); document.getElementById('drawer-overlay').classList.toggle('pointer-events-none'); }
     function closeAllDrawers() { document.querySelectorAll('aside').forEach(a => a.classList.add('translate-x-full')); document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none'); }
+
+    function filterRole(role) {
+        const btns = document.querySelectorAll('.filter-btn');
+        btns.forEach(btn => { btn.classList.remove('text-primary', 'border-b', 'border-primary'); btn.classList.add('text-on-surface-variant/60'); });
+        if (event && event.currentTarget) event.currentTarget.classList.add('text-primary', 'border-b', 'border-primary');
+        if (role === 'Todos') renderClientsTable(realClients);
+        else renderClientsTable(realClients.filter(c => c.Rol_Musical === role));
+    }
 
     document.addEventListener('DOMContentLoaded', () => { switchPanel('dashboard'); });
 </script>
