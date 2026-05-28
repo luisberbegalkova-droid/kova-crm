@@ -222,7 +222,7 @@
     </form>
 </aside>
 
-<!-- ASIDE DRAWER: NUEVA SESIÓN (VINCULADA A PROYECTOS ACTIVOS) -->
+<!-- ASIDE DRAWER: NUEVA SESIÓN -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-session-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">PROGRAMAR ACCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesionProyectos(event)">
@@ -248,7 +248,7 @@
     </form>
 </aside>
 
-<!-- ASIDE DRAWER: EDITAR SESIÓN / ACCIÓN EXISTENTE (NUEVA MEJORA) -->
+<!-- ASIDE DRAWER: EDITAR SESIÓN -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-session-drawer">
     <header class="flex justify-between items-center mb-12">
         <h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR SESIÓN <span id="edit-session-id-title" class="font-mono text-technical-label"></span></h2>
@@ -429,7 +429,6 @@
                 realSales.map(s => `<option value="${s.ID_Pedido}">${s.ID_Pedido} — ${s.Nombre_Cliente}</option>`).join('');
         }
 
-        // Poblar todos los selects dinámicos de proyectos (tanto del creador como del editor)
         document.querySelectorAll('.class-select-pedidos-dinamico').forEach(select => {
             select.innerHTML = '<option value="">Selecciona proyecto activo...</option>' + 
                 realSales.map(s => `<option value="${s.ID_Pedido}" data-clientid="${s.ID_Cliente}" data-clientname="${s.Nombre_Cliente}">${s.ID_Pedido} — ${s.Nombre_Cliente} (${s.Servicio})</option>`).join('');
@@ -764,7 +763,7 @@
             ID_Pedido: f.get('edit_id_pedido'),
             ID_Cliente: idCliente,
             Nombre_Cliente: f.get('edit_nombre_cliente'),
-            Servicio: f.get('edit_servicio').toUpperCase(),
+            Service: f.get('edit_servicio').toUpperCase(),
             Monto_Total: base.toFixed(2),
             Deadline: f.get('edit_deadline'),
             Forma_Pago: f.get('edit_forma_pago')
@@ -772,7 +771,7 @@
         e.target.reset();
     }
 
-    // --- NUEVA MEJORA: LÓGICA PARA MODIFICAR SESIONES EXISTENTES ---
+    // --- LÓGICA DE EDICIÓN DE SESIONES (NOMBRE CORREGIDO) ---
     function abrirEditorSesion(idTarea) {
         const s = realSessions.find(sess => sess.ID_Tarea === idTarea);
         if (!s) return;
@@ -794,17 +793,7 @@
         toggleDrawer('edit-session-drawer');
     }
 
-    function syncDatosProyectoEdicion(select) {
-        const option = select.options[select.selectedIndex];
-        const form = select.closest('form');
-        if (select.value) {
-            form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid') || '';
-            form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || '';
-            document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || '';
-        }
-    }
-
-    function actualizarSesionExisting(e) {
+    function actualizarSesionExistente(e) {
         e.preventDefault();
         const f = new FormData(e.target);
 
