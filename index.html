@@ -222,11 +222,10 @@
     </form>
 </aside>
 
-<!-- ASIDE DRAWER: NUEVA SESIÓN (VINCULADA A PROYECTOS / PEDIDIDOS ACTIVOS) -->
+<!-- ASIDE DRAWER: NUEVA SESIÓN (VINCULADA A PROYECTOS ACTIVOS) -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-session-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">PROGRAMAR ACCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesionProyectos(event)">
-        
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Tipo de Seguimiento</label>
             <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-tipo" name="tipo_accion" onchange="toggleWorkflowInputs(this.value)" required>
@@ -234,22 +233,51 @@
                 <option value="Seguimiento Comercial">Seguimiento Comercial / Cliente (Sin Horas)</option>
             </select>
         </div>
-
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Proyecto / Pedido Activo</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="select-pedidos-sesion" name="id_pedido" onchange="syncDatosProyecto(this)" required></select>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm class-select-pedidos-dinamico" id="select-pedidos-sesion" name="id_pedido" onchange="syncDatosProyecto(this)" required></select>
             <input type="hidden" name="id_cliente"/>
             <input type="hidden" name="nombre_cliente"/>
         </div>
-
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción del Trabajo / Hito</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-descripcion" name="tarea_descripcion" placeholder="ej: Primera Mix o Revisión de Feedback" required type="text"/>
         </div>
-
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha Límite / Ejecución</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="fecha_limite" required type="date"/></div>
-        
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">AGENDAR EN PROYECTO</button>
+    </form>
+</aside>
+
+<!-- ASIDE DRAWER: EDITAR SESIÓN / ACCIÓN EXISTENTE (NUEVA MEJORA) -->
+<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-session-drawer">
+    <header class="flex justify-between items-center mb-12">
+        <h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR SESIÓN <span id="edit-session-id-title" class="font-mono text-technical-label"></span></h2>
+        <button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button>
+    </header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarSesionExistente(event)">
+        <input type="hidden" name="edit_sess_id_tarea"/>
+        <input type="hidden" name="edit_sess_id_cliente"/>
+        <input type="hidden" name="edit_sess_nombre_cliente"/>
+        <input type="hidden" name="edit_sess_horas"/>
+        <input type="hidden" name="edit_sess_estado"/>
+
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista Vinculado</label>
+            <input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-session-artista-display" readonly type="text"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Proyecto / Pedido Activo</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm class-select-pedidos-dinamico" name="edit_sess_id_pedido" onchange="syncDatosProyectoEdicion(this)" required></select>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Tarea / Fase</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_sess_descripcion" required type="text"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nueva Fecha Límite</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_sess_fecha_limite" required type="date"/>
+        </div>
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button>
     </form>
 </aside>
 
@@ -401,15 +429,13 @@
                 realSales.map(s => `<option value="${s.ID_Pedido}">${s.ID_Pedido} — ${s.Nombre_Cliente}</option>`).join('');
         }
 
-        // NUEVO: Alimentar la lista de proyectos dentro del creador de sesiones
-        const selectPedSesion = document.getElementById('select-pedidos-sesion');
-        if (selectPedSesion) {
-            selectPedSesion.innerHTML = '<option value="">Selecciona proyecto activo...</option>' + 
+        // Poblar todos los selects dinámicos de proyectos (tanto del creador como del editor)
+        document.querySelectorAll('.class-select-pedidos-dinamico').forEach(select => {
+            select.innerHTML = '<option value="">Selecciona proyecto activo...</option>' + 
                 realSales.map(s => `<option value="${s.ID_Pedido}" data-clientid="${s.ID_Cliente}" data-clientname="${s.Nombre_Cliente}">${s.ID_Pedido} — ${s.Nombre_Cliente} (${s.Servicio})</option>`).join('');
-        }
+        });
     }
 
-    // NUEVO: Sincronizar datos automáticamente al seleccionar un proyecto
     function syncDatosProyecto(select) {
         const option = select.options[select.selectedIndex];
         const form = select.closest('form');
@@ -419,7 +445,16 @@
         }
     }
 
-    // Cambiar dinámicamente placeholders según el flujo elegido
+    function syncDatosProyectoEdicion(select) {
+        const option = select.options[select.selectedIndex];
+        const form = select.closest('form');
+        if (select.value) {
+            form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid') || '';
+            form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || '';
+            document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || '';
+        }
+    }
+
     function toggleWorkflowInputs(value) {
         const descInput = document.getElementById('session-descripcion');
         if (value === "Seguimiento Comercial") {
@@ -476,7 +511,7 @@
             <li class="flex items-start justify-between group">
                 <div class="flex flex-col gap-1">
                     <span class="font-body-main text-primary text-sm sm:text-base">${t.Tarea_Descripcion || ''}</span>
-                    <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">PROYECTO: <span class="text-primary font-medium">${t.ID_Pedido || 'S/PROY'}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
+                    <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">PROYECTO: <span class="text-primary font-medium">${t.ID_Pedido || 'GENERAL'}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
                 </div>
                 <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
             </li>`).join('');
@@ -511,8 +546,7 @@
             let mes = isNaN(d.getTime()) ? "MMS" : meses[d.getMonth()];
             let horas = parseInt(session.Horas_Dedicadas) || 0;
             
-            // Renderizado inteligente según el tipo de acción
-            let esComercial = session.Tarea_Descripcion.toLowerCase().includes('feedback') || session.Tarea_Descripcion.toLowerCase().includes('enviar') || session.ID_Pedido === '';
+            let esComercial = session.Tarea_Descripcion.toLowerCase().includes('feedback') || session.Tarea_Descripcion.toLowerCase().includes('enviar') || !session.ID_Pedido;
 
             return `
             <div class="session-row group py-6 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-surface-container-low/30 px-2 sm:px-4 transition-colors gap-4">
@@ -533,9 +567,8 @@
                     </div>
                 </div>
                 
-                <div class="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 shrink-0 border-t sm:border-0 pt-3 sm:pt-0 border-outline-variant/10">
+                <div class="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 shrink-0 border-t sm:border-0 pt-3 sm:pt-0 border-outline-variant/10 font-technical-data text-[11px]">
                     
-                    <!-- Solo mostramos controles de horas si es una tarea que computa tiempo de estudio -->
                     <div class="flex items-center gap-2 border border-outline-variant/30 bg-surface-container-lowest px-2 py-1 ${esComercial ? 'opacity-30 pointer-events-none' : ''}">
                         <button class="w-6 h-6 flex items-center justify-center font-mono text-xs hover:bg-surface-container-high transition-colors" onclick="actualizarHorasSesion('${session.ID_Tarea}', ${horas - 1})">-</button>
                         <span class="font-technical-data font-medium text-xs w-14 text-center">${horas} HRS</span>
@@ -549,7 +582,11 @@
                         <option value="Completada">Completada ✔</option>
                     </select>
 
-                    <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Tareas_Seguimiento', 'ID_Tarea', '${session.ID_Tarea}', 'tareas')">ELIMINAR</button>
+                    <div class="flex items-center gap-3 ml-2">
+                        <button class="text-primary font-label-caps text-[10px] tracking-widest hover:underline" onclick="abrirEditorSesion('${session.ID_Tarea}')">EDITAR</button>
+                        <span class="text-outline-variant/30">|</span>
+                        <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Tareas_Seguimiento', 'ID_Tarea', '${session.ID_Tarea}', 'tareas')">ELIMINAR</button>
+                    </div>
                 </div>
             </div>`;
         }).join('');
@@ -624,7 +661,6 @@
 
     function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notes') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
     
-    // NUEVO: Guardar la sesión vinculando estrictamente la ID_Pedido del Proyecto
     function guardarSesionProyectos(e) {
         e.preventDefault();
         const f = new FormData(e.target);
@@ -736,7 +772,58 @@
         e.target.reset();
     }
 
-    // --- LÓGICA DE EDICIÓN Y LIMPIEZA DE SESIONES EN VIVO ---
+    // --- NUEVA MEJORA: LÓGICA PARA MODIFICAR SESIONES EXISTENTES ---
+    function abrirEditorSesion(idTarea) {
+        const s = realSessions.find(sess => sess.ID_Tarea === idTarea);
+        if (!s) return;
+
+        document.getElementById('edit-session-id-title').innerText = `#${s.ID_Tarea}`;
+        
+        const form = document.querySelector('#edit-session-drawer form');
+        form.elements['edit_sess_id_tarea'].value = s.ID_Tarea;
+        form.elements['edit_sess_id_cliente'].value = s.ID_Cliente;
+        form.elements['edit_sess_nombre_cliente'].value = s.Nombre_Cliente;
+        form.elements['edit_sess_horas'].value = s.Horas_Dedicadas || 0;
+        form.elements['edit_sess_estado'].value = s.Estado_Tarea || 'Pendiente';
+        
+        document.getElementById('edit-session-artista-display').value = s.Nombre_Cliente;
+        form.elements['edit_sess_descripcion'].value = s.Tarea_Descripcion || '';
+        form.elements['edit_sess_fecha_limite'].value = s.Fecha_Limite ? s.Fecha_Limite.split('T')[0] : '';
+        form.elements['edit_sess_id_pedido'].value = s.ID_Pedido || '';
+
+        toggleDrawer('edit-session-drawer');
+    }
+
+    function syncDatosProyectoEdicion(select) {
+        const option = select.options[select.selectedIndex];
+        const form = select.closest('form');
+        if (select.value) {
+            form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid') || '';
+            form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || '';
+            document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || '';
+        }
+    }
+
+    function actualizarSesionExisting(e) {
+        e.preventDefault();
+        const f = new FormData(e.target);
+
+        ejecutarPost({
+            sheet: "Tareas_Seguimiento",
+            action: "UPDATE",
+            ID_Tarea: f.get('edit_sess_id_tarea'),
+            ID_Cliente: f.get('edit_sess_id_cliente'),
+            Nombre_Cliente: f.get('edit_sess_nombre_cliente'),
+            ID_Pedido: f.get('edit_sess_id_pedido'),
+            Tarea_Descripcion: f.get('edit_sess_descripcion'),
+            Fecha_Limite: f.get('edit_sess_fecha_limite'),
+            Estado_Tarea: f.get('edit_sess_estado'),
+            Horas_Dedicadas: parseInt(f.get('edit_sess_horas')) || 0
+        }, 'tareas');
+        e.target.reset();
+    }
+
+    // --- LÓGICA DE ACTUALIZACIÓN RÁPIDA EN VIVO DE SESIONES ---
     function actualizarHorasSesion(idTarea, nuevasHoras) {
         if (nuevasHoras < 0) return; 
         const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
