@@ -592,21 +592,31 @@
     }
 
     function renderOrdersTable() {
-        document.getElementById('orders-table-body').innerHTML = realSales.map(o => `
-            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
-                <td class="py-4 font-mono font-medium">${o.ID_Pedido}</td>
-                <td class="py-4 font-mono text-xs">${o.ID_Cliente}</td>
-                <td class="py-4 uppercase font-medium">${o.Nombre_Cliente}</td>
-                <td class="py-4 font-mono text-xs">${o.Servicio}</td>
-                <td class="py-4 font-mono text-xs">${o.Deadline ? o.Deadline.split('T')[0] : 'S/D'}</td>
-                <td class="py-4 uppercase text-[11px] font-medium text-on-surface-variant/70">${o.Forma_Pago || '100% ENTREGA'}</td>
-                <td class="py-4 text-right font-mono font-medium">${parseFloat(o.Monto_Total).toFixed(2)}€</td>
-                <td class="py-4 text-right flex justify-end gap-4 items-center h-[53px]">
-                    <button class="text-primary font-label-caps text-[10px] tracking-widest hover:underline" onclick="abrirEditorPedido('${o.ID_Pedido}')">EDITAR</button>
-                    <span class="text-outline-variant/30">|</span>
-                    <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Ventas_Pedidos', 'ID_Pedido', '${o.ID_Pedido}', 'orders')">ELIMINAR</button>
-                </td>
-            </tr>`).join('');
+        document.getElementById('orders-table-body').innerHTML = realSales.map(o => {
+            // Comprobamos si Make ya ha inyectado el enlace de Drive en la columna
+            let tieneDrive = o.Link_Drive && o.Link_Drive.startsWith('http');
+            let botonDrive = tieneDrive 
+                ? `<a href="${o.Link_Drive}" target="_blank" class="text-tertiary-fixed-dim hover:underline flex items-center justify-end gap-1"><span class="material-symbols-outlined text-[16px]">folder_open</span> DRIVE</a>`
+                : `<span class="text-technical-label/40 uppercase text-[10px] tracking-widest font-mono">PROCESANDO...</span>`;
+
+            return `
+                <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                    <td class="py-4 font-mono font-medium">${o.ID_Pedido}</td>
+                    <td class="py-4 font-mono text-xs">${o.ID_Cliente}</td>
+                    <td class="py-4 uppercase font-medium">${o.Nombre_Cliente}</td>
+                    <td class="py-4 font-mono text-xs">${o.Servicio}</td>
+                    <td class="py-4 font-mono text-xs">${o.Deadline ? o.Deadline.split('T')[0] : 'S/D'}</td>
+                    <td class="py-4 uppercase text-[11px] font-medium text-on-surface-variant/70">${o.Forma_Pago || '100% ENTREGA'}</td>
+                    <td class="py-4 text-right font-mono font-medium">${parseFloat(o.Monto_Total).toFixed(2)}€</td>
+                    <td class="py-4 text-right flex justify-end gap-4 items-center h-[53px]">
+                        ${botonDrive}
+                        <span class="text-outline-variant/30">|</span>
+                        <button class="text-primary font-label-caps text-[10px] tracking-widest hover:underline" onclick="abrirEditorPedido('${o.ID_Pedido}')">EDITAR</button>
+                        <span class="text-outline-variant/30">|</span>
+                        <button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Ventas_Pedidos', 'ID_Pedido', '${o.ID_Pedido}', 'orders')">ELIMINAR</button>
+                    </td>
+                </tr>`;
+        }).join('');
     }
 
     function renderBillingTable() {
