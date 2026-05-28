@@ -149,7 +149,7 @@
         <ul class="space-y-8">
             <li class="relative"><div class="sidebar-active-indicator" id="indicator-dashboard"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-primary text-left w-full" id="btn-dashboard" onclick="switchPanel('dashboard')">Dashboard</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-directorio"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-directorio" onclick="switchPanel('directorio')">Lead Directory</button></li>
-            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-tareas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-tareas" onclick="switchPanel('tareas')">Sessions</button></li>
+            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-tareas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-tareas" onclick="switchPanel('tareas')">Sessions & Tracking</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-orders"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-orders" onclick="switchPanel('orders')">Orders</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-ventas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-ventas" onclick="switchPanel('ventas')">Billing</button></li>
         </ul>
@@ -163,6 +163,7 @@
 
 <main class="xl:ml-[280px] pt-16 xl:pt-20 min-h-screen">
     
+    <!-- DASHBOARD -->
     <section class="p-4 sm:p-10 block animate-in fade-in duration-500" id="panel-dashboard">
         <header class="mb-10 sm:mb-16"><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2><div class="active-tab-line"></div></header>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-16 mb-12 sm:mb-20">
@@ -175,21 +176,25 @@
         </div>
     </section>
 
+    <!-- DIRECTORIO -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
     </section>
 
+    <!-- SESSIONS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
-        <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES ACTIVAS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> ADD SESSION</button></header>
+        <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES Y ACCIONES</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> PROGRAMAR ACCIÓN</button></header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
+    <!-- ORDERS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
         <div class="overflow-x-auto"><table class="w-full text-left min-w-[750px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right font-medium">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="orders-table-body"></tbody></table></div>
     </section>
 
+    <!-- BILLING -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-outline-variant/20 mb-8 pb-8">
@@ -203,6 +208,7 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
+<!-- DRAWERS RESPONSIVOS -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-lead-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
@@ -216,13 +222,34 @@
     </form>
 </aside>
 
+<!-- ASIDE DRAWER: NUEVA SESIÓN (VINCULADA A PROYECTOS / PEDIDIDOS ACTIVOS) -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-session-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA SESIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesion(event)">
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Artista</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Sesión</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="tarea_descripcion" placeholder="ej: Grabación de Voces" required type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Ejecución</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="fecha_limite" required type="date"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">AGENDAR SESIÓN</button>
+    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">PROGRAMAR ACCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesionProyectos(event)">
+        
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Tipo de Seguimiento</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-tipo" name="tipo_accion" onchange="toggleWorkflowInputs(this.value)" required>
+                <option value="Sesion de Mezcla">Sesión de Mezcla / Estudio (Suma Horas)</option>
+                <option value="Seguimiento Comercial">Seguimiento Comercial / Cliente (Sin Horas)</option>
+            </select>
+        </div>
+
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Proyecto / Pedido Activo</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="select-pedidos-sesion" name="id_pedido" onchange="syncDatosProyecto(this)" required></select>
+            <input type="hidden" name="id_cliente"/>
+            <input type="hidden" name="nombre_cliente"/>
+        </div>
+
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción del Trabajo / Hito</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-descripcion" name="tarea_descripcion" placeholder="ej: Primera Mix o Revisión de Feedback" required type="text"/>
+        </div>
+
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha Límite / Ejecución</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="fecha_limite" required type="date"/></div>
+        
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">AGENDAR EN PROYECTO</button>
     </form>
 </aside>
 
@@ -367,10 +394,38 @@
             select.innerHTML = '<option value="">Selecciona un artista...</option>' + 
                 realClients.map(c => `<option value="${c.ID_Cliente}" data-nombre="${c.Nombre_Completo}" data-pais="${c.País || c.Pais || 'España'}">${c.Nombre_Completo}</option>`).join('');
         });
+        
         const selectPed = document.getElementById('select-pedidos-dinamico');
         if (selectPed) {
             selectPed.innerHTML = '<option value="">Selecciona contrato...</option>' + 
                 realSales.map(s => `<option value="${s.ID_Pedido}">${s.ID_Pedido} — ${s.Nombre_Cliente}</option>`).join('');
+        }
+
+        // NUEVO: Alimentar la lista de proyectos dentro del creador de sesiones
+        const selectPedSesion = document.getElementById('select-pedidos-sesion');
+        if (selectPedSesion) {
+            selectPedSesion.innerHTML = '<option value="">Selecciona proyecto activo...</option>' + 
+                realSales.map(s => `<option value="${s.ID_Pedido}" data-clientid="${s.ID_Cliente}" data-clientname="${s.Nombre_Cliente}">${s.ID_Pedido} — ${s.Nombre_Cliente} (${s.Servicio})</option>`).join('');
+        }
+    }
+
+    // NUEVO: Sincronizar datos automáticamente al seleccionar un proyecto
+    function syncDatosProyecto(select) {
+        const option = select.options[select.selectedIndex];
+        const form = select.closest('form');
+        if (select.value) {
+            form.querySelector('input[name="id_cliente"]').value = option.getAttribute('data-clientid') || '';
+            form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-clientname') || '';
+        }
+    }
+
+    // Cambiar dinámicamente placeholders según el flujo elegido
+    function toggleWorkflowInputs(value) {
+        const descInput = document.getElementById('session-descripcion');
+        if (value === "Seguimiento Comercial") {
+            descInput.placeholder = "ej: Enviar mezcla preliminar / revisión feedback";
+        } else {
+            descInput.placeholder = "ej: Primera Mix / Masterización final";
         }
     }
 
@@ -421,14 +476,14 @@
             <li class="flex items-start justify-between group">
                 <div class="flex flex-col gap-1">
                     <span class="font-body-main text-primary text-sm sm:text-base">${t.Tarea_Descripcion || ''}</span>
-                    <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">ARTISTA: <span class="text-primary font-medium">${t.Nombre_Cliente || 'DESCONOCIDO'}</span></span>
+                    <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">PROYECTO: <span class="text-primary font-medium">${t.ID_Pedido || 'S/PROY'}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
                 </div>
                 <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
             </li>`).join('');
             
         document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 3).map(p => `
             <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
-                <span class="font-body-main text-primary text-sm sm:text-base">${p.Nombre_Cliente || 'ARTISTA'} / PROJECT</span>
+                <span class="font-body-main text-primary text-sm sm:text-base">${p.Nombre_Cliente || 'ARTISTA'} / ${p.ID_Pedido}</span>
                 <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">${p.Servicio || 'ESTUDIO'}</span>
             </li>`).join('');
     }
@@ -455,6 +510,9 @@
             let meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
             let mes = isNaN(d.getTime()) ? "MMS" : meses[d.getMonth()];
             let horas = parseInt(session.Horas_Dedicadas) || 0;
+            
+            // Renderizado inteligente según el tipo de acción
+            let esComercial = session.Tarea_Descripcion.toLowerCase().includes('feedback') || session.Tarea_Descripcion.toLowerCase().includes('enviar') || session.ID_Pedido === '';
 
             return `
             <div class="session-row group py-6 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-surface-container-low/30 px-2 sm:px-4 transition-colors gap-4">
@@ -464,14 +522,21 @@
                         <span class="font-mono text-[9px] sm:text-[10px] tracking-widest text-technical-label font-medium">${mes}</span>
                     </div>
                     <div class="min-w-0">
-                        <span class="font-technical-data text-[9px] sm:text-[10px] text-technical-label uppercase tracking-widest block mb-1">${session.ID_Tarea || 'SESS'} // ID: ${session.ID_Cliente || 'S/ID'}</span>
+                        <span class="font-technical-data text-[9px] sm:text-[10px] text-technical-label uppercase tracking-widest block mb-1">
+                            ${session.ID_Tarea || 'SESS'} // PROYECTO: <span class="text-primary font-bold">${session.ID_Pedido || 'GENERAL'}</span>
+                        </span>
                         <h3 class="font-headline-lg text-base sm:text-xl uppercase tracking-widest truncate text-primary font-medium">${session.Nombre_Cliente || 'ARTISTA'}</h3>
-                        <p class="font-body-main text-xs sm:text-sm text-on-surface-variant mt-1 uppercase tracking-wide">FASE: ${session.Tarea_Descripcion || ''}</p>
+                        <p class="font-body-main text-xs sm:text-sm text-on-surface-variant mt-1 uppercase tracking-wide flex items-center gap-2">
+                            <span class="inline-block w-1.5 h-1.5 ${esComercial ? 'bg-amber-500' : 'bg-primary'}"></span>
+                            ${session.Tarea_Descripcion || ''}
+                        </p>
                     </div>
                 </div>
                 
                 <div class="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 shrink-0 border-t sm:border-0 pt-3 sm:pt-0 border-outline-variant/10">
-                    <div class="flex items-center gap-2 border border-outline-variant/30 bg-surface-container-lowest px-2 py-1">
+                    
+                    <!-- Solo mostramos controles de horas si es una tarea que computa tiempo de estudio -->
+                    <div class="flex items-center gap-2 border border-outline-variant/30 bg-surface-container-lowest px-2 py-1 ${esComercial ? 'opacity-30 pointer-events-none' : ''}">
                         <button class="w-6 h-6 flex items-center justify-center font-mono text-xs hover:bg-surface-container-high transition-colors" onclick="actualizarHorasSesion('${session.ID_Tarea}', ${horas - 1})">-</button>
                         <span class="font-technical-data font-medium text-xs w-14 text-center">${horas} HRS</span>
                         <button class="w-6 h-6 flex items-center justify-center font-mono text-xs hover:bg-surface-container-high transition-colors" onclick="actualizarHorasSesion('${session.ID_Tarea}', ${horas + 1})">+</button>
@@ -558,7 +623,24 @@
     }
 
     function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notes') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
-    function guardarSesion(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Tareas_Seguimiento", ID_Cliente: f.get('id_cliente'), Nombre_Cliente: f.get('nombre_cliente'), Tarea_Descripcion: f.get('tarea_descripcion'), Fecha_Limite: f.get('fecha_limite'), Estado_Tarea: 'Pendiente' }, 'tareas'); e.target.reset(); }
+    
+    // NUEVO: Guardar la sesión vinculando estrictamente la ID_Pedido del Proyecto
+    function guardarSesionProyectos(e) {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        ejecutarPost({
+            sheet: "Tareas_Seguimiento",
+            action: "SAVE",
+            ID_Cliente: f.get('id_cliente'),
+            Nombre_Cliente: f.get('nombre_cliente'),
+            ID_Pedido: f.get('id_pedido'),
+            Tarea_Descripcion: `[${f.get('tipo_accion')}] ${f.get('tarea_descripcion')}`,
+            Fecha_Limite: f.get('fecha_limite'),
+            Estado_Tarea: 'Pendiente',
+            Horas_Dedicadas: 0
+        }, 'tareas');
+        e.target.reset();
+    }
     
     function guardarPedido(e) { 
         e.preventDefault(); const f = new FormData(e.target); const idCliente = f.get('id_cliente');
@@ -686,6 +768,7 @@
             ID_Tarea: idTarea,
             ID_Cliente: sesion.ID_Cliente,
             Nombre_Cliente: sesion.Nombre_Cliente,
+            ID_Pedido: sesion.ID_Pedido || '',
             Tarea_Descripcion: sesion.Tarea_Descripcion,
             Fecha_Limite: sesion.Fecha_Limite ? sesion.Fecha_Limite.split('T')[0] : '',
             Estado_Tarea: nuevoEstado,
