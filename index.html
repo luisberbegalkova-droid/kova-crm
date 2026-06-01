@@ -865,29 +865,50 @@
 
         // 4. SISTEMA DE GEOLOCALIZACIÓN DINÁMICA: MAPA METALLICA
         // Limpiamos iluminaciones previas
-        document.querySelectorAll('.world-map-svg path').forEach(path => path.classList.remove('client-active'));
-        
-        // Buscamos los países de tus clientes reales y encendemos el mapa
-        realClients.forEach(c => {
-            const paisCliente = (c.País || c.Pais || '').toLowerCase().trim()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quita acentos para emparejar
-            
-            if (paisCliente) {
-                // Mapeos de nombres de países a IDs del SVG
-                let idTarget = `map-country-${paisCliente.replace(/\s+/g, '-')}`;
-                if (paisCliente === 'espana') idTarget = 'map-country-espana';
-                if (paisCliente === 'estados unidos') idTarget = 'map-country-estados-unidos';
-                if (paisCliente === 'paises bajos') idTarget = 'map-country-paises-bajos';
-                if (paisCliente === 'reino unido') idTarget = 'map-country-reino-unido';
-                if (paisCliente === 'arabia saudita') idTarget = 'map-country-arabia';
-                if (paisCliente === 'afganistan') idTarget = 'map-country-afganistan';
+        /* RENDER DASHBOARD CON MAPAMUNDI DE ALTA RESOLUCIÓN */
+function renderDashboard() {
+    let totalRecaudado = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
+    const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
 
-                const pathElement = document.getElementById(idTarget);
-                if (pathElement) {
-                    pathElement.classList.add('client-active');
-                }
-            }
-        });
+    realPayments.forEach(p => totalRecaudado += (parseFloat(p.Cantidad_Pagada) || 0));
+    realSales.forEach(s => { if (s.Fecha_Pedido) { const fPed = new Date(s.Fecha_Pedido); if (!isNaN(fPed.getTime()) && fPed.getMonth() === mesActual && fPed.getFullYear() === anoActual) pedidosUltimoMes++; } });
+    realClients.forEach(c => { if (c.Fecha_Registro) { const fReg = new Date(c.Fecha_Registro); if (!isNaN(fReg.getTime()) && fReg.getMonth() === mesActual && fReg.getFullYear() === anoActual) clientesNuevosMes++; } });
+
+    document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+    document.getElementById('dash-total-pedidos').innerText = totalPedidosContador;
+    document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
+    document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
+
+    // 1. CARGA EL MAPA EN EL CONTENEDOR HTML
+    initWorldMapReal();
+
+    // 2. ENVÍA LOS PAÍSES EN VERDE CORPORATIVO AL IFRAME DEL MAPA
+    const iframe = document.getElementById('map-iframe');
+    if (iframe) {
+        iframe.onload = function() {
+            // Recorremos tus clientes para extraer sus países limpios
+            const paisesActivos = realClients.map(c => {
+                return (c.País || c.Pais || '').toLowerCase().trim()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            });
+            
+            // Le mandamos la orden al mapa detallado para que se ilumine
+            iframe.contentWindow.postMessage({
+                action: "highlight_countries",
+                countries: paisesActivos,
+                color: "#a1fa49" // Tu verde de KOVA
+            }, "*");
+        };
+    }
+
+    // Renderizado de Listas (Operaciones en Dos Columnas)
+    document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
+        const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
+        return `<li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4"><div class="flex flex-col gap-1"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL')}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span></div><span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span></li>`;
+    }).join('');
+        
+    document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 4).map(p => `<li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${p.Nombre_Cliente || 'ARTISTA'} / <span class="font-mono text-xs text-technical-label">${p.ID_Pedido}</span></span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-widest">${p.Servicio || 'ESTUDIO'}</span></li>`).join('');
+}
 
         // 5. Renderizar Columna Izquierda: Acciones Prioritarias (Micro)
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
