@@ -163,7 +163,6 @@
 
 <main class="xl:ml-[280px] pt-16 xl:pt-20 min-h-screen">
     
-    <!-- DASHBOARD -->
     <section class="p-4 sm:p-10 block animate-in fade-in duration-500" id="panel-dashboard">
         <header class="mb-10 sm:mb-16"><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2><div class="active-tab-line"></div></header>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-16 mb-12 sm:mb-20">
@@ -176,25 +175,21 @@
         </div>
     </section>
 
-    <!-- DIRECTORIO -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
     </section>
 
-    <!-- SESSIONS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES Y ACCIONES</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> PROGRAMAR ACCIÓN</button></header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
-    <!-- ORDERS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
         <div class="overflow-x-auto"><table class="w-full text-left min-w-[750px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right font-medium">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="orders-table-body"></tbody></table></div>
     </section>
 
-    <!-- BILLING -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-outline-variant/20 mb-8 pb-8">
@@ -208,13 +203,31 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
-<!-- DRAWERS RESPONSIVOS -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-lead-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre" required type="text"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="pais" required><option value="España">España</option><option value="Otro">Otro (Internacional / Sin IVA)</option></select></div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" name="pais" required>
+                <option value="España" selected>España</option>
+                <option value="Alemania">Alemania</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Chile">Chile</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Estados Unidos">Estados Unidos</option>
+                <option value="Francia">Francia</option>
+                <option value="Italia">Italia</option>
+                <option value="México">México</option>
+                <option value="Perú">Perú</option>
+                <option value="Reino Unido">Reino Unido</option>
+                <option value="Uruguay">Uruguay</option>
+                <option value="Venezuela">Venezuela</option>
+                <option value="Otro Internacional">Otro Internacional (Exento IVA)</option>
+            </select>
+        </div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" required type="email"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="social" placeholder="@username" type="text"/></div>
@@ -222,7 +235,6 @@
     </form>
 </aside>
 
-<!-- ASIDE DRAWER: NUEVA SESIÓN -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-session-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">PROGRAMAR ACCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesionProyectos(event)">
@@ -248,7 +260,6 @@
     </form>
 </aside>
 
-<!-- ASIDE DRAWER: EDITAR SESIÓN -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-session-drawer">
     <header class="flex justify-between items-center mb-12">
         <h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR SESIÓN <span id="edit-session-id-title" class="font-mono text-technical-label"></span></h2>
@@ -300,10 +311,15 @@
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="deadline" required type="date"/></div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago" required>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom')" required>
                 <option value="100% a entrega">100% a entrega</option>
                 <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
+                <option value="Otro">Otro (Especificar)</option>
             </select>
+        </div>
+        <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom">
+            <label class="font-label-caps text-[11px] uppercase text-error">Especificar Forma de Pago</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
         </div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice"></p></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CERRAR PEDIDO</button>
@@ -353,10 +369,15 @@
         </div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago" required>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom-edit')" required>
                 <option value="100% a entrega">100% a entrega</option>
                 <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
+                <option value="Otro">Otro (Especificar)</option>
             </select>
+        </div>
+        <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom-edit">
+            <label class="font-label-caps text-[11px] uppercase text-error">Especificar Forma de Pago</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
         </div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice-edit"></p></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button>
@@ -495,7 +516,22 @@
         if (pais === "España") {
             notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>`;
         } else {
-            notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`;
+            notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`;
+        }
+    }
+
+    // Nueva función para monitorizar "Otro" en formas de pago
+    function manejarFormaPagoCustom(select, targetWrapperId) {
+        const wrapper = document.getElementById(targetWrapperId);
+        const customInput = wrapper.querySelector('input');
+        if (select.value === "Otro") {
+            wrapper.classList.remove('hidden');
+            customInput.required = true;
+            customInput.focus();
+        } else {
+            wrapper.classList.add('hidden');
+            customInput.required = false;
+            customInput.value = "";
         }
     }
 
@@ -593,7 +629,6 @@
 
     function renderOrdersTable() {
         document.getElementById('orders-table-body').innerHTML = realSales.map(o => {
-            // Comprobamos si Make ya ha inyectado el enlace de Drive en la columna
             let tieneDrive = o.Link_Drive && o.Link_Drive.startsWith('http');
             let botonDrive = tieneDrive 
                 ? `<a href="${o.Link_Drive}" target="_blank" class="text-tertiary-fixed-dim hover:underline flex items-center justify-end gap-1"><span class="material-symbols-outlined text-[16px]">folder_open</span> DRIVE</a>`
@@ -693,8 +728,16 @@
         const pais = artista ? (artista.País || artista.Pais) : 'España';
         let base = parseFloat(f.get('monto_base')) || 0;
         if (pais === "España") base = base * 1.21; 
-        ejecutarPost({ sheet: "Ventas_Pedidos", ID_Cliente: idCliente, Nombre_Cliente: f.get('nombre_cliente'), Servicio: f.get('servicio').toUpperCase(), Monto_Total: base.toFixed(2), Estado_Pago: 'Pendiente', Fecha_Pedido: new Date().toISOString().split('T')[0], Deadline: f.get('deadline'), Forma_Pago: f.get('forma_pago') }, 'orders'); 
+
+        // Evaluamos si es forma de pago clásica o la personalizada ("Otro")
+        let formaPagoFinal = f.get('forma_pago');
+        if (formaPagoFinal === "Otro") {
+            formaPagoFinal = f.get('forma_pago_custom') || "Otro";
+        }
+
+        ejecutarPost({ sheet: "Ventas_Pedidos", ID_Cliente: idCliente, Nombre_Cliente: f.get('nombre_cliente'), Servicio: f.get('servicio').toUpperCase(), Monto_Total: base.toFixed(2), Estado_Pago: 'Pendiente', Fecha_Pedido: new Date().toISOString().split('T')[0], Deadline: f.get('deadline'), Forma_Pago: formaPagoFinal }, 'orders'); 
         e.target.reset(); 
+        document.getElementById('wrapper-forma-pago-custom').classList.add('hidden');
     }
     
     function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
@@ -728,7 +771,21 @@
         document.getElementById('edit-order-monto-input').value = baseCalculada.toFixed(2);
 
         form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
-        form.elements['edit_forma_pago'].value = o.Forma_Pago || '100% a entrega';
+        
+        // Cargar forma de pago en la edición
+        const formaPagoActual = o.Forma_Pago || '100% a entrega';
+        const customWrapper = document.getElementById('wrapper-forma-pago-custom-edit');
+        const customInput = customWrapper.querySelector('input');
+
+        if (["100% a entrega", "50% anticipado + 50% a entrega"].includes(formaPagoActual)) {
+            form.elements['edit_forma_pago'].value = formaPagoActual;
+            customWrapper.classList.add('hidden');
+            customInput.value = "";
+        } else {
+            form.elements['edit_forma_pago'].value = "Otro";
+            customWrapper.classList.remove('hidden');
+            customInput.value = formaPagoActual;
+        }
 
         calcularImpuestosEdicion();
         toggleDrawer('edit-order-drawer');
@@ -754,7 +811,7 @@
         if (pais === "España") {
             notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>`;
         } else {
-            notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`;
+            notice.innerHTML = `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`;
         }
     }
 
@@ -767,6 +824,11 @@
         let base = parseFloat(f.get('edit_monto_base')) || 0;
         if (pais === "España") base = base * 1.21;
 
+        let formaPagoFinal = f.get('edit_forma_pago');
+        if (formaPagoFinal === "Otro") {
+            formaPagoFinal = f.get('edit_forma_pago_custom') || "Otro";
+        }
+
         ejecutarPost({
             sheet: "Ventas_Pedidos",
             action: "UPDATE",
@@ -776,12 +838,13 @@
             Service: f.get('edit_servicio').toUpperCase(),
             Monto_Total: base.toFixed(2),
             Deadline: f.get('edit_deadline'),
-            Forma_Pago: f.get('edit_forma_pago')
+            Forma_Pago: formaPagoFinal
         }, 'orders');
         e.target.reset();
+        document.getElementById('wrapper-forma-pago-custom-edit').classList.add('hidden');
     }
 
-    // --- LÓGICA DE EDICIÓN DE SESIONES (NOMBRE CORREGIDO) ---
+    // --- LÓGICA DE EDICIÓN DE SESIONES ---
     function abrirEditorSesion(idTarea) {
         const s = realSessions.find(sess => sess.ID_Tarea === idTarea);
         if (!s) return;
