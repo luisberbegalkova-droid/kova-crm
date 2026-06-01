@@ -617,22 +617,29 @@
     }
 
     function renderProjectsTable() {
-        document.getElementById('projects-table-body').innerHTML = realProjects.map(p => {
-            const horasTotales = realSessions
-                .filter(s => s.ID_Pedido === p.ID_Proyecto)
-                .reduce((acc, curr) => acc + (acc = parseInt(curr.Horas_Dedicadas) || 0), 0);
+    document.getElementById('projects-table-body').innerHTML = realProjects.map(p => {
+        // En tu Google Sheets la columna se llama ID_Proyecto
+        const idProj = p.ID_Proyecto || p.id_proyecto || '';
+        const nomProyecto = p.Nombre_Proyecto || p.nombre_proyecto || '';
+        const nomCliente = p.Nombre_Cliente || p.nombre_cliente || '';
+        const idPed = p.ID_Pedido || p.id_pedido || '';
 
-            return `
-                <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
-                    <td class="py-6 font-mono font-medium">${p.ID_Proyecto}</td>
-                    <td class="py-6 font-medium uppercase text-primary">${p.Nombre_Proyecto}</td>
-                    <td class="py-6 uppercase">${p.Nombre_Cliente}</td>
-                    <td class="py-6 font-mono text-xs text-on-surface-variant/60">${p.ID_Pedido || 'AMOR AL ARTE 🤍'}</td>
-                    <td class="py-6 text-right font-mono font-medium text-sm">${horasTotales} HRS</td>
-                    <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Proyectos_Canciones', 'ID_Proyecto', '${p.ID_Proyecto}', 'proyectos')">ELIMINAR</button></td>
-                </tr>`;
-        }).join('');
-    }
+        // Corregido el typo en el acumulador (acc + curr) para calcular las horas reales
+        const horasTotales = realSessions
+            .filter(s => String(s.ID_Pedido) === String(idProj))
+            .reduce((acc, curr) => acc + (parseInt(curr.Horas_Dedicadas) || 0), 0);
+
+        return `
+            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                <td class="py-6 font-mono font-medium">${idProj}</td>
+                <td class="py-6 font-medium uppercase text-primary">${nomProyecto}</td>
+                <td class="py-6 uppercase">${nomCliente}</td>
+                <td class="py-6 font-mono text-xs text-on-surface-variant/60">${idPed ? idPed : 'AMOR AL ARTE 🤍'}</td>
+                <td class="py-6 text-right font-mono font-medium text-sm">${horasTotales} HRS</td>
+                <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Proyectos_Canciones', 'ID_Proyecto', '${idProj}', 'proyectos')">ELIMINAR</button></td>
+            </tr>`;
+    }).join('');
+}
 
     function syncDatosProyecto(select) {
         // Obsoleta por mapeo dinámico en populateDropdowns, se mantiene firma por compatibilidad
