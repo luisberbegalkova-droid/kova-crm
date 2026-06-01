@@ -210,23 +210,8 @@
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" name="pais" required>
-                <option value="España" selected>España</option>
-                <option value="Alemania">Alemania</option>
-                <option value="Argentina">Argentina</option>
-                <option value="Chile">Chile</option>
-                <option value="Colombia">Colombia</option>
-                <option value="Ecuador">Ecuador</option>
-                <option value="Estados Unidos">Estados Unidos</option>
-                <option value="Francia">Francia</option>
-                <option value="Italia">Italia</option>
-                <option value="México">México</option>
-                <option value="Perú">Perú</option>
-                <option value="Reino Unido">Reino Unido</option>
-                <option value="Uruguay">Uruguay</option>
-                <option value="Venezuela">Venezuela</option>
-                <option value="Otro Internacional">Otro Internacional (Exento IVA)</option>
-            </select>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required>
+                </select>
         </div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" required type="email"/></div>
@@ -318,7 +303,7 @@
             </select>
         </div>
         <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom">
-            <label class="font-label-caps text-[11px] uppercase text-error">Especificar Forma de Pago</label>
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
         </div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice"></p></div>
@@ -376,7 +361,7 @@
             </select>
         </div>
         <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom-edit">
-            <label class="font-label-caps text-[11px] uppercase text-error">Especificar Forma de Pago</label>
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
         </div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice-edit"></p></div>
@@ -389,6 +374,39 @@
 
     let realClients = []; let realSessions = []; let realSales = []; let realPayments = [];
     const TARIFAS = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
+
+    // Listado de los 195 países ordenados alfabéticamente
+    const PAISES_MUNDO = [
+        "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán",
+        "Bahamas", "Bangladés", "Barbados", "Baréin", "Bélgica", "Belice", "Benín", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Bután",
+        "Cabo Verde", "Camboya", "Camerún", "Canadá", "Catar", "República Centroafricana", "Chad", "República Checa", "Chile", "China", "Chipre", "Colombia", "Comoras", "República del Congo", "República Democrática del Congo", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba",
+        "Dinamarca", "Dominica", "República Dominicana",
+        "Ecuador", "Egipto", "El Salvador", "Emiratos Árabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "España", "Estados Unidos", "Estonia", "Etiopía",
+        "Filipinas", "Finlandia", "Fiyi", "Francia",
+        "Gabón", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea-Bisáu", "Guinea Ecuatorial",
+        "Haití", "Honduras", "Hungría",
+        "India", "Indonesia", "Irak", "Irán", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomón", "Israel", "Italia",
+        "Jamaica", "Japón", "Jordania",
+        "Kazajistán", "Kenia", "Kirguistán", "Kiribati", "Kuwait",
+        "Laos", "Lesoto", "Letonia", "Líbano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo",
+        "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Malí", "Malta", "Marruecos", "Mauricio", "Mauritania", "México", "Micronesia", "Moldavia", "Mónaco", "Mongolia", "Montenegro", "Mozambique",
+        "Namibia", "Nauru", "Nepal", "Nicaragua", "Níger", "Nigeria", "Noruega", "Nueva Zelanda",
+        "Omán",
+        "Países Bajos", "Pakistán", "Palaos", "Palestina", "Panamá", "Papúa Nueva Guinea", "Paraguay", "Perú", "Polonia", "Portugal",
+        "Reino Unido", "Ruanda", "Rumania", "Rusia",
+        "Samoa", "San Cristóbal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucía", "Santo Tomé y Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudáfrica", "Sudán", "Sudán del Sur", "Suecia", "Suiza", "Surinam",
+        "Tailandia", "Taiwán", "Tanzania", "Tayikistán", "Togo", "Tonga", "Trinidad y Tobago", "Túnez", "Turkmenistán", "Turquía", "Tuvalu",
+        "Ucrania", "Uganda", "Uruguay", "Uzbekistán",
+        "Vanuatu", "Ciudad del Vaticano", "Venezuela", "Vietnam",
+        "Yemen", "Yibuti",
+        "Zambia", "Zimbabue"
+    ];
+
+    function cargarPaisesEnSelect() {
+        const select = document.getElementById('lead-pais-select');
+        if (!select) return;
+        select.innerHTML = PAISES_MUNDO.map(p => `<option value="${p}" ${p === "España" ? "selected" : ""}>${p}</option>`).join('');
+    }
 
     async function sincronizarCoreKova() {
         if (!API_URL || API_URL.includes("AQUÍ_PEGA")) return;
@@ -520,7 +538,6 @@
         }
     }
 
-    // Nueva función para monitorizar "Otro" en formas de pago
     function manejarFormaPagoCustom(select, targetWrapperId) {
         const wrapper = document.getElementById(targetWrapperId);
         const customInput = wrapper.querySelector('input');
@@ -729,7 +746,6 @@
         let base = parseFloat(f.get('monto_base')) || 0;
         if (pais === "España") base = base * 1.21; 
 
-        // Evaluamos si es forma de pago clásica o la personalizada ("Otro")
         let formaPagoFinal = f.get('forma_pago');
         if (formaPagoFinal === "Otro") {
             formaPagoFinal = f.get('forma_pago_custom') || "Otro";
@@ -772,7 +788,6 @@
 
         form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
         
-        // Cargar forma de pago en la edición
         const formaPagoActual = o.Forma_Pago || '100% a entrega';
         const customWrapper = document.getElementById('wrapper-forma-pago-custom-edit');
         const customInput = customWrapper.querySelector('input');
@@ -947,6 +962,7 @@
     function closeAllDrawers() { document.querySelectorAll('aside').forEach(a => a.classList.add('translate-x-full')); document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none'); }
 
     document.addEventListener('DOMContentLoaded', async () => {
+        cargarPaisesEnSelect();
         await sincronizarCoreKova();
         switchPanel('dashboard');
     });
