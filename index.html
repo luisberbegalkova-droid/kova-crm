@@ -203,6 +203,26 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
+<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="view-lead-drawer">
+    <header class="flex justify-between items-center mb-12">
+        <h2 class="font-headline-lg text-lg uppercase tracking-wider">FICHA ARTISTA <span id="view-lead-id-title" class="font-mono text-technical-label"></span></h2>
+        <button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button>
+    </header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarClienteExistente(event)">
+        <input type="hidden" name="edit_client_id"/>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="edit_client_nombre" required type="text"/></div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_telefono" type="text"/></div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="edit-client-pais-select" name="edit_client_pais" required></select>
+        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_email" required type="email"/></div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_social" type="text"/></div>
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">ACTUALIZAR DATOS</button>
+    </form>
+</aside>
+    
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-lead-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
@@ -401,7 +421,47 @@
         "Yemen", "Yibuti",
         "Zambia", "Zimbabue"
     ];
+    function abrirFichaCliente(idCliente) {
+    const c = realClients.find(client => client.ID_Cliente === idCliente);
+    if (!c) return;
 
+    document.getElementById('view-lead-id-title').innerText = `#${c.ID_Cliente}`;
+    
+    // Rellenar el select de países del drawer de edición
+    const selectPais = document.getElementById('edit-client-pais-select');
+    if (selectPais) {
+        selectPais.innerHTML = PAISES_MUNDO.map(p => `<option value="${p}">${p}</option>`).join('');
+    }
+
+    const form = document.querySelector('#view-lead-drawer form');
+    form.elements['edit_client_id'].value = c.ID_Cliente;
+    form.elements['edit_client_nombre'].value = c.Nombre_Completo || '';
+    form.elements['edit_client_telefono'].value = c.Telefono || '';
+    form.elements['edit_client_pais'].value = c.País || c.Pais || 'España';
+    form.elements['edit_client_rol'].value = c.Rol_Musical || 'Vocalista';
+    form.elements['edit_client_email'].value = c.Email || '';
+    form.elements['edit_client_social'].value = c.Redes_Sociales || '';
+
+    toggleDrawer('view-lead-drawer');
+}
+
+function actualizarClienteExistente(e) {
+    e.preventDefault();
+    const f = new FormData(e.target);
+
+    ejecutarPost({
+        sheet: "Clientes_Leads",
+        action: "UPDATE",
+        ID_Cliente: f.get('edit_client_id'),
+        Nombre_Completo: f.get('edit_client_nombre').toUpperCase(),
+        Telefono: f.get('edit_client_telefono'),
+        Pais: f.get('edit_client_pais'),
+        Rol_Musical: f.get('edit_client_rol'),
+        Email: f.get('edit_client_email'),
+        Redes_Sociales: f.get('edit_client_social')
+    }, 'directorio');
+    e.target.reset();
+}
     function cargarPaisesEnSelect() {
         const select = document.getElementById('lead-pais-select');
         if (!select) return;
@@ -576,16 +636,16 @@
     }
 
     function renderClientsTable(data) {
-        document.getElementById('clients-table-body').innerHTML = data.map(c => `
-            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors group">
-                <td class="py-6 text-on-surface-variant font-technical-data font-medium">${c.ID_Cliente || ''}</td>
-                <td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td>
-                <td class="py-6 font-technical-data">${c.Telefono || c.Email || ''}</td>
-                <td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.País || c.Pais || 'España'}</td>
-                <td class="py-6 font-mono text-xs uppercase">${c.Estado_Lead || 'POTENCIAL'}</td>
-                <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
-            </tr>`).join('');
-    }
+    document.getElementById('clients-table-body').innerHTML = data.map(c => `
+        <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="abrirFichaCliente('${c.ID_Cliente}')">
+            <td class="py-6 text-on-surface-variant font-technical-data font-medium">${c.ID_Cliente || ''}</td>
+            <td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td>
+            <td class="py-6 font-technical-data">${c.Telefono || c.Email || ''}</td>
+            <td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.País || c.Pais || 'España'}</td>
+            <td class="py-6 font-mono text-xs uppercase">${c.Estado_Lead || 'POTENCIAL'}</td>
+            <td class="py-6 text-right" onclick="event.stopPropagation()"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
+        </tr>`).join('');
+}
 
     function renderSessionsList(data) {
         const activas = data.filter(s => s.Estado_Tarea !== 'Completada');
