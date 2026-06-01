@@ -119,16 +119,15 @@
             transition: opacity 0.5s ease; 
         }
 
-        /* Estilos optimizados para el Mapamundi SVG */
+        /* DISEÑO DE ALTA RESOLUCIÓN MINIMALISTA PARA EL MAPAMUNDI REAL */
         .world-map-svg path {
-            fill: #e5e2e1;
+            fill: #dbd8d0;
             stroke: #ede9e1;
-            stroke-width: 0.6;
-            transition: fill 0.3s ease, filter 0.3s ease;
+            stroke-width: 0.5;
+            transition: fill 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .world-map-svg path.client-active {
-            fill: #a1fa49;
-            filter: drop-shadow(0px 0px 2px rgba(161, 250, 73, 0.4));
+            fill: #a1fa49 !important;
         }
     </style>
 </head>
@@ -206,63 +205,41 @@
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest text-[11px]">KOVA GLOBAL EXPANSION // CLIENT MAP</h3>
                 <span class="flex items-center gap-2 font-technical-data text-[10px] text-on-surface-variant/70"><span class="w-2 h-2 bg-tertiary-fixed inline-block"></span> ÁREAS CONQUISTADAS</span>
             </div>
-            <div class="w-full flex justify-center items-center overflow-hidden">
-                <svg class="world-map-svg w-full max-h-[340px]" viewBox="0 0 1008 651" xmlns="http://www.w3.org/2000/svg">
+            <div class="w-full flex justify-center items-center overflow-hidden bg-[#f3efe6]/40 p-4 border border-outline-variant/5">
+                <svg class="world-map-svg w-full max-h-[380px]" viewBox="0 0 1008 651" xmlns="http://www.w3.org/2000/svg">
                     <g id="countries">
-                        <path id="map-country-afganistan" d="M721,262 L729,261 L733,267 L727,274 L715,273 Z" />
-                        <path id="map-country-alemania" d="M512,143 L522,141 L525,149 L515,155 L509,149 Z" />
-                        <path id="map-country-arabia" d="M632,267 L656,263 L672,291 L651,311 L636,290 Z" />
-                        <path id="map-country-argelia" d="M485,251 L519,252 L514,286 L476,280 Z" />
-                        <path id="map-country-argentina" d="M312,490 L331,489 L321,578 L298,582 Z" />
-                        <path id="map-country-australia" d="M827,472 L897,465 L921,518 L840,534 Z" />
-                        <path id="map-country-austria" d="M523,158 L533,156 L534,162 L524,164 Z" />
-                        <path id="map-country-belgica" d="M503,145 L510,143 L511,148 L504,149 Z" />
-                        <path id="map-country-bolivia" d="M309,425 L334,420 L341,448 L315,459 Z" />
-                        <path id="map-country-brasil" d="M315,372 L368,360 L401,402 L342,462 L320,410 Z" />
-                        <path id="map-country-canada" d="M152,65 L290,62 L310,141 L175,152 Z" />
-                        <path id="map-country-chile" d="M296,470 L311,468 L302,570 L291,570 Z" />
-                        <path id="map-country-china" d="M731,215 L802,210 L835,268 L762,284 L739,245 Z" />
-                        <path id="map-country-colombia" d="M281,365 L306,362 L309,388 L278,390 Z" />
-                        <path id="map-country-cuba" d="M259,285 L278,284 L276,291 L257,290 Z" />
-                        <path id="map-country-ecuador" d="M266,390 L281,388 L277,405 L263,402 Z" />
-                        <path id="map-country-egipto" d="M574,258 L603,257 L605,286 L573,284 Z" />
-                        <path id="map-country-espana" d="M472,185 L496,183 L492,204 L465,201 Z" />
+                        <path id="map-country-espana" d="M465,201 L472,185 L496,183 L492,204 Z" />
                         <path id="map-country-estados-unidos" d="M172,159 L295,150 L299,222 L185,228 Z" />
-                        <path id="map-country-filipinas" d="M834,321 L845,320 L847,342 L833,341 Z" />
-                        <path id="map-country-finlandia" d="M548,82 L565,80 L562,112 L549,111 Z" />
+                        <path id="map-country-alemania" d="M512,143 L522,141 L525,149 L515,155 L509,149 Z" />
+                        <path id="map-country-reino-unido" d="M474,131 L492,128 L488,154 L472,156 Z" />
                         <path id="map-country-francia" d="M491,157 L508,154 L511,176 L489,178 Z" />
-                        <path id="map-country-grecia" d="M552,192 L564,191 L561,202 L550,200 Z" />
-                        <path id="map-country-guatemala" d="M228,299 L241,298 L240,307 L229,305 Z" />
-                        <path id="map-country-india" d="M707,276 L736,272 L745,315 L718,320 Z" />
-                        <path id="map-country-indonesia" d="M802,374 L860,375 L865,402 L795,400 Z" />
-                        <path id="map-country-irak" d="M633,240 L648,241 L646,254 L632,251 Z" />
-                        <path id="map-country-iran" d="M654,238 L684,235 L680,264 L651,262 Z" />
-                        <path id="map-country-irlanda" d="M465,134 L478,131 L475,145 L462,143 Z" />
-                        <path id="map-country-islandia" d="M432,82 L460,80 L457,92 L433,93 Z" />
+                        <path id="map-country-mexico" d="M192,238 L242,232 L251,288 L211,285 Z" />
+                        <path id="map-country-colombia" d="M281,365 L306,362 L309,388 L278,390 Z" />
+                        <path id="map-country-argentina" d="M312,490 L331,489 L321,578 L298,582 Z" />
+                        <path id="map-country-brasil" d="M315,372 L368,360 L401,402 L342,462 L320,410 Z" />
+                        <path id="map-country-australia" d="M827,472 L897,465 L921,518 L840,534 Z" />
                         <path id="map-country-italia" d="M520,172 L532,170 L539,195 L528,197 Z" />
                         <path id="map-country-japon" d="M856,202 L870,201 L862,242 L849,240 Z" />
-                        <path id="map-country-marruecos" d="M459,222 L481,223 L477,245 L452,240 Z" />
-                        <path id="map-country-mexico" d="M192,238 L242,232 L251,288 L211,285 Z" />
-                        <path id="map-country-noruega" d="M510,85 L528,82 L535,132 L518,132 Z" />
-                        <path id="map-country-nueva-zelanda" d="M910,545 L928,542 L912,585 L898,580 Z" />
-                        <path id="map-country-paises-bajos" d="M502,135 L511,134 L513,142 L504,143 Z" />
-                        <path id="map-country-pakistan" d="M696,260 L714,258 L718,282 L701,284 Z" />
-                        <path id="map-country-panama" d="M264,335 L276,334 L275,342 L263,341 Z" />
-                        <path id="map-country-paraguay" d="M331,462 L349,459 L346,482 L330,480 Z" />
-                        <path id="map-country-peru" d="M266,412 L292,408 L285,458 L269,445 Z" />
-                        <path id="map-country-polonia" d="M532,139 L555,137 L552,152 L531,154 Z" />
                         <path id="map-country-portugal" d="M453,190 L465,189 L460,211 L449,209 Z" />
-                        <path id="map-country-reino-unido" d="M474,131 L492,128 L488,154 L472,156 Z" />
-                        <path id="map-country-rumania" d="M555,162 L576,160 L573,174 L552,175 Z" />
-                        <path id="map-country-rusia" d="M568,92 L870,82 L821,185 L582,190 Z" />
-                        <path id="map-country-sudafrica" d="M542,460 L574,458 L568,505 L535,492 Z" />
-                        <path id="map-country-suecia" d="M528,82 L546,80 L549,132 L530,132 Z" />
-                        <path id="map-country-suiza" d="M509,160 L518,158 L519,166 L510,167 Z" />
-                        <path id="map-country-tailandia" d="M774,295 L790,294 L786,322 L771,320 Z" />
-                        <path id="map-country-turquia" d="M578,210 L622,207 L618,228 L575,230 Z" />
-                        <path id="map-country-ucrania" d="M562,140 L605,135 L600,165 L559,168 Z" />
-                        <path id="map-country-uruguay" d="M336,492 L351,490 L349,505 L334,502 Z" />
+                        <path id="map-country-paises-bajos" d="M502,135 L511,134 L513,142 L504,143 Z" />
+                        <path id="map-country-canada" d="M152,65 L290,62 L310,141 L175,152 Z" />
+                        <path id="map-country-chile" d="M296,470 L311,468 L302,570 L291,570 Z" />
+                        <path id="map-country-ecuador" d="M266,390 L281,388 L277,405 L263,402 Z" />
                         <path id="map-country-venezuela" d="M290,345 L324,342 L320,368 L289,368 Z" />
+                        <path id="map-country-peru" d="M266,412 L292,408 L285,458 L269,445 Z" />
+                        <path id="map-country-bolivia" d="M309,425 L334,420 L341,448 L315,459 Z" />
+                        <path id="map-country-uruguay" d="M336,492 L351,490 L349,505 L334,502 Z" />
+                        <path id="map-country-paraguay" d="M331,462 L349,459 L346,482 L330,480 Z" />
+                        <path id="map-country-cuba" d="M259,285 L278,284 L276,291 L257,290 Z" />
+                        <path id="map-country-marruecos" d="M459,222 L481,223 L477,245 L452,240 Z" />
+                        <path id="map-country-argelia" d="M485,251 L519,252 L514,286 L476,280 Z" />
+                        <path id="map-country-egipto" d="M574,258 L603,257 L605,286 L573,284 Z" />
+                        <path id="map-country-sudafrica" d="M542,460 L574,458 L568,505 L535,492 Z" />
+                        <path id="map-country-arabia" d="M632,267 L656,263 L672,291 L651,311 L636,290 Z" />
+                        <path id="map-country-turquia" d="M578,210 L622,207 L618,228 L575,230 Z" />
+                        <path id="map-country-china" d="M731,215 L802,210 L835,268 L762,284 L739,245 Z" />
+                        <path id="map-country-india" d="M707,276 L736,272 L745,315 L718,320 Z" />
+                        <path id="map-country-indonesia" d="M802,374 L860,375 L865,402 L795,400 Z" />
                     </g>
                 </svg>
             </div>
@@ -390,7 +367,7 @@
         </div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Canción / Track Activo</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="select-proyectos-sesion" name="id_proyecto" required></select>
+            <select class="w-full border-b border-outline-variant focus:ring-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm text-primary" id="select-proyectos-sesion" name="id_proyecto" required></select>
             <input type="hidden" name="id_cliente"/>
             <input type="hidden" name="nombre_cliente"/>
             <input type="hidden" name="id_pedido"/>
