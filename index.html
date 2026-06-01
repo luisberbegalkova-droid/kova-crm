@@ -149,6 +149,7 @@
         <ul class="space-y-8">
             <li class="relative"><div class="sidebar-active-indicator" id="indicator-dashboard"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-primary text-left w-full" id="btn-dashboard" onclick="switchPanel('dashboard')">Dashboard</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-directorio"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-directorio" onclick="switchPanel('directorio')">Lead Directory</button></li>
+            <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-proyectos"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-proyectos" onclick="switchPanel('proyectos')">Project Directory</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-tareas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-tareas" onclick="switchPanel('tareas')">Sessions & Tracking</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-orders"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-orders" onclick="switchPanel('orders')">Orders</button></li>
             <li class="relative"><div class="sidebar-active-indicator hidden" id="indicator-ventas"></div><button class="pl-6 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant/60 text-left w-full" id="btn-ventas" onclick="switchPanel('ventas')">Billing</button></li>
@@ -178,6 +179,21 @@
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
+    </section>
+
+    <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-proyectos">
+        <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10">
+            <div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">GESTIÓN DE PROYECTOS</h2><div class="active-tab-line"></div></div>
+            <button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-project-drawer')"><span class="material-symbols-outlined">add</span> NUEVA CANCIÓN</button>
+        </header>
+        <div class="overflow-x-auto border-b border-outline-variant/10 pb-4">
+            <table class="w-full text-left min-w-[600px]">
+                <thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">
+                    <tr><th class="py-4">ID Proyecto</th><th class="py-4">Nombre Canción / Track</th><th class="py-4">Artista</th><th class="py-4">Pedido Comercial</th><th class="py-4 text-right">Horas Totales</th><th class="py-4 text-right">Acción</th></tr>
+                </thead>
+                <tbody class="font-technical-data text-xs" id="projects-table-body"></tbody>
+            </table>
+        </div>
     </section>
 
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
@@ -230,13 +246,31 @@
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required>
-                </select>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required></select>
         </div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" required type="email"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="social" placeholder="@username" type="text"/></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">REGISTRAR EN DIRECTORIO</button>
+    </form>
+</aside>
+
+<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-project-drawer">
+    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA CANCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarProyectoTrack(event)">
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre de la Canción / Track</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre_proyecto" required type="text" placeholder="ej: ALMOST EVERYTHING"/></div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Cliente</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="filtrarPedidosPorArtista(this.value)" required></select>
+            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Vincular a Pedido Comercial (Opcional)</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="project-pedido-select" name="id_pedido">
+                <option value="">Sin pedido comercial (Amor al arte / Track Propio)</option>
+            </select>
+        </div>
+        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CREAR CANCIÓN EN SISTEMA</button>
     </form>
 </aside>
 
@@ -251,10 +285,11 @@
             </select>
         </div>
         <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Proyecto / Pedido Activo</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm class-select-pedidos-dinamico" id="select-pedidos-sesion" name="id_pedido" onchange="syncDatosProyecto(this)" required></select>
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Canción / Track Activo</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="select-proyectos-sesion" name="id_proyecto" required></select>
             <input type="hidden" name="id_cliente"/>
             <input type="hidden" name="nombre_cliente"/>
+            <input type="hidden" name="id_pedido"/>
         </div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción del Trabajo / Hito</label>
@@ -282,8 +317,8 @@
             <input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-session-artista-display" readonly type="text"/>
         </div>
         <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Proyecto / Pedido Activo</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm class-select-pedidos-dinamico" name="edit_sess_id_pedido" onchange="syncDatosProyectoEdicion(this)" required></select>
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Canción / Track</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-select-proyectos-sesion" name="edit_sess_id_pedido" required></select>
         </div>
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Tarea / Fase</label>
@@ -327,6 +362,7 @@
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
         </div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice"></p></div>
+        <div class="space-y-1 bg-surface-container/50 border border-outline-variant/10 p-4 font-technical-data text-[11px] flex gap-2 items-start text-on-surface-variant/70"><span class="material-symbols-outlined text-amber-500 scale-90">info</span><span>Una vez cerrado el pedido comercial, puedes ir a <b>PROJECT DIRECTORY</b> para dar de alta individualmente las canciones que incluye y trazar sus horas.</span></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CERRAR PEDIDO</button>
     </form>
 </aside>
@@ -392,10 +428,9 @@
 <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbw2uLH8vXctnIHw9n94kqE3KbjeVSLjJwR5lJ9XwdS_ZaoZK8cKJL3JIPADqzHe8Zr_/exec";
 
-    let realClients = []; let realSessions = []; let realSales = []; let realPayments = [];
+    let realClients = []; let realSessions = []; let realSales = []; let realPayments = []; let realProjects = [];
     const TARIFAS = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
 
-    // Listado de los 195 países ordenados alfabéticamente
     const PAISES_MUNDO = [
         "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán",
         "Bahamas", "Bangladés", "Barbados", "Baréin", "Bélgica", "Belice", "Benín", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Bután",
@@ -421,47 +456,48 @@
         "Yemen", "Yibuti",
         "Zambia", "Zimbabue"
     ];
-    function abrirFichaCliente(idCliente) {
-    const c = realClients.find(client => client.ID_Cliente === idCliente);
-    if (!c) return;
 
-    document.getElementById('view-lead-id-title').innerText = `#${c.ID_Cliente}`;
-    
-    // Rellenar el select de países del drawer de edición
-    const selectPais = document.getElementById('edit-client-pais-select');
-    if (selectPais) {
-        selectPais.innerHTML = PAISES_MUNDO.map(p => `<option value="${p}">${p}</option>`).join('');
+    function abrirFichaCliente(idCliente) {
+        const c = realClients.find(client => client.ID_Cliente === idCliente);
+        if (!c) return;
+
+        document.getElementById('view-lead-id-title').innerText = `#${c.ID_Cliente}`;
+        
+        const selectPais = document.getElementById('edit-client-pais-select');
+        if (selectPais) {
+            selectPais.innerHTML = PAISES_MUNDO.map(p => `<option value="${p}">${p}</option>`).join('');
+        }
+
+        const form = document.querySelector('#view-lead-drawer form');
+        form.elements['edit_client_id'].value = c.ID_Cliente;
+        form.elements['edit_client_nombre'].value = c.Nombre_Completo || '';
+        form.elements['edit_client_telefono'].value = c.Telefono || '';
+        form.elements['edit_client_pais'].value = c.País || c.Pais || 'España';
+        form.elements['edit_client_rol'].value = c.Rol_Musical || 'Vocalista';
+        form.elements['edit_client_email'].value = c.Email || '';
+        form.elements['edit_client_social'].value = c.Redes_Sociales || '';
+
+        toggleDrawer('view-lead-drawer');
     }
 
-    const form = document.querySelector('#view-lead-drawer form');
-    form.elements['edit_client_id'].value = c.ID_Cliente;
-    form.elements['edit_client_nombre'].value = c.Nombre_Completo || '';
-    form.elements['edit_client_telefono'].value = c.Telefono || '';
-    form.elements['edit_client_pais'].value = c.País || c.Pais || 'España';
-    form.elements['edit_client_rol'].value = c.Rol_Musical || 'Vocalista';
-    form.elements['edit_client_email'].value = c.Email || '';
-    form.elements['edit_client_social'].value = c.Redes_Sociales || '';
+    function actualizarClienteExistente(e) {
+        e.preventDefault();
+        const f = new FormData(e.target);
 
-    toggleDrawer('view-lead-drawer');
-}
+        ejecutarPost({
+            sheet: "Clientes_Leads",
+            action: "UPDATE",
+            ID_Cliente: f.get('edit_client_id'),
+            Nombre_Completo: f.get('edit_client_nombre').toUpperCase(),
+            Telefono: f.get('edit_client_telefono'),
+            Pais: f.get('edit_client_pais'),
+            Rol_Musical: f.get('edit_client_rol'),
+            Email: f.get('edit_client_email'),
+            Redes_Sociales: f.get('edit_client_social')
+        }, 'directorio');
+        e.target.reset();
+    }
 
-function actualizarClienteExistente(e) {
-    e.preventDefault();
-    const f = new FormData(e.target);
-
-    ejecutarPost({
-        sheet: "Clientes_Leads",
-        action: "UPDATE",
-        ID_Cliente: f.get('edit_client_id'),
-        Nombre_Completo: f.get('edit_client_nombre').toUpperCase(),
-        Telefono: f.get('edit_client_telefono'),
-        Pais: f.get('edit_client_pais'),
-        Rol_Musical: f.get('edit_client_rol'),
-        Email: f.get('edit_client_email'),
-        Redes_Sociales: f.get('edit_client_social')
-    }, 'directorio');
-    e.target.reset();
-}
     function cargarPaisesEnSelect() {
         const select = document.getElementById('lead-pais-select');
         if (!select) return;
@@ -471,14 +507,15 @@ function actualizarClienteExistente(e) {
     async function sincronizarCoreKova() {
         if (!API_URL || API_URL.includes("AQUÍ_PEGA")) return;
         try {
-            const [respSales, respPayments, respTasks, respClients] = await Promise.all([
+            const [respSales, respPayments, respTasks, respClients, respProjects] = await Promise.all([
                 fetch(`${API_URL}?sheet=Ventas_Pedidos`, { redirect: "follow" }).then(r => r.json()),
                 fetch(`${API_URL}?sheet=Pagos_Registro`, { redirect: "follow" }).then(r => r.json()),
                 fetch(`${API_URL}?sheet=Tareas_Seguimiento`, { redirect: "follow" }).then(r => r.json()),
-                fetch(`${API_URL}?sheet=Clientes_Leads`, { redirect: "follow" }).then(r => r.json())
+                fetch(`${API_URL}?sheet=Clientes_Leads`, { redirect: "follow" }).then(r => r.json()),
+                fetch(`${API_URL}?sheet=Proyectos_Canciones`, { redirect: "follow" }).then(r => r.json())
             ]);
 
-            realSales = respSales; realPayments = respPayments; realSessions = respTasks; realClients = respClients;
+            realSales = respSales; realPayments = respPayments; realSessions = respTasks; realClients = respClients; realProjects = respProjects;
             populateDropdowns();
 
             const loader = document.getElementById('kova-initial-loader');
@@ -493,7 +530,7 @@ function actualizarClienteExistente(e) {
         document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
         document.getElementById(`panel-${panelId}`).classList.remove('hidden');
         
-        const ids = ['dashboard', 'directorio', 'tareas', 'orders', 'ventas'];
+        const ids = ['dashboard', 'directorio', 'proyectos', 'tareas', 'orders', 'ventas'];
         ids.forEach(id => {
             const btn = document.getElementById(`btn-${id}`); const ind = document.getElementById(`indicator-${id}`);
             if (btn && ind) { 
@@ -510,6 +547,7 @@ function actualizarClienteExistente(e) {
         if (panelId === 'ventas') renderBillingTable();
         if (panelId === 'tareas') renderSessionsList(realSessions);
         if (panelId === 'directorio') renderClientsTable(realClients);
+        if (panelId === 'proyectos') renderProjectsTable();
     }
 
     function toggleMobileSidebar() {
@@ -528,19 +566,76 @@ function actualizarClienteExistente(e) {
                 realSales.map(s => `<option value="${s.ID_Pedido}">${s.ID_Pedido} — ${s.Nombre_Cliente}</option>`).join('');
         }
 
-        document.querySelectorAll('.class-select-pedidos-dinamico').forEach(select => {
-            select.innerHTML = '<option value="">Selecciona proyecto activo...</option>' + 
-                realSales.map(s => `<option value="${s.ID_Pedido}" data-clientid="${s.ID_Cliente}" data-clientname="${s.Nombre_Cliente}">${s.ID_Pedido} — ${s.Nombre_Cliente} (${s.Servicio})</option>`).join('');
-        });
+        const selectProjSess = document.getElementById('select-proyectos-sesion');
+        if (selectProjSess) {
+            selectProjSess.innerHTML = '<option value="">Selecciona canción / track...</option>' + 
+                realProjects.map(p => `<option value="${p.ID_Proyecto}" data-clientid="${p.ID_Cliente}" data-clientname="${p.Nombre_Cliente}" data-pedidoid="${p.ID_Pedido || ''}">${p.Nombre_Proyecto} [${p.Nombre_Cliente}]</option>`).join('');
+            
+            selectProjSess.onchange = function() {
+                const opt = this.options[this.selectedIndex];
+                const form = this.closest('form');
+                form.querySelector('input[name="id_cliente"]').value = opt.getAttribute('data-clientid') || '';
+                form.querySelector('input[name="nombre_cliente"]').value = opt.getAttribute('data-clientname') || '';
+                form.querySelector('input[name="id_pedido"]').value = opt.getAttribute('data-pedidoid') || '';
+            };
+        }
+
+        const editSelectProjSess = document.getElementById('edit-select-proyectos-sesion');
+        if (editSelectProjSess) {
+            editSelectProjSess.innerHTML = '<option value="">Selecciona canción / track...</option>' + 
+                realProjects.map(p => `<option value="${p.ID_Proyecto}" data-clientid="${p.ID_Cliente}" data-clientname="${p.Nombre_Cliente}">${p.Nombre_Proyecto} [${p.Nombre_Cliente}]</option>`).join('');
+        }
+    }
+
+    function filtrarPedidosPorArtista(idCliente) {
+        const orderSelect = document.getElementById('project-pedido-select');
+        const form = orderSelect.closest('form');
+        const artista = realClients.find(c => c.ID_Cliente === idCliente);
+        
+        if (artista) {
+            form.querySelector('input[name="id_cliente"]').value = artista.ID_Cliente;
+            form.querySelector('input[name="nombre_cliente"]').value = artista.Nombre_Completo;
+        }
+
+        const pedidosFiltrados = realSales.filter(s => s.ID_Cliente === idCliente);
+        orderSelect.innerHTML = '<option value="">Sin pedido comercial (Amor al arte / Track Propio)</option>' +
+            pedidosFiltrados.map(o => `<option value="${o.ID_Pedido}">${o.ID_Pedido} — ${o.Servicio}</option>`).join('');
+    }
+
+    function guardarProyectoTrack(e) {
+        e.preventDefault();
+        const f = new FormData(e.target);
+        ejecutarPost({
+            sheet: "Proyectos_Canciones",
+            Nombre_Proyecto: f.get('nombre_proyecto').toUpperCase(),
+            ID_Cliente: f.get('id_cliente'),
+            Nombre_Cliente: f.get('nombre_cliente'),
+            ID_Pedido: f.get('id_pedido') || '',
+            Estado: 'En Proceso'
+        }, 'proyectos');
+        e.target.reset();
+    }
+
+    function renderProjectsTable() {
+        document.getElementById('projects-table-body').innerHTML = realProjects.map(p => {
+            const horasTotales = realSessions
+                .filter(s => s.ID_Pedido === p.ID_Proyecto)
+                .reduce((acc, curr) => acc + (acc = parseInt(curr.Horas_Dedicadas) || 0), 0);
+
+            return `
+                <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                    <td class="py-6 font-mono font-medium">${p.ID_Proyecto}</td>
+                    <td class="py-6 font-medium uppercase text-primary">${p.Nombre_Proyecto}</td>
+                    <td class="py-6 uppercase">${p.Nombre_Cliente}</td>
+                    <td class="py-6 font-mono text-xs text-on-surface-variant/60">${p.ID_Pedido || 'AMOR AL ARTE 🤍'}</td>
+                    <td class="py-6 text-right font-mono font-medium text-sm">${horasTotales} HRS</td>
+                    <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Proyectos_Canciones', 'ID_Proyecto', '${p.ID_Proyecto}', 'proyectos')">ELIMINAR</button></td>
+                </tr>`;
+        }).join('');
     }
 
     function syncDatosProyecto(select) {
-        const option = select.options[select.selectedIndex];
-        const form = select.closest('form');
-        if (select.value) {
-            form.querySelector('input[name="id_cliente"]').value = option.getAttribute('data-clientid') || '';
-            form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-clientname') || '';
-        }
+        // Obsoleta por mapeo dinámico en populateDropdowns, se mantiene firma por compatibilidad
     }
 
     function syncDatosProyectoEdicion(select) {
@@ -619,14 +714,18 @@ function actualizarClienteExistente(e) {
         document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('dash-curso').innerText = `€${(totalPedidos - totalRecaudado).toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
 
-        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3).map(t => `
-            <li class="flex items-start justify-between group">
-                <div class="flex flex-col gap-1">
-                    <span class="font-body-main text-primary text-sm sm:text-base">${t.Tarea_Descripcion || ''}</span>
-                    <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">PROYECTO: <span class="text-primary font-medium">${t.ID_Pedido || 'GENERAL'}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
-                </div>
-                <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
-            </li>`).join('');
+        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3).map(t => {
+            const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
+            const labelProyecto = projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL');
+            return `
+                <li class="flex items-start justify-between group">
+                    <div class="flex flex-col gap-1">
+                        <span class="font-body-main text-primary text-sm sm:text-base">${t.Tarea_Descripcion || ''}</span>
+                        <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">TRACK: <span class="text-primary font-medium">${labelProyecto}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
+                </li>`;
+        }).join('');
             
         document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 3).map(p => `
             <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
@@ -636,16 +735,16 @@ function actualizarClienteExistente(e) {
     }
 
     function renderClientsTable(data) {
-    document.getElementById('clients-table-body').innerHTML = data.map(c => `
-        <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="abrirFichaCliente('${c.ID_Cliente}')">
-            <td class="py-6 text-on-surface-variant font-technical-data font-medium">${c.ID_Cliente || ''}</td>
-            <td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td>
-            <td class="py-6 font-technical-data">${c.Telefono || c.Email || ''}</td>
-            <td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.País || c.Pais || 'España'}</td>
-            <td class="py-6 font-mono text-xs uppercase">${c.Estado_Lead || 'POTENCIAL'}</td>
-            <td class="py-6 text-right" onclick="event.stopPropagation()"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
-        </tr>`).join('');
-}
+        document.getElementById('clients-table-body').innerHTML = data.map(c => `
+            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors group cursor-pointer" onclick="abrirFichaCliente('${c.ID_Cliente}')">
+                <td class="py-6 text-on-surface-variant font-technical-data font-medium">${c.ID_Cliente || ''}</td>
+                <td class="py-6 font-medium">${c.Nombre_Completo || ''} <span class="text-[9px] text-on-surface-variant/40 ml-2 uppercase font-mono tracking-wider">${c.Rol_Musical || ''}</span></td>
+                <td class="py-6 font-technical-data">${c.Telefono || c.Email || ''}</td>
+                <td class="py-6 font-medium text-xs uppercase tracking-wider text-on-surface-variant/70">${c.País || c.Pais || 'España'}</td>
+                <td class="py-6 font-mono text-xs uppercase">${c.Estado_Lead || 'POTENCIAL'}</td>
+                <td class="py-6 text-right" onclick="event.stopPropagation()"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Clientes_Leads', 'ID_Cliente', '${c.ID_Cliente}', 'directorio')">ELIMINAR</button></td>
+            </tr>`).join('');
+    }
 
     function renderSessionsList(data) {
         const activas = data.filter(s => s.Estado_Tarea !== 'Completada');
@@ -660,6 +759,9 @@ function actualizarClienteExistente(e) {
             
             let esComercial = session.Tarea_Descripcion.toLowerCase().includes('feedback') || session.Tarea_Descripcion.toLowerCase().includes('enviar') || !session.ID_Pedido;
 
+            const trackingTrack = realProjects.find(p => p.ID_Proyecto === session.ID_Pedido);
+            const trackingDisplay = trackingTrack ? trackingTrack.Nombre_Proyecto : 'GENERAL';
+
             return `
             <div class="session-row group py-6 sm:py-8 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-surface-container-low/30 px-2 sm:px-4 transition-colors gap-4">
                 <div class="flex items-center gap-4 sm:gap-10 flex-1">
@@ -669,7 +771,7 @@ function actualizarClienteExistente(e) {
                     </div>
                     <div class="min-w-0">
                         <span class="font-technical-data text-[9px] sm:text-[10px] text-technical-label uppercase tracking-widest block mb-1">
-                            ${session.ID_Tarea || 'SESS'} // PROYECTO: <span class="text-primary font-bold">${session.ID_Pedido || 'GENERAL'}</span>
+                            ${session.ID_Tarea || 'SESS'} // TRACK: <span class="text-primary font-bold">${trackingDisplay}</span>
                         </span>
                         <h3 class="font-headline-lg text-base sm:text-xl uppercase tracking-widest truncate text-primary font-medium">${session.Nombre_Cliente || 'ARTISTA'}</h3>
                         <p class="font-body-main text-xs sm:text-sm text-on-surface-variant mt-1 uppercase tracking-wide flex items-center gap-2">
@@ -790,7 +892,7 @@ function actualizarClienteExistente(e) {
             action: "SAVE",
             ID_Cliente: f.get('id_cliente'),
             Nombre_Cliente: f.get('nombre_cliente'),
-            ID_Pedido: f.get('id_pedido'),
+            ID_Pedido: f.get('id_proyecto'), 
             Tarea_Descripcion: `[${f.get('tipo_accion')}] ${f.get('tarea_descripcion')}`,
             Fecha_Limite: f.get('fecha_limite'),
             Estado_Tarea: 'Pendiente',
@@ -818,7 +920,6 @@ function actualizarClienteExistente(e) {
     
     function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
 
-    // --- LÓGICA DE EDICIÓN DE PEDIDOS ---
     function abrirEditorPedido(idPedido) {
         const o = realSales.find(order => order.ID_Pedido === idPedido);
         if (!o) return;
@@ -919,7 +1020,6 @@ function actualizarClienteExistente(e) {
         document.getElementById('wrapper-forma-pago-custom-edit').classList.add('hidden');
     }
 
-    // --- LÓGICA DE EDICIÓN DE SESIONES ---
     function abrirEditorSesion(idTarea) {
         const s = realSessions.find(sess => sess.ID_Tarea === idTarea);
         if (!s) return;
@@ -952,6 +1052,7 @@ function actualizarClienteExistente(e) {
             ID_Cliente: f.get('edit_sess_id_cliente'),
             Nombre_Cliente: f.get('edit_sess_nombre_cliente'),
             ID_Pedido: f.get('edit_sess_id_pedido'),
+            Tasa_Descripcion: f.get('edit_sess_descripcion'), // compatible
             Tarea_Descripcion: f.get('edit_sess_descripcion'),
             Fecha_Limite: f.get('edit_sess_fecha_limite'),
             Estado_Tarea: f.get('edit_sess_estado'),
@@ -960,7 +1061,6 @@ function actualizarClienteExistente(e) {
         e.target.reset();
     }
 
-    // --- LÓGICA DE ACTUALIZACIÓN RÁPIDA EN VIVO DE SESIONES ---
     function actualizarHorasSesion(idTarea, nuevasHoras) {
         if (nuevasHoras < 0) return; 
         const sesion = realSessions.find(s => s.ID_Tarea === idTarea);
