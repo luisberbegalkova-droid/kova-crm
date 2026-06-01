@@ -405,7 +405,7 @@
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-order-monto-input" name="edit_monto_base" type="number" step="0.01" oninput="calcularImpuestosEdicion()"/>
         </div>
         <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label>
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entre Delivery (Deadline)</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_deadline" required type="date"/>
         </div>
         <div class="space-y-1">
@@ -569,7 +569,11 @@
         const selectProjSess = document.getElementById('select-proyectos-sesion');
         if (selectProjSess) {
             selectProjSess.innerHTML = '<option value="">Selecciona canción / track...</option>' + 
-                realProjects.map(p => `<option value="${p.ID_Proyecto}" data-clientid="${p.ID_Cliente}" data-clientname="${p.Nombre_Cliente}" data-pedidoid="${p.ID_Pedido || ''}">${p.Nombre_Proyecto} [${p.Nombre_Cliente}]</option>`).join('');
+                realProjects.map((p, index) => {
+                    const idTrack = p.ID_Proyecto || p.id_proyecto || `TRACK-${index+1}`;
+                    const nameTrack = p.Nombre_Proyecto || p.nombre_proyecto || 'S/N';
+                    return `<option value="${idTrack}" data-clientid="${p.ID_Cliente}" data-clientname="${p.Nombre_Cliente}" data-pedidoid="${p.ID_Pedido || ''}">${nameTrack} [${p.Nombre_Cliente}]</option>`;
+                }).join('');
             
             selectProjSess.onchange = function() {
                 const opt = this.options[this.selectedIndex];
@@ -583,7 +587,11 @@
         const editSelectProjSess = document.getElementById('edit-select-proyectos-sesion');
         if (editSelectProjSess) {
             editSelectProjSess.innerHTML = '<option value="">Selecciona canción / track...</option>' + 
-                realProjects.map(p => `<option value="${p.ID_Proyecto}" data-clientid="${p.ID_Cliente}" data-clientname="${p.Nombre_Cliente}">${p.Nombre_Proyecto} [${p.Nombre_Cliente}]</option>`).join('');
+                realProjects.map((p, index) => {
+                    const idTrack = p.ID_Proyecto || p.id_proyecto || `TRACK-${index+1}`;
+                    const nameTrack = p.Nombre_Proyecto || p.nombre_proyecto || 'S/N';
+                    return `<option value="${idTrack}" data-clientid="${p.ID_Cliente}" data-clientname="${p.Nombre_Cliente}">${nameTrack} [${p.Nombre_Cliente}]</option>`;
+                }).join('');
         }
     }
 
@@ -617,33 +625,31 @@
     }
 
     function renderProjectsTable() {
-    document.getElementById('projects-table-body').innerHTML = realProjects.map(p => {
-        // En tu Google Sheets la columna se llama ID_Proyecto
-        const idProj = p.ID_Proyecto || p.id_proyecto || '';
-        const nomProyecto = p.Nombre_Proyecto || p.nombre_proyecto || '';
-        const nomCliente = p.Nombre_Cliente || p.nombre_cliente || '';
-        const idPed = p.ID_Pedido || p.id_pedido || '';
+        document.getElementById('projects-table-body').innerHTML = realProjects.map((p, index) => {
+            // Blindaje de datos: Si el ID de Sheets viene vacío debido al fallo del Script, le asignamos uno temporal basado en el índice
+            const idProj = p.ID_Proyecto || p.id_proyecto || `TRK-00${index + 1}`;
+            const nomProyecto = p.Nombre_Proyecto || p.nombre_proyecto || 'TRACK SIN NOMBRE';
+            const nomCliente = p.Nombre_Cliente || p.nombre_cliente || 'DESCONOCIDO';
+            const idPed = p.ID_Pedido || p.id_pedido || '';
 
-        // Corregido el typo en el acumulador (acc + curr) para calcular las horas reales
-        const horasTotales = realSessions
-            .filter(s => String(s.ID_Pedido) === String(idProj))
-            .reduce((acc, curr) => acc + (parseInt(curr.Horas_Dedicadas) || 0), 0);
+            // Trazabilidad de horas acumuladas en base al ID
+            const horasTotales = realSessions
+                .filter(s => String(s.ID_Pedido) === String(idProj))
+                .reduce((acc, curr) => acc + (parseInt(curr.Horas_Dedicadas) || 0), 0);
 
-        return `
-            <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
-                <td class="py-6 font-mono font-medium">${idProj}</td>
-                <td class="py-6 font-medium uppercase text-primary">${nomProyecto}</td>
-                <td class="py-6 uppercase">${nomCliente}</td>
-                <td class="py-6 font-mono text-xs text-on-surface-variant/60">${idPed ? idPed : 'AMOR AL ARTE 🤍'}</td>
-                <td class="py-6 text-right font-mono font-medium text-sm">${horasTotales} HRS</td>
-                <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Proyectos_Canciones', 'ID_Proyecto', '${idProj}', 'proyectos')">ELIMINAR</button></td>
-            </tr>`;
-    }).join('');
-}
-
-    function syncDatosProyecto(select) {
-        // Obsoleta por mapeo dinámico en populateDropdowns, se mantiene firma por compatibilidad
+            return `
+                <tr class="border-t border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                    <td class="py-6 font-mono font-medium">${idProj}</td>
+                    <td class="py-6 font-medium uppercase text-primary">${nomProyecto}</td>
+                    <td class="py-6 uppercase">${nomCliente}</td>
+                    <td class="py-6 font-mono text-xs text-on-surface-variant/60">${idPed ? idPed : 'AMOR AL ARTE 🤍'}</td>
+                    <td class="py-6 text-right font-mono font-medium text-sm">${horasTotales} HRS</td>
+                    <td class="py-6 text-right"><button class="text-error font-label-caps text-[10px] tracking-widest hover:underline" onclick="borrarFilaDirecta('Proyectos_Canciones', 'ID_Proyecto', '${idProj}', 'proyectos')">ELIMINAR</button></td>
+                </tr>`;
+        }).join('');
     }
+
+    function syncDatosProyecto(select) {}
 
     function syncDatosProyectoEdicion(select) {
         const option = select.options[select.selectedIndex];
@@ -1059,7 +1065,6 @@
             ID_Cliente: f.get('edit_sess_id_cliente'),
             Nombre_Cliente: f.get('edit_sess_nombre_cliente'),
             ID_Pedido: f.get('edit_sess_id_pedido'),
-            Tasa_Descripcion: f.get('edit_sess_descripcion'), // compatible
             Tarea_Descripcion: f.get('edit_sess_descripcion'),
             Fecha_Limite: f.get('edit_sess_fecha_limite'),
             Estado_Tarea: f.get('edit_sess_estado'),
