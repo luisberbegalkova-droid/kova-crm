@@ -119,15 +119,17 @@
             transition: opacity 0.5s ease; 
         }
 
-        /* DISEÑO DE ALTA RESOLUCIÓN MINIMALISTA PARA EL MAPAMUNDI REAL */
-        .world-map-svg path {
-            fill: #dbd8d0;
-            stroke: #ede9e1;
-            stroke-width: 0.5;
-            transition: fill 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Estilos del contenedor del mapamundi real */
+        .map-wrapper svg {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
         }
-        .world-map-svg path.client-active {
-            fill: #a1fa49 !important;
+        .map-wrapper path {
+            fill: #dbd8d0 !important;
+            stroke: #ede9e1 !important;
+            stroke-width: 0.6px !important;
+            transition: fill 0.3s ease;
         }
     </style>
 </head>
@@ -181,6 +183,7 @@
             <div class="active-tab-line"></div>
         </header>
         
+        <!-- Fila de KPIs Principales -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 border-b border-outline-variant/10 pb-10">
             <div>
                 <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Facturación (Cobrado)</p>
@@ -200,51 +203,19 @@
             </div>
         </div>
 
+        <!-- El Mapa del Mundo Real "Estilo Metallica" -->
         <div class="mb-14 bg-surface-container/20 border border-outline-variant/10 p-6 sm:p-8">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest text-[11px]">KOVA GLOBAL EXPANSION // CLIENT MAP</h3>
                 <span class="flex items-center gap-2 font-technical-data text-[10px] text-on-surface-variant/70"><span class="w-2 h-2 bg-tertiary-fixed inline-block"></span> ÁREAS CONQUISTADAS</span>
             </div>
-            <div class="w-full flex justify-center items-center overflow-hidden bg-[#f3efe6]/40 p-4 border border-outline-variant/5">
-                <svg class="world-map-svg w-full max-h-[380px]" viewBox="0 0 1008 651" xmlns="http://www.w3.org/2000/svg">
-                    <g id="countries">
-                        <path id="map-country-espana" d="M465,201 L472,185 L496,183 L492,204 Z" />
-                        <path id="map-country-estados-unidos" d="M172,159 L295,150 L299,222 L185,228 Z" />
-                        <path id="map-country-alemania" d="M512,143 L522,141 L525,149 L515,155 L509,149 Z" />
-                        <path id="map-country-reino-unido" d="M474,131 L492,128 L488,154 L472,156 Z" />
-                        <path id="map-country-francia" d="M491,157 L508,154 L511,176 L489,178 Z" />
-                        <path id="map-country-mexico" d="M192,238 L242,232 L251,288 L211,285 Z" />
-                        <path id="map-country-colombia" d="M281,365 L306,362 L309,388 L278,390 Z" />
-                        <path id="map-country-argentina" d="M312,490 L331,489 L321,578 L298,582 Z" />
-                        <path id="map-country-brasil" d="M315,372 L368,360 L401,402 L342,462 L320,410 Z" />
-                        <path id="map-country-australia" d="M827,472 L897,465 L921,518 L840,534 Z" />
-                        <path id="map-country-italia" d="M520,172 L532,170 L539,195 L528,197 Z" />
-                        <path id="map-country-japon" d="M856,202 L870,201 L862,242 L849,240 Z" />
-                        <path id="map-country-portugal" d="M453,190 L465,189 L460,211 L449,209 Z" />
-                        <path id="map-country-paises-bajos" d="M502,135 L511,134 L513,142 L504,143 Z" />
-                        <path id="map-country-canada" d="M152,65 L290,62 L310,141 L175,152 Z" />
-                        <path id="map-country-chile" d="M296,470 L311,468 L302,570 L291,570 Z" />
-                        <path id="map-country-ecuador" d="M266,390 L281,388 L277,405 L263,402 Z" />
-                        <path id="map-country-venezuela" d="M290,345 L324,342 L320,368 L289,368 Z" />
-                        <path id="map-country-peru" d="M266,412 L292,408 L285,458 L269,445 Z" />
-                        <path id="map-country-bolivia" d="M309,425 L334,420 L341,448 L315,459 Z" />
-                        <path id="map-country-uruguay" d="M336,492 L351,490 L349,505 L334,502 Z" />
-                        <path id="map-country-paraguay" d="M331,462 L349,459 L346,482 L330,480 Z" />
-                        <path id="map-country-cuba" d="M259,285 L278,284 L276,291 L257,290 Z" />
-                        <path id="map-country-marruecos" d="M459,222 L481,223 L477,245 L452,240 Z" />
-                        <path id="map-country-argelia" d="M485,251 L519,252 L514,286 L476,280 Z" />
-                        <path id="map-country-egipto" d="M574,258 L603,257 L605,286 L573,284 Z" />
-                        <path id="map-country-sudafrica" d="M542,460 L574,458 L568,505 L535,492 Z" />
-                        <path id="map-country-arabia" d="M632,267 L656,263 L672,291 L651,311 L636,290 Z" />
-                        <path id="map-country-turquia" d="M578,210 L622,207 L618,228 L575,230 Z" />
-                        <path id="map-country-china" d="M731,215 L802,210 L835,268 L762,284 L739,245 Z" />
-                        <path id="map-country-india" d="M707,276 L736,272 L745,315 L718,320 Z" />
-                        <path id="map-country-indonesia" d="M802,374 L860,375 L865,402 L795,400 Z" />
-                    </g>
-                </svg>
+            <div class="w-full flex justify-center items-center overflow-hidden map-wrapper" id="world-map-container">
+                <!-- Aquí se carga mediante fetch el mapa real de la tierra sin fallas de renderizado -->
+                <p class="font-technical-data text-xs tracking-widest text-on-surface-variant/40 animate-pulse">CARGANDO GEOGRAFÍA MUNDIAL REVOLUTION...</p>
             </div>
         </div>
 
+        <!-- Distribución Operativa Inferior de 2 Columnas Estrictas -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 max-w-full">
             <div>
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Acciones Prioritarias</h3>
@@ -257,11 +228,13 @@
         </div>
     </section>
 
+    <!-- DIRECTORIO -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
     </section>
 
+    <!-- GESTIÓN DE PROYECTOS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-proyectos">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10">
             <div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">GESTIÓN DE PROYECTOS</h2><div class="active-tab-line"></div></div>
@@ -277,16 +250,19 @@
         </div>
     </section>
 
+    <!-- SESIONES Y ACCIONES -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES Y ACCIONES</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> PROGRAMAR ACCIÓN</button></header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
+    <!-- ORDERS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
         <div class="overflow-x-auto"><table class="w-full text-left min-w-[750px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right font-medium">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="orders-table-body"></tbody></table></div>
     </section>
 
+    <!-- BILLING -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-outline-variant/20 mb-8 pb-8">
@@ -300,19 +276,14 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
+<!-- DRAWERS LATERALES -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="view-lead-drawer">
-    <header class="flex justify-between items-center mb-12">
-        <h2 class="font-headline-lg text-lg uppercase tracking-wider">FICHA ARTISTA <span id="view-lead-id-title" class="font-mono text-technical-label"></span></h2>
-        <button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button>
-    </header>
+    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">FICHA ARTISTA <span id="view-lead-id-title" class="font-mono text-technical-label"></span></h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarClienteExistente(event)">
         <input type="hidden" name="edit_client_id"/>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="edit_client_nombre" required type="text"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_telefono" type="text"/></div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="edit-client-pais-select" name="edit_client_pais" required></select>
-        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="edit-client-pais-select" name="edit_client_pais" required></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_email" required type="email"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_social" type="text"/></div>
@@ -325,10 +296,7 @@
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre" required type="text"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required></select>
-        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" required type="email"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="social" placeholder="@username" type="text"/></div>
@@ -340,17 +308,8 @@
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA CANCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarProyectoTrack(event)">
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre de la Canción / Track</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre_proyecto" required type="text" placeholder="ej: ALMOST EVERYTHING"/></div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Cliente</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="filtrarPedidosPorArtista(this.value)" required></select>
-            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Vincular a Pedido Comercial (Opcional)</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="project-pedido-select" name="id_pedido">
-                <option value="">Sin pedido comercial (Amor al arte / Track Propio)</option>
-            </select>
-        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Cliente</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="filtrarPedidosPorArtista(this.value)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Vincular a Pedido Comercial (Opcional)</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="project-pedido-select" name="id_pedido"><option value="">Sin pedido comercial (Amor al arte / Track Propio)</option></select></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CREAR CANCIÓN EN SISTEMA</button>
     </form>
 </aside>
@@ -358,90 +317,28 @@
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-session-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">PROGRAMAR ACCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesionProyectos(event)">
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Tipo de Seguimiento</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-tipo" name="tipo_accion" onchange="toggleWorkflowInputs(this.value)" required>
-                <option value="Sesion de Mezcla">Sesión de Mezcla / Estudio (Suma Horas)</option>
-                <option value="Seguimiento Comercial">Seguimiento Comercial / Cliente (Sin Horas)</option>
-            </select>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Canción / Track Activo</label>
-            <select class="w-full border-b border-outline-variant focus:ring-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm text-primary" id="select-proyectos-sesion" name="id_proyecto" required></select>
-            <input type="hidden" name="id_cliente"/>
-            <input type="hidden" name="nombre_cliente"/>
-            <input type="hidden" name="id_pedido"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción del Trabajo / Hito</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-descripcion" name="tarea_descripcion" placeholder="ej: Primera Mix o Revisión de Feedback" required type="text"/>
-        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Tipo de Seguimiento</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-tipo" name="tipo_accion" onchange="toggleWorkflowInputs(this.value)" required><option value="Sesion de Mezcla">Sesión de Mezcla / Estudio (Suma Horas)</option><option value="Seguimiento Comercial">Seguimiento Comercial / Cliente (Sin Horas)</option></select></div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Canción / Track Activo</label><select class="w-full border-b border-outline-variant focus:ring-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm text-primary" id="select-proyectos-sesion" name="id_proyecto" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/><input type="hidden" name="id_pedido"/></div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción del Trabajo / Hito</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-descripcion" name="tarea_descripcion" placeholder="ej: Primera Mix o Revisión de Feedback" required type="text"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha Límite / Ejecución</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="fecha_limite" required type="date"/></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">AGENDAR EN PROYECTO</button>
     </form>
 </aside>
 
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-session-drawer">
-    <header class="flex justify-between items-center mb-12">
-        <h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR SESIÓN <span id="edit-session-id-title" class="font-mono text-technical-label"></span></h2>
-        <button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button>
-    </header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarSesionExistente(event)">
-        <input type="hidden" name="edit_sess_id_tarea"/>
-        <input type="hidden" name="edit_sess_id_cliente"/>
-        <input type="hidden" name="edit_sess_nombre_cliente"/>
-        <input type="hidden" name="edit_sess_horas"/>
-        <input type="hidden" name="edit_sess_estado"/>
-
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista Vinculado</label>
-            <input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-session-artista-display" readonly type="text"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Canción / Track</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-select-proyectos-sesion" name="edit_sess_id_pedido" required></select>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Tarea / Fase</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_sess_descripcion" required type="text"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nueva Fecha Límite</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_sess_fecha_limite" required type="date"/>
-        </div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button>
-    </form>
+    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR SESIÓN <span id="edit-session-id-title" class="font-mono text-technical-label"></span></h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarSesionExistente(event)"><input type="hidden" name="edit_sess_id_tarea"/><input type="hidden" name="edit_sess_id_cliente"/><input type="hidden" name="edit_sess_nombre_cliente"/><input type="hidden" name="edit_sess_horas"/><input type="hidden" name="edit_sess_estado"/><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista Vinculado</label><input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-session-artista-display" readonly type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Canción / Track</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-select-proyectos-sesion" name="edit_sess_id_pedido" required></select></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Tarea / Fase</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_sess_descripcion" required type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nueva Fecha Límite</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_sess_fecha_limite" required type="date"/></div><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button></form>
 </aside>
 
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-order-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarPedido(event)">
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="servicio" onchange="tarifaEstudio(this)" required>
-                <option value="">Selecciona tarifa...</option>
-                <option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option>
-                <option value="Single Pro">Single Pro — 350€</option>
-                <option value="KOVA Signature">KOVA Signature — 500€</option>
-                <option value="Recording">Recording — 200€</option>
-                <option value="Servicio Personalizado">Servicio Personalizado (Manual)</option>
-            </select>
-        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="servicio" onchange="tarifaEstudio(this)" required><option value="">Selecciona tarifa...</option><option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option><option value="Single Pro">Single Pro — 350€</option><option value="KOVA Signature">KOVA Signature — 500€</option><option value="Recording">Recording — 200€</option><option value="Servicio Personalizado">Servicio Personalizado (Manual)</option></select></div>
         <div class="space-y-1 hidden" id="wrapper-precio-manual"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="deadline" required type="date"/></div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom')" required>
-                <option value="100% a entrega">100% a entrega</option>
-                <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
-                <option value="Otro">Otro (Especificar)</option>
-            </select>
-        </div>
-        <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
-        </div>
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom')" required><option value="100% a entrega">100% a entrega</option><option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option><option value="Otro">Otro (Especificar)</option></select></div>
+        <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/></div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice"></p></div>
         <div class="space-y-1 bg-surface-container/50 border border-outline-variant/10 p-4 font-technical-data text-[11px] flex gap-2 items-start text-on-surface-variant/70"><span class="material-symbols-outlined text-amber-500 scale-90">info</span><span>Una vez cerrado el pedido comercial, puedes ir a <b>PROJECT DIRECTORY</b> para dar de alta individualmente las canciones que incluye y trazar sus horas.</span></div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CERRAR PEDIDO</button>
@@ -450,60 +347,12 @@
 
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-payment-drawer">
     <header class="flex justify-between items-center mb-16"><h2 class="font-headline-lg text-headline-lg uppercase tracking-wider">AÑADIR PAGO</h2><button class="material-symbols-outlined" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPago(event)">
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Pedido Activo</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="select-pedidos-dinamico" name="id_pedido" required></select></div>
-        <div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="cantidad_pagada" placeholder="ej: 100.00" required type="number" step="0.01"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CONFIRMAR ABONO</button>
-    </form>
+    <form class="space-y-10 flex-1 overflow-y-auto pr-4" onsubmit="guardarPago(event)"><div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Pedido Activo</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="select-pedidos-dinamico" name="id_pedido" required></select></div><div class="space-y-2"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad Abonada (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="cantidad_pagada" placeholder="ej: 100.00" required type="number" step="0.01"/></div><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CONFIRMAR ABONO</button></form>
 </aside>
 
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-order-drawer">
-    <header class="flex justify-between items-center mb-12">
-        <h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR PEDIDO <span id="edit-order-id-title" class="font-mono text-technical-label"></span></h2>
-        <button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button>
-    </header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarPedido(event)">
-        <input type="hidden" name="edit_id_pedido"/>
-        <input type="hidden" name="edit_id_cliente"/>
-        <input type="hidden" name="edit_nombre_cliente"/>
-        
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Proyecto</label>
-            <input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-order-artista" readonly type="text"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_servicio" onchange="tarifaEstudioEdicion(this)" required>
-                <option value="SESION PRO">Sesion Pro (Mezcla + Mastering) — 200€</option>
-                <option value="SINGLE PRO">Single Pro — 350€</option>
-                <option value="KOVA SIGNATURE">KOVA Signature — 500€</option>
-                <option value="RECORDING">Recording — 200€</option>
-                <option value="SERVICIO PERSONALIZADO">Servicio Personalizado (Manual)</option>
-            </select>
-        </div>
-        <div class="space-y-1 hidden" id="wrapper-precio-manual-edit">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-order-monto-input" name="edit_monto_base" type="number" step="0.01" oninput="calcularImpuestosEdicion()"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entre Delivery (Deadline)</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_deadline" required type="date"/>
-        </div>
-        <div class="space-y-1">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
-            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom-edit')" required>
-                <option value="100% a entrega">100% a entrega</option>
-                <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
-                <option value="Otro">Otro (Especificar)</option>
-            </select>
-        </div>
-        <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom-edit">
-            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label>
-            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/>
-        </div>
-        <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice-edit"></p></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button>
-    </form>
+    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR PEDIDO <span id="edit-order-id-title" class="font-mono text-technical-label"></span></h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
+    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarPedido(event)"><input type="hidden" name="edit_id_pedido"/><input type="hidden" name="edit_id_cliente"/><input type="hidden" name="edit_nombre_cliente"/><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Proyecto</label><input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-order-artista" readonly type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_servicio" onchange="tarifaEstudioEdicion(this)" required><option value="SESION PRO">Sesion Pro (Mezcla + Mastering) — 200€</option><option value="SINGLE PRO">Single Pro — 350€</option><option value="KOVA SIGNATURE">KOVA Signature — 500€</option><option value="RECORDING">Recording — 200€</option><option value="SERVICIO PERSONALIZADO">Servicio Personalizado (Manual)</option></select></div><div class="space-y-1 hidden" id="wrapper-precio-manual-edit"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-order-monto-input" name="edit_monto_base" type="number" step="0.01" oninput="calcularImpuestosEdicion()"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entre Delivery (Deadline)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_deadline" required type="date"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom-edit')" required><option value="100% a entrega">100% a entrega</option><option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option><option value="Otro">Otro (Especificar)</option></select></div><div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom-edit"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/></div><div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice-edit"></p></div><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button></form>
 </aside>
 
 <script>
@@ -511,6 +360,15 @@
 
     let realClients = []; let realSessions = []; let realSales = []; let realPayments = []; let realProjects = [];
     const TARIFAS = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
+
+    // Mapeo unificado para identificar las regiones del mapa vectorial detallado de Wikipedia
+    const MAPEO_PAISES = {
+        "espana": "es", "estados unidos": "us", "alemania": "de", "reino unido": "gb", "francia": "fr",
+        "mexico": "mx", "colombia": "co", "argentina": "ar", "brasil": "br", "australia": "au",
+        "italia": "it", "japon": "jp", "portugal": "pt", "paises bajos": "nl", "canada": "ca",
+        "chile": "cl", "ecuador": "ec", "venezuela": "ve", "peru": "pe", "bolivia": "bo",
+        "uruguay": "uy", "paraguay": "py", "cuba": "cu", "marruecos": "ma"
+    };
 
     const PAISES_MUNDO = [
         "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán",
@@ -799,22 +657,19 @@
         }
     }
 
-    /* RENDER DASHBOARD ACTUALIZADO Y OPTIMIZADO */
-    function renderDashboard() {
+    /* RENDER DASHBOARD CON IMAGEN VECTORIAL DETALLADA COMPLETA */
+    async function renderDashboard() {
         let totalRecaudado = 0;
         let totalPedidosContador = realSales.length;
         let pedidosUltimoMes = 0;
         let clientesNuevosMes = 0;
 
-        // Cálculos de tiempo en base a la fecha actual del sistema (Junio 2026)
         const ahora = new Date();
         const mesActual = ahora.getMonth();
         const anoActual = ahora.getFullYear();
 
-        // 1. Calcular Facturación Cobrada Absoluta
         realPayments.forEach(p => totalRecaudado += (parseFloat(p.Cantidad_Pagada) || 0));
         
-        // 2. Calcular Pedidos del último mes
         realSales.forEach(s => {
             if (s.Fecha_Pedido) {
                 const fPed = new Date(s.Fecha_Pedido);
@@ -824,7 +679,6 @@
             }
         });
 
-        // 3. Calcular Clientes Nuevos del mes actual
         realClients.forEach(c => {
             if (c.Fecha_Registro) {
                 const fReg = new Date(c.Fecha_Registro);
@@ -834,39 +688,58 @@
             }
         });
 
-        // Pintar KPIs en el Dashboard
         document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('dash-total-pedidos').innerText = totalPedidosContador;
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
-        // 4. SISTEMA DE GEOLOCALIZACIÓN DINÁMICA: MAPA METALLICA
-        // Limpiamos iluminaciones previas
-        document.querySelectorAll('.world-map-svg path').forEach(path => path.classList.remove('client-active'));
-        
-        // Buscamos los países de tus clientes reales y encendemos el mapa
-        realClients.forEach(c => {
-            const paisCliente = (c.País || c.Pais || '').toLowerCase().trim()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quita acentos para emparejar
-            
-            if (paisCliente) {
-                // Mapeos de nombres de países a IDs del SVG
-                let idTarget = `map-country-${paisCliente.replace(/\s+/g, '-')}`;
-                if (paisCliente === 'espana') idTarget = 'map-country-espana';
-                if (paisCliente === 'estados unidos') idTarget = 'map-country-estados-unidos';
-                if (paisCliente === 'paises bajos') idTarget = 'map-country-paises-bajos';
-                if (paisCliente === 'reino unido') idTarget = 'map-country-reino-unido';
-                if (paisCliente === 'arabia saudita') idTarget = 'map-country-arabia';
-                if (paisCliente === 'afganistan') idTarget = 'map-country-afganistan';
+        // CARGA DIRECTA DEL MAPA DEL MUNDO REAL DESDE WIKIMEDIA (EVITA CÓDIGO INCOMPLETO)
+        const mapContainer = document.getElementById('world-map-container');
+        if (mapContainer) {
+            try {
+                // Descarga directa del mapa político en curvas detalladas de la base de datos abierta
+                const response = await fetch('https://upload.wikimedia.org/wikipedia/commons/1/15/World_map_blank_black_white.svg');
+                const svgText = await response.text();
+                
+                // Limpieza del contenedor e inyección del mapa completo real
+                mapContainer.innerHTML = svgText;
+                
+                // Ajustamos el diseño y el color del mapa inyectado para que cuadre con KOVA
+                const svgElement = mapContainer.querySelector('svg');
+                if (svgElement) {
+                    svgElement.setAttribute('class', 'world-map-svg w-full max-h-[360px]');
+                    svgElement.removeAttribute('width');
+                    svgElement.removeAttribute('height');
+                    
+                    // Coloreamos todos los trazos reales de la geografía mundial en color gris claro/crema
+                    svgElement.querySelectorAll('path').forEach(p => {
+                        p.style.fill = '#dbd8d0';
+                        p.style.stroke = '#ede9e1';
+                        p.style.strokeWidth = '0.5px';
+                    });
 
-                const pathElement = document.getElementById(idTarget);
-                if (pathElement) {
-                    pathElement.classList.add('client-active');
+                    // Recorremos tus clientes de Sheets e iluminamos los países reales en tu verde
+                    realClients.forEach(c => {
+                        const paisCliente = (c.País || c.Pais || '').toLowerCase().trim()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        
+                        const idIso = MAPEO_PAISES[paisCliente];
+                        if (idIso) {
+                            // Wikimedia usa los códigos oficiales de dos letras (es, us, mx, etc) como IDs o clases
+                            const pathPais = svgElement.getElementById(idIso) || svgElement.querySelector(`.${idIso}`);
+                            if (pathPais) {
+                                pathPais.style.fill = '#a1fa49';
+                            }
+                        }
+                    });
                 }
+            } catch (err) {
+                console.error("Fallo de red al renderizar curvas cartográficas:", err);
+                mapContainer.innerHTML = `<p class="font-technical-data text-xs text-error uppercase">Error de sincronización con servidor de mapas.</p>`;
             }
-        });
+        }
 
-        // 5. Renderizar Columna Izquierda: Acciones Prioritarias (Micro)
+        // Renderizar Columna Izquierda: Acciones Prioritarias
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
             const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
             const labelProyecto = projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL');
@@ -880,7 +753,7 @@
                 </li>`;
         }).join('');
             
-        // 6. Renderizar Columna Derecha: Proyectos en Marcha (Macro)
+        // Renderizar Columna Derecha: Proyectos en Marcha
         document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 4).map(p => `
             <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
                 <span class="font-body-main text-primary text-sm sm:text-base font-medium">${p.Nombre_Cliente || 'ARTISTA'} / <span class="font-mono text-xs text-technical-label">${p.ID_Pedido}</span></span>
