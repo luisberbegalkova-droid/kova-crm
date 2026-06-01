@@ -118,6 +118,18 @@
             text-align: center;
             transition: opacity 0.5s ease; 
         }
+
+        /* Estilos optimizados para el Mapamundi SVG */
+        .world-map-svg path {
+            fill: #e5e2e1;
+            stroke: #ede9e1;
+            stroke-width: 0.6;
+            transition: fill 0.3s ease, filter 0.3s ease;
+        }
+        .world-map-svg path.client-active {
+            fill: #a1fa49;
+            filter: drop-shadow(0px 0px 2px rgba(161, 250, 73, 0.4));
+        }
     </style>
 </head>
 <body class="font-body-main text-on-surface antialiased">
@@ -165,14 +177,106 @@
 <main class="xl:ml-[280px] pt-16 xl:pt-20 min-h-screen">
     
     <section class="p-4 sm:p-10 block animate-in fade-in duration-500" id="panel-dashboard">
-        <header class="mb-10 sm:mb-16"><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2><div class="active-tab-line"></div></header>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-16 mb-12 sm:mb-20">
-            <div><p class="font-label-caps text-xs text-technical-label uppercase mb-2 sm:mb-4">Importe Facturación (Cobrado)</p><p class="font-display-xl text-2xl sm:text-display-xl tracking-tighter text-primary" id="dash-facturacion">€0,00</p></div>
-            <div><p class="font-label-caps text-xs text-technical-label uppercase mb-2 sm:mb-4">Pendiente Neto por Cobrar</p><p class="font-display-xl text-2xl sm:text-display-xl tracking-tighter text-error" id="dash-curso">€0,00</p></div>
+        <header class="mb-10 sm:mb-12">
+            <h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">KOVA OVERVIEW</h2>
+            <div class="active-tab-line"></div>
+        </header>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 border-b border-outline-variant/10 pb-10">
+            <div>
+                <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Facturación (Cobrado)</p>
+                <p class="font-display-xl text-xl sm:text-3xl tracking-tighter text-primary font-medium" id="dash-facturacion">€0,00</p>
+            </div>
+            <div>
+                <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Total Pedidos</p>
+                <p class="font-display-xl text-xl sm:text-3xl tracking-tighter text-primary font-medium" id="dash-total-pedidos">0</p>
+            </div>
+            <div>
+                <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Pedidos Cerrados (Mes)</p>
+                <p class="font-display-xl text-xl sm:text-3xl tracking-tighter text-primary font-medium" id="dash-pedidos-mes">0</p>
+            </div>
+            <div>
+                <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Clientes Nuevos (Mes)</p>
+                <p class="font-display-xl text-xl sm:text-3xl tracking-tighter text-primary font-medium" id="dash-clientes-mes">0</p>
+            </div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 sm:gap-x-24 gap-y-12 max-w-full">
-            <div><h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8">Acciones Prioritarias</h3><ul class="space-y-8 sm:space-y-10" id="dash-acciones-list"></ul></div>
-            <div><h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8">Proyectos en Marcha</h3><ul class="space-y-6 sm:space-y-8" id="dash-proyectos-list"></ul></div>
+
+        <div class="mb-14 bg-surface-container/20 border border-outline-variant/10 p-6 sm:p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-label-caps text-technical-label uppercase tracking-widest text-[11px]">KOVA GLOBAL EXPANSION // CLIENT MAP</h3>
+                <span class="flex items-center gap-2 font-technical-data text-[10px] text-on-surface-variant/70"><span class="w-2 h-2 bg-tertiary-fixed inline-block"></span> ÁREAS CONQUISTADAS</span>
+            </div>
+            <div class="w-full flex justify-center items-center overflow-hidden">
+                <svg class="world-map-svg w-full max-h-[340px]" viewBox="0 0 1008 651" xmlns="http://www.w3.org/2000/svg">
+                    <g id="countries">
+                        <path id="map-country-afganistan" d="M721,262 L729,261 L733,267 L727,274 L715,273 Z" />
+                        <path id="map-country-alemania" d="M512,143 L522,141 L525,149 L515,155 L509,149 Z" />
+                        <path id="map-country-arabia" d="M632,267 L656,263 L672,291 L651,311 L636,290 Z" />
+                        <path id="map-country-argelia" d="M485,251 L519,252 L514,286 L476,280 Z" />
+                        <path id="map-country-argentina" d="M312,490 L331,489 L321,578 L298,582 Z" />
+                        <path id="map-country-australia" d="M827,472 L897,465 L921,518 L840,534 Z" />
+                        <path id="map-country-austria" d="M523,158 L533,156 L534,162 L524,164 Z" />
+                        <path id="map-country-belgica" d="M503,145 L510,143 L511,148 L504,149 Z" />
+                        <path id="map-country-bolivia" d="M309,425 L334,420 L341,448 L315,459 Z" />
+                        <path id="map-country-brasil" d="M315,372 L368,360 L401,402 L342,462 L320,410 Z" />
+                        <path id="map-country-canada" d="M152,65 L290,62 L310,141 L175,152 Z" />
+                        <path id="map-country-chile" d="M296,470 L311,468 L302,570 L291,570 Z" />
+                        <path id="map-country-china" d="M731,215 L802,210 L835,268 L762,284 L739,245 Z" />
+                        <path id="map-country-colombia" d="M281,365 L306,362 L309,388 L278,390 Z" />
+                        <path id="map-country-cuba" d="M259,285 L278,284 L276,291 L257,290 Z" />
+                        <path id="map-country-ecuador" d="M266,390 L281,388 L277,405 L263,402 Z" />
+                        <path id="map-country-egipto" d="M574,258 L603,257 L605,286 L573,284 Z" />
+                        <path id="map-country-espana" d="M472,185 L496,183 L492,204 L465,201 Z" />
+                        <path id="map-country-estados-unidos" d="M172,159 L295,150 L299,222 L185,228 Z" />
+                        <path id="map-country-filipinas" d="M834,321 L845,320 L847,342 L833,341 Z" />
+                        <path id="map-country-finlandia" d="M548,82 L565,80 L562,112 L549,111 Z" />
+                        <path id="map-country-francia" d="M491,157 L508,154 L511,176 L489,178 Z" />
+                        <path id="map-country-grecia" d="M552,192 L564,191 L561,202 L550,200 Z" />
+                        <path id="map-country-guatemala" d="M228,299 L241,298 L240,307 L229,305 Z" />
+                        <path id="map-country-india" d="M707,276 L736,272 L745,315 L718,320 Z" />
+                        <path id="map-country-indonesia" d="M802,374 L860,375 L865,402 L795,400 Z" />
+                        <path id="map-country-irak" d="M633,240 L648,241 L646,254 L632,251 Z" />
+                        <path id="map-country-iran" d="M654,238 L684,235 L680,264 L651,262 Z" />
+                        <path id="map-country-irlanda" d="M465,134 L478,131 L475,145 L462,143 Z" />
+                        <path id="map-country-islandia" d="M432,82 L460,80 L457,92 L433,93 Z" />
+                        <path id="map-country-italia" d="M520,172 L532,170 L539,195 L528,197 Z" />
+                        <path id="map-country-japon" d="M856,202 L870,201 L862,242 L849,240 Z" />
+                        <path id="map-country-marruecos" d="M459,222 L481,223 L477,245 L452,240 Z" />
+                        <path id="map-country-mexico" d="M192,238 L242,232 L251,288 L211,285 Z" />
+                        <path id="map-country-noruega" d="M510,85 L528,82 L535,132 L518,132 Z" />
+                        <path id="map-country-nueva-zelanda" d="M910,545 L928,542 L912,585 L898,580 Z" />
+                        <path id="map-country-paises-bajos" d="M502,135 L511,134 L513,142 L504,143 Z" />
+                        <path id="map-country-pakistan" d="M696,260 L714,258 L718,282 L701,284 Z" />
+                        <path id="map-country-panama" d="M264,335 L276,334 L275,342 L263,341 Z" />
+                        <path id="map-country-paraguay" d="M331,462 L349,459 L346,482 L330,480 Z" />
+                        <path id="map-country-peru" d="M266,412 L292,408 L285,458 L269,445 Z" />
+                        <path id="map-country-polonia" d="M532,139 L555,137 L552,152 L531,154 Z" />
+                        <path id="map-country-portugal" d="M453,190 L465,189 L460,211 L449,209 Z" />
+                        <path id="map-country-reino-unido" d="M474,131 L492,128 L488,154 L472,156 Z" />
+                        <path id="map-country-rumania" d="M555,162 L576,160 L573,174 L552,175 Z" />
+                        <path id="map-country-rusia" d="M568,92 L870,82 L821,185 L582,190 Z" />
+                        <path id="map-country-sudafrica" d="M542,460 L574,458 L568,505 L535,492 Z" />
+                        <path id="map-country-suecia" d="M528,82 L546,80 L549,132 L530,132 Z" />
+                        <path id="map-country-suiza" d="M509,160 L518,158 L519,166 L510,167 Z" />
+                        <path id="map-country-tailandia" d="M774,295 L790,294 L786,322 L771,320 Z" />
+                        <path id="map-country-turquia" d="M578,210 L622,207 L618,228 L575,230 Z" />
+                        <path id="map-country-ucrania" d="M562,140 L605,135 L600,165 L559,168 Z" />
+                        <path id="map-country-uruguay" d="M336,492 L351,490 L349,505 L334,502 Z" />
+                        <path id="map-country-venezuela" d="M290,345 L324,342 L320,368 L289,368 Z" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 max-w-full">
+            <div>
+                <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Acciones Prioritarias</h3>
+                <ul class="space-y-8 sm:space-y-10" id="dash-acciones-list"></ul>
+            </div>
+            <div>
+                <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Proyectos en Marcha</h3>
+                <ul class="space-y-6 sm:space-y-8" id="dash-proyectos-list"></ul>
+            </div>
         </div>
     </section>
 
@@ -626,13 +730,11 @@
 
     function renderProjectsTable() {
         document.getElementById('projects-table-body').innerHTML = realProjects.map((p, index) => {
-            // Blindaje de datos: Si el ID de Sheets viene vacío debido al fallo del Script, le asignamos uno temporal basado en el índice
             const idProj = p.ID_Proyecto || p.id_proyecto || `TRK-00${index + 1}`;
             const nomProyecto = p.Nombre_Proyecto || p.nombre_proyecto || 'TRACK SIN NOMBRE';
             const nomCliente = p.Nombre_Cliente || p.nombre_cliente || 'DESCONOCIDO';
             const idPed = p.ID_Pedido || p.id_pedido || '';
 
-            // Trazabilidad de horas acumuladas en base al ID
             const horasTotales = realSessions
                 .filter(s => String(s.ID_Pedido) === String(idProj))
                 .reduce((acc, curr) => acc + (parseInt(curr.Horas_Dedicadas) || 0), 0);
@@ -720,30 +822,92 @@
         }
     }
 
+    /* RENDER DASHBOARD ACTUALIZADO Y OPTIMIZADO */
     function renderDashboard() {
-        let totalRecaudado = 0; let totalPedidos = 0;
-        realSales.forEach(s => totalPedidos += (parseFloat(s.Monto_Total) || 0));
-        realPayments.forEach(p => totalRecaudado += (parseFloat(p.Cantidad_Pagada) || 0));
-        document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
-        document.getElementById('dash-curso').innerText = `€${(totalPedidos - totalRecaudado).toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        let totalRecaudado = 0;
+        let totalPedidosContador = realSales.length;
+        let pedidosUltimoMes = 0;
+        let clientesNuevosMes = 0;
 
-        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 3).map(t => {
+        // Cálculos de tiempo en base a la fecha actual del sistema (Junio 2026)
+        const ahora = new Date();
+        const mesActual = ahora.getMonth();
+        const anoActual = ahora.getFullYear();
+
+        // 1. Calcular Facturación Cobrada Absoluta
+        realPayments.forEach(p => totalRecaudado += (parseFloat(p.Cantidad_Pagada) || 0));
+        
+        // 2. Calcular Pedidos del último mes
+        realSales.forEach(s => {
+            if (s.Fecha_Pedido) {
+                const fPed = new Date(s.Fecha_Pedido);
+                if (!isNaN(fPed.getTime()) && fPed.getMonth() === mesActual && fPed.getFullYear() === anoActual) {
+                    pedidosUltimoMes++;
+                }
+            }
+        });
+
+        // 3. Calcular Clientes Nuevos del mes actual
+        realClients.forEach(c => {
+            if (c.Fecha_Registro) {
+                const fReg = new Date(c.Fecha_Registro);
+                if (!isNaN(fReg.getTime()) && fReg.getMonth() === mesActual && fReg.getFullYear() === anoActual) {
+                    clientesNuevosMes++;
+                }
+            }
+        });
+
+        // Pintar KPIs en el Dashboard
+        document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('dash-total-pedidos').innerText = totalPedidosContador;
+        document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
+        document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
+
+        // 4. SISTEMA DE GEOLOCALIZACIÓN DINÁMICA: MAPA METALLICA
+        // Limpiamos iluminaciones previas
+        document.querySelectorAll('.world-map-svg path').forEach(path => path.classList.remove('client-active'));
+        
+        // Buscamos los países de tus clientes reales y encendemos el mapa
+        realClients.forEach(c => {
+            const paisCliente = (c.País || c.Pais || '').toLowerCase().trim()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quita acentos para emparejar
+            
+            if (paisCliente) {
+                // Mapeos de nombres de países a IDs del SVG
+                let idTarget = `map-country-${paisCliente.replace(/\s+/g, '-')}`;
+                if (paisCliente === 'espana') idTarget = 'map-country-espana';
+                if (paisCliente === 'estados unidos') idTarget = 'map-country-estados-unidos';
+                if (paisCliente === 'paises bajos') idTarget = 'map-country-paises-bajos';
+                if (paisCliente === 'reino unido') idTarget = 'map-country-reino-unido';
+                if (paisCliente === 'arabia saudita') idTarget = 'map-country-arabia';
+                if (paisCliente === 'afganistan') idTarget = 'map-country-afganistan';
+
+                const pathElement = document.getElementById(idTarget);
+                if (pathElement) {
+                    pathElement.classList.add('client-active');
+                }
+            }
+        });
+
+        // 5. Renderizar Columna Izquierda: Acciones Prioritarias (Micro)
+        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
             const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
             const labelProyecto = projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL');
             return `
-                <li class="flex items-start justify-between group">
+                <li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4">
                     <div class="flex flex-col gap-1">
-                        <span class="font-body-main text-primary text-sm sm:text-base">${t.Tarea_Descripcion || ''}</span>
-                        <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">TRACK: <span class="text-primary font-medium">${labelProyecto}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
+                        <span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span>
+                        <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${labelProyecto}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span>
                     </div>
-                    <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer" onclick="switchPanel('tareas')">arrow_forward</span>
+                    <span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span>
                 </li>`;
         }).join('');
             
-        document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 3).map(p => `
+        // 6. Renderizar Columna Derecha: Proyectos en Marcha (Macro)
+        document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 4).map(p => `
             <li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4">
-                <span class="font-body-main text-primary text-sm sm:text-base">${p.Nombre_Cliente || 'ARTISTA'} / ${p.ID_Pedido}</span>
-                <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase">${p.Servicio || 'ESTUDIO'}</span>
+                <span class="font-body-main text-primary text-sm sm:text-base font-medium">${p.Nombre_Cliente || 'ARTISTA'} / <span class="font-mono text-xs text-technical-label">${p.ID_Pedido}</span></span>
+                <span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-widest">${p.Servicio || 'ESTUDIO'}</span>
             </li>`).join('');
     }
 
