@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>KOVA RS // SYSTEM v3.0</title>
+    <title>KOVA RS // SYSTEM v1.0</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -118,6 +118,16 @@
             text-align: center;
             transition: opacity 0.5s ease; 
         }
+
+        /* Contenedor adaptativo blindado para evitar deformaciones del mapa PNG */
+        .map-container-responsive {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1300 / 780;
+            max-width: 5xl;
+            margin: 0 auto;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="font-body-main text-on-surface antialiased">
@@ -170,9 +180,10 @@
             <div class="active-tab-line"></div>
         </header>
         
+        <!-- Fila de KPIs Principales Actualizada (Suma de Pedidos/Vendido) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 border-b border-outline-variant/10 pb-10">
             <div>
-                <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Facturación (Cobrado)</p>
+                <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Total Vendido (Pedidos)</p>
                 <p class="font-display-xl text-xl sm:text-3xl tracking-tighter text-primary font-medium" id="dash-facturacion">€0,00</p>
             </div>
             <div>
@@ -189,6 +200,7 @@
             </div>
         </div>
 
+        <!-- El Mapa del Mundo Real "Estilo Metallica" -->
         <div class="mb-14 bg-surface-container/20 border border-outline-variant/10 p-6 sm:p-8">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest text-[11px]">KOVA GLOBAL EXPANSION // CLIENT MAP</h3>
@@ -196,19 +208,15 @@
                     <span class="w-2.5 h-2.5 rounded-full bg-[#a1fa49] inline-block"></span> ÁREAS CONQUISTADAS
                 </span>
             </div>
-            <div class="w-full flex justify-center items-center p-4 bg-transparent border border-outline-variant/5 relative aspect-[1300/780] max-w-5xl mx-auto overflow-hidden">
-
-              <img 
-                src="/world-map-kova.png"
-                class="absolute inset-0 w-full h-full object-contain opacity-90"
-                alt="World Map"
-              />
-            
-              <div id="map-markers-layer" class="absolute inset-0 z-10"></div>
-            
+            <div class="map-container-responsive">
+                <!-- Imagen mapeada de tu carpeta pública en GitHub -->
+                <img src="/world-map-kova.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="World Map">
+                <!-- Capa absoluta para clavar las chinchetas sobre las proporciones reales -->
+                <div id="map-markers-layer" class="absolute inset-0 z-10"></div>
             </div>
         </div>
 
+        <!-- Distribución Operativa Inferior de 2 Columnas Estrictas -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 max-w-full">
             <div>
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Acciones Prioritarias</h3>
@@ -221,11 +229,13 @@
         </div>
     </section>
 
+    <!-- DIRECTORIO -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
     </section>
 
+    <!-- GESTIÓN DE PROYECTOS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-proyectos">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10">
             <div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">GESTIÓN DE PROYECTOS</h2><div class="active-tab-line"></div></div>
@@ -241,16 +251,19 @@
         </div>
     </section>
 
+    <!-- SESIONES Y ACCIONES -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES Y ACCIONES</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> PROGRAMAR ACCIÓN</button></header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
+    <!-- REGISTRO DE PEDIDOS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
         <div class="overflow-x-auto"><table class="w-full text-left min-w-[750px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right font-medium">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="orders-table-body"></tbody></table></div>
     </section>
 
+    <!-- BILLING -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-outline-variant/20 mb-8 pb-8">
@@ -317,14 +330,49 @@
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarSesionExistente(event)"><input type="hidden" name="edit_sess_id_tarea"/><input type="hidden" name="edit_sess_id_cliente"/><input type="hidden" name="edit_sess_nombre_cliente"/><input type="hidden" name="edit_sess_horas"/><input type="hidden" name="edit_sess_estado"/><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista Vinculado</label><input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-session-artista-display" readonly type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Canción / Track</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-select-proyectos-sesion" name="edit_sess_id_pedido" required></select></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Tarea / Fase</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_sess_descripcion" required type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nueva Fecha Límite</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_sess_fecha_limite" required type="date"/></div><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button></form>
 </aside>
 
+<!-- DRAWER DE REGISTRO DE PEDIDOS CON MULTIPLICADOR Y CAMPOS DINÁMICOS -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-order-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarPedido(event)">
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="servicio" onchange="tarifaEstudio(this)" required><option value="">Selecciona tarifa...</option><option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option><option value="Single Pro">Single Pro — 350€</option><option value="KOVA Signature">KOVA Signature — 500€</option><option value="Recording">Recording — 200€</option><option value="Servicio Personalizado">Servicio Personalizado (Manual)</option></select></div>
-        <div class="space-y-1 hidden" id="wrapper-precio-manual"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Manual (€)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/></div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Artista</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="syncNombreCliente(this)" required></select>
+            <input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/>
+        </div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Servicio Contratado</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="servicio" onchange="tarifaEstudio(this)" required>
+                <option value="">Selecciona tarifa...</option>
+                <option value="Sesion Pro">Sesion Pro (Mezcla + Mastering) — 200€</option>
+                <option value="Single Pro">Single Pro — 350€</option>
+                <option value="KOVA Signature">KOVA Signature — 500€</option>
+                <option value="Recording">Recording — 200€</option>
+                <option value="Servicio Personalizado">Servicio Personalizado (Manual)</option>
+            </select>
+        </div>
+        <!-- Casilla de texto para detallar si seleccionas Servicio Personalizado -->
+        <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-servicio-custom">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Servicio Personalizado</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm uppercase" name="servicio_custom" placeholder="ej: EP PRODUCCIÓN COMPLETA / ARREGLOS" type="text"/>
+        </div>
+        <!-- Casilla de cantidad multiplicadora de temas -->
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad (Nº de Temas)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" id="order-cantidad-input" name="cantidad" type="number" value="1" min="1" oninput="calcularImpuestosDinamicos()"/>
+        </div>
+        <div class="space-y-1 hidden" id="wrapper-precio-manual">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Monto Base Unitario (€)</label>
+            <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="order-monto-input" name="monto_base" type="number" step="0.01" oninput="calcularImpuestosDinamicos()"/>
+        </div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha de Entrega (Deadline)</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="deadline" required type="date"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom')" required><option value="100% a entrega">100% a entrega</option><option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option><option value="Otro">Otro (Especificar)</option></select></div>
+        <div class="space-y-1">
+            <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Forma de Pago (Odoo ERP)</label>
+            <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago" onchange="manejarFormaPagoCustom(this, 'wrapper-forma-pago-custom')" required>
+                <option value="100% a entrega">100% a entrega</option>
+                <option value="50% anticipado + 50% a entrega">50% anticipado + 50% a entrega</option>
+                <option value="Otro">Otro (Especificar)</option>
+            </select>
+        </div>
         <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-forma-pago-custom"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Forma de Pago</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="forma_pago_custom" placeholder="ej: 30% Adelanto + 70% Licencia" type="text"/></div>
         <div class="pt-2"><p class="text-[11px] font-technical-data uppercase text-primary bg-surface-container-high p-4 border border-outline-variant/30 hidden shadow-none" id="iva-tax-notice"></p></div>
         <div class="space-y-1 bg-surface-container/50 border border-outline-variant/10 p-4 font-technical-data text-[11px] flex gap-2 items-start text-on-surface-variant/70"><span class="material-symbols-outlined text-amber-500 scale-90">info</span><span>Una vez cerrado el pedido comercial, puedes ir a <b>PROJECT DIRECTORY</b> para dar de alta individualmente las canciones que incluye y trazar sus horas.</span></div>
@@ -420,6 +468,7 @@
         } catch (e) { console.error("Sync Error Inicial:", e); }
     }
 
+    // Navegación estructural del CRM
     function switchPanel(panelId) {
         document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
         document.getElementById(`panel-${panelId}`).classList.remove('hidden');
@@ -472,70 +521,101 @@
         }).join('');
     }
 
-    function syncDatosProyectoEdicion(select) { const option = select.options[select.selectedIndex]; const form = select.closest('form'); if (select.value) { form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid') || ''; form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || ''; document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || ''; } }
+    function syncDatosProyectoEdicion(select) { const option = select.options[select.selectedIndex]; const form = select.closest('form'); if (select.value) { form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid) || ''; form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || ''; document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || ''; } }
     function toggleWorkflowInputs(value) { const descInput = document.getElementById('session-descripcion'); descInput.placeholder = value === "Seguimiento Comercial" ? "ej: Enviar mezcla preliminar / revisión feedback" : "ej: Primera Mix / Masterización final"; }
     function syncNombreCliente(select) { const option = select.options[select.selectedIndex]; if (select.value) { const form = select.closest('form'); form.querySelector('input[name="id_cliente"]').value = select.value; form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-nombre') || ''; } calcularImpuestosDinamicos(); }
-    function tarifaEstudio(select) { const wrapper = document.getElementById('wrapper-precio-manual'); const input = document.getElementById('order-monto-input'); if (select.value === "Servicio Personalizado") { wrapper.classList.remove('hidden'); input.value = ""; input.focus(); } else { wrapper.classList.add('hidden'); input.value = TARIFAS[select.value] || 0; } calcularImpuestosDinamicos(); }
+    
+    function tarifaEstudio(select) { 
+        const wrapperPrecio = document.getElementById('wrapper-precio-manual');
+        const wrapperServicio = document.getElementById('wrapper-servicio-custom');
+        const inputMonto = document.getElementById('order-monto-input');
+        if (select.value === "Servicio Personalizado") { 
+            wrapperPrecio.classList.remove('hidden'); 
+            wrapperServicio.classList.remove('hidden');
+            inputMonto.value = ""; 
+            inputMonto.focus(); 
+        } else { 
+            wrapperPrecio.classList.add('hidden'); 
+            wrapperServicio.classList.add('hidden');
+            inputMonto.value = TARIFAS[select.value] || 0; 
+        } 
+        calcularImpuestosDinamicos(); 
+    }
 
     function calcularImpuestosDinamicos() {
-        const orderSelect = document.querySelector('#add-order-drawer select[name="artista_select"]'); const serviceSelect = document.querySelector('#add-order-drawer select[name="servicio"]'); const input = document.getElementById('order-monto-input'); const notice = document.getElementById('iva-tax-notice');
+        const orderSelect = document.querySelector('#add-order-drawer select[name="artista_select"]'); 
+        const serviceSelect = document.querySelector('#add-order-drawer select[name="servicio"]'); 
+        const inputMonto = document.getElementById('order-monto-input'); 
+        const inputCantidad = document.getElementById('order-cantidad-input');
+        const notice = document.getElementById('iva-tax-notice');
+        
         if (!orderSelect || orderSelect.selectedIndex <= 0 || !serviceSelect || serviceSelect.value === "") { notice.classList.add('hidden'); return; }
-        const pais = orderSelect.options[orderSelect.selectedIndex].getAttribute('data-pais'); const base = parseFloat(input.value) || 0; notice.classList.remove('hidden');
-        notice.innerHTML = pais === "España" ? `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>` : `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`;
+        
+        const pais = orderSelect.options[orderSelect.selectedIndex].getAttribute('data-pais'); 
+        const cantidad = parseInt(inputCantidad.value) || 1;
+        
+        let precioBaseUnitario = parseFloat(inputMonto.value) || 0;
+        if (serviceSelect.value !== "Servicio Personalizado") {
+            precioBaseUnitario = TARIFAS[serviceSelect.value] || 0;
+        }
+        
+        const baseTotal = precioBaseUnitario * cantidad;
+        notice.classList.remove('hidden');
+        
+        if (pais === "España") {
+            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(baseTotal * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(baseTotal * 1.21).toFixed(2)}€</b>`;
+        } else {
+            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${baseTotal.toFixed(2)}€</b>`;
+        }
     }
 
     function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
 
-    /* RENDER DASHBOARD CON CHINCHETAS CALIBRADAS PARA EL MAPA PNG */
+    /* RENDER DASHBOARD ACTUALIZADO Y SEGURO (MÉTRICAS DE TOTAL VENDIDO ACUMULADO) */
     function renderDashboard() {
-        let totalRecaudado = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
+        let totalVendidoAcumulado = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
         const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
 
-        realPayments.forEach(p => totalRecaudado += (parseFloat(p.Cantidad_Pagada) || 0));
+        // Cambiado: Ahora suma el volumen bruto contratado de todos los pedidos (Vendido) en lugar del dinero cobrado
+        realSales.forEach(s => totalVendidoAcumulado += (parseFloat(s.Monto_Total) || 0));
         realSales.forEach(s => { if (s.Fecha_Pedido) { const fPed = new Date(s.Fecha_Pedido); if (!isNaN(fPed.getTime()) && fPed.getMonth() === mesActual && fPed.getFullYear() === anoActual) pedidosUltimoMes++; } });
         realClients.forEach(c => { if (c.Fecha_Registro) { const fReg = new Date(c.Fecha_Registro); if (!isNaN(fReg.getTime()) && fReg.getMonth() === mesActual && fReg.getFullYear() === anoActual) clientesNuevosMes++; } });
 
-        document.getElementById('dash-facturacion').innerText = `€${totalRecaudado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('dash-facturacion').innerText = `€${totalVendidoAcumulado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('dash-total-pedidos').innerText = totalPedidosContador;
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
-        // COORDENADAS RECALIBRADAS SOBRE TU NUEVA PLANTILLA PNG OPERATIVA
+        // MATRIZ DE COORDENADAS RECALIBRADAS SOBRE TU PLANTILLA PNG OPERATIVA EN GITHUB
         const COORDENADAS_PAISES = {
-    "espana": { top: "32.5%", left: "43.5%" },
-    "aruba": { top: "49.4%", left: "22.8%" },
-
-    "estados unidos": { top: "33.0%", left: "16.8%" },
-    "mexico": { top: "45.0%", left: "18.8%" },
-    "colombia": { top: "57.0%", left: "27.4%" },
-    "venezuela": { top: "53.5%", left: "28.7%" },
-    "argentina": { top: "80.0%", left: "31.7%" },
-    "brasil": { top: "64.0%", left: "35.3%" },
-    "chile": { top: "78.0%", left: "29.2%" },
-    "peru": { top: "64.0%", left: "28.2%" },
-
-    "reino unido": { top: "26.0%", left: "44.8%" },
-    "francia": { top: "30.2%", left: "46.2%" },
-    "alemania": { top: "28.8%", left: "47.5%" },
-    "italia": { top: "34.6%", left: "48.7%" },
-    "paises bajos": { top: "27.5%", left: "46.8%" },
-    "portugal": { top: "34.0%", left: "44.7%" },
-
-    "marruecos": { top: "38.4%", left: "45.3%" },
-    "argelia": { top: "42.0%", left: "48.4%" },
-    "egipto": { top: "43.5%", left: "52.5%" },
-
-    "rusia": { top: "24.5%", left: "65.0%" },
-    "china": { top: "42.5%", left: "72.0%" },
-    "india": { top: "51.5%", left: "66.8%" },
-    "japon": { top: "39.8%", left: "83.0%" },
-    "corea del sur": { top: "41.0%", left: "80.6%" },
-
-    "australia": { top: "74.5%", left: "81.0%" }
-};
+            "espana": { top: "32.5%", left: "48.2%", label: "España" },
+            "aruba": { top: "49.4%", left: "22.8%", label: "Aruba" },
+            "estados unidos": { top: "33.0%", left: "16.8%", label: "Estados Unidos" },
+            "mexico": { top: "45.0%", left: "18.8%", label: "México" },
+            "colombia": { top: "57.0%", left: "27.4%", label: "Colombia" },
+            "venezuela": { top: "53.5%", left: "28.7%", label: "Venezuela" },
+            "argentina": { top: "80.0%", left: "31.7%", label: "Argentina" },
+            "brasil": { top: "64.0%", left: "35.3%", label: "Brasil" },
+            "chile": { top: "78.0%", left: "29.2%", label: "Chile" },
+            "peru": { top: "64.0%", left: "28.2%", label: "Perú" },
+            "reino unido": { top: "26.0%", left: "44.8%", label: "Reino Unido" },
+            "francia": { top: "30.2%", left: "46.2%", label: "Francia" },
+            "alemania": { top: "28.8%", left: "47.5%", label: "Alemania" },
+            "italia": { top: "34.6%", left: "48.7%", label: "Italia" },
+            "paises bajos": { top: "27.5%", left: "46.8%", label: "Países Bajos" },
+            "portugal": { top: "34.0%", left: "44.7%", label: "Portugal" },
+            "marruecos": { top: "38.4%", left: "45.3%", label: "Marruecos" },
+            "argelia": { top: "42.0%", left: "48.4%", label: "Argelia" },
+            "egipto": { top: "43.5%", left: "52.5%", label: "Egipto" },
+            "rusia": { top: "24.5%", left: "65.0%", label: "Rusia" },
+            "china": { top: "42.5%", left: "72.0%", label: "China" },
+            "india": { top: "51.5%", left: "66.8%", label: "India" },
+            "japon": { top: "39.8%", left: "83.0%", label: "Japón" },
+            "corea del sur": { top: "41.0%", left: "80.6%", label: "Corea del Sur" },
+            "australia": { top: "74.5%", left: "81.0%", label: "Australia" }
+        };
 
         const markersLayer = document.getElementById('map-markers-layer');
-
         if (markersLayer) {
             markersLayer.innerHTML = '';
 
@@ -554,37 +634,24 @@
                     .map(normalizarPais)
             )];
 
-            console.log("PAISES ACTIVOS EN MAPA:", paisesActivos);
-
             paisesActivos.forEach(pais => {
                 const pos = COORDENADAS_PAISES[pais];
-
-                if (!pos) {
-                    console.warn("País sin coordenadas:", pais);
-                    return;
-                }
+                if (!pos) return;
 
                 const label = pos.label || pais;
-
                 markersLayer.innerHTML += `
-                    <div 
-                        class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group"
-                        style="top: ${pos.top}; left: ${pos.left};"
-                        title="${label}"
-                    >
+                    <div class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group" style="top: ${pos.top}; left: ${pos.left};" title="${label}">
                         <div class="relative w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_10px_#a1fa49]">
                             <span class="absolute inset-0 rounded-full bg-[#a1fa49] opacity-50 animate-ping"></span>
                         </div>
-
                         <div class="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap bg-primary text-surface px-2 py-1 text-[9px] font-technical-data uppercase tracking-widest opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                             ${label}
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
-        // Renderizado de Listas Operativas
+        // Renderizado de Listas Operarias
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
             const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
             return `<li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4"><div class="flex flex-col gap-1"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL')}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span></div><span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span></li>`;
@@ -630,24 +697,32 @@
 
     function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notes') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
     function guardarSesionProyectos(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Tareas_Seguimiento", action: "SAVE", ID_Cliente: f.get('id_cliente'), Nombre_Cliente: f.get('nombre_cliente'), ID_Pedido: f.get('id_proyecto'), Tarea_Descripcion: `[${f.get('tipo_accion')}] ${f.get('tarea_descripcion')}`, Fecha_Limite: f.get('fecha_limite'), Estado_Tarea: 'Pendiente', Horas_Dedicadas: 0 }, 'tareas'); e.target.reset(); }
-    function guardarPedido(e) { e.preventDefault(); const f = new FormData(e.target); const idCliente = f.get('id_cliente'); const artista = realClients.find(c => c.ID_Cliente === idCliente); const pais = artista ? (artista.País || artista.Pais) : 'España'; let base = parseFloat(f.get('monto_base')) || 0; if (pais === "España") base = base * 1.21; let formaPagoFinal = f.get('forma_pago') === "Otro" ? (f.get('forma_pago_custom') || "Otro") : f.get('forma_pago'); ejecutarPost({ sheet: "Ventas_Pedidos", ID_Cliente: idCliente, Nombre_Cliente: f.get('nombre_cliente'), Servicio: f.get('servicio').toUpperCase(), Monto_Total: base.toFixed(2), Estado_Pago: 'Pendiente', Fecha_Pedido: new Date().toISOString().split('T')[0], Deadline: f.get('deadline'), Forma_Pago: formaPagoFinal }, 'orders'); e.target.reset(); document.getElementById('wrapper-forma-pago-custom').classList.add('hidden'); }
-    function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
+    
+    function guardarPedido(e) { 
+        e.preventDefault(); const f = new FormData(e.target); const idCliente = f.get('id_cliente');
+        const artista = realClients.find(c => c.ID_Cliente === idCliente);
+        const pais = artista ? (artista.País || artista.Pais) : 'España';
+        const inputCantidad = document.getElementById('order-cantidad-input');
+        const cantidad = parseInt(inputCantidad.value) || 1;
+        
+        let baseUnitario = parseFloat(f.get('monto_base')) || 0;
+        if (f.get('servicio') !== "Servicio Personalizado") {
+            baseUnitario = TARIFAS[f.get('servicio')] || 0;
+        }
+        
+        let baseTotal = baseUnitario * cantidad;
+        if (pais === "España") baseTotal = baseTotal * 1.21;
 
-    function abrirEditorPedido(idPedido) {
-        const o = realSales.find(order => order.ID_Pedido === idPedido); if (!o) return;
-        document.getElementById('edit-order-id-title').innerText = `#${o.ID_Pedido}`; const form = document.querySelector('#edit-order-drawer form');
-        form.elements['edit_id_pedido'].value = o.ID_Pedido; form.elements['edit_id_cliente'].value = o.ID_Cliente; form.elements['edit_nombre_cliente'].value = o.Nombre_Cliente; document.getElementById('edit-order-artista').value = o.Nombre_Cliente;
-        const servicioUpper = (o.Servicio || "").toUpperCase();
-        if (["SESION PRO", "SINGLE PRO", "KOVA SIGNATURE", "RECORDING"].includes(servicioUpper)) { form.elements['edit_servicio'].value = servicioUpper; document.getElementById('wrapper-precio-manual-edit').classList.add('hidden'); } else { form.elements['edit_servicio'].value = "SERVICIO PERSONALIZADO"; document.getElementById('wrapper-precio-manual-edit').classList.remove('hidden'); }
-        const artista = realClients.find(c => c.ID_Cliente === o.ID_Cliente); const baseCalculada = (artista ? (artista.País || artista.Pais) : 'España') === "España" ? (parseFloat(o.Monto_Total) || 0) / 1.21 : parseFloat(o.Monto_Total) || 0;
-        document.getElementById('edit-order-monto-input').value = baseCalculada.toFixed(2); form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
-        const formaPagoActual = o.Forma_Pago || '100% a entrega'; const customWrapper = document.getElementById('wrapper-forma-pago-custom-edit'); const customInput = customWrapper.querySelector('input');
-        if (["100% a entrega", "50% anticipado + 50% a entrega"].includes(formaPagoActual)) { form.elements['edit_forma_pago'].value = formaPagoActual; customWrapper.classList.add('hidden'); customInput.value = ""; } else { form.elements['edit_forma_pago'].value = "Otro"; customWrapper.classList.remove('hidden'); customInput.value = formaPagoActual; }
-        calcularImpuestosEdicion(); toggleDrawer('edit-order-drawer');
+        let formaPagoFinal = f.get('forma_pago') === "Otro" ? (f.get('forma_pago_custom') || "Otro") : f.get('forma_pago');
+        let servicioFinal = f.get('servicio') === "Servicio Personalizado" ? (f.get('servicio_custom') || "Servicio Personalizado") : f.get('servicio');
+
+        ejecutarPost({ sheet: "Ventas_Pedidos", ID_Cliente: idCliente, Nombre_Cliente: f.get('nombre_cliente'), Servicio: servicioFinal.toUpperCase(), Monto_Total: baseTotal.toFixed(2), Estado_Pago: 'Pendiente', Fecha_Pedido: new Date().toISOString().split('T')[0], Deadline: f.get('deadline'), Forma_Pago: formaPagoFinal }, 'orders'); 
+        e.target.reset(); 
+        document.getElementById('wrapper-forma-pago-custom').classList.add('hidden');
+        document.getElementById('wrapper-servicio-custom').classList.add('hidden');
     }
-
-    function toggleDrawer(id) { document.getElementById(id).classList.toggle('translate-x-full'); document.getElementById('drawer-overlay').classList.toggle('opacity-0'); document.getElementById('drawer-overlay').classList.toggle('pointer-events-none'); }
-    function closeAllDrawers() { document.querySelectorAll('aside').forEach(a => a.classList.add('translate-x-full')); document.getElementById('drawer-overlay').classList.add('opacity-0', 'pointer-events-none'); }
+    
+    function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
 
     document.addEventListener('DOMContentLoaded', async () => {
         cargarPaisesEnSelect();
