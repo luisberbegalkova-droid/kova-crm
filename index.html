@@ -118,19 +118,6 @@
             text-align: center;
             transition: opacity 0.5s ease; 
         }
-
-        /* Estilos del contenedor del mapamundi real */
-        .map-wrapper svg {
-            width: 100%;
-            height: auto;
-            max-height: 400px;
-        }
-        .map-wrapper path {
-            fill: #dbd8d0 !important;
-            stroke: #ede9e1 !important;
-            stroke-width: 0.6px !important;
-            transition: fill 0.3s ease;
-        }
     </style>
 </head>
 <body class="font-body-main text-on-surface antialiased">
@@ -209,8 +196,8 @@
                     <span class="w-2.5 h-2.5 rounded-full bg-[#a1fa49] inline-block"></span> ÁREAS CONQUISTADAS
                 </span>
             </div>
-            <div class="w-full flex justify-center items-center p-4 bg-transparent border border-outline-variant/5 min-h-[340px] relative">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTMwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDk3NC44OCA5ODUgTCAwLjc3MzQzOCAwIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iMDhhM2JjMTllMiI+PHBhdGggZD0iTSAxMi4wMDM5MDYgNDkgTCA0MjkuNzg5MDYyIDQ5IEwg4MDIsMjEwIEwgODM1LDI2OCBMIDc2MiwyODQgTCA3MzksMjQ1IFoiIC8+PHBhdGggaWQ9Im1hcC1jb3VudHJ5LWNvbG9tYmlhIiBkPSJNNzA3LDI3NiBMIDczNiwyNzIgTCA3NDUsMzE1IEwgNzE4LDMyMCBaIiAvPjxwYXRoIGlkPSJtYXAtY291bnRyeS1pbmRvbmVzaWEiIGQ9Ik04MDIsMzc0IEwgODYwLDM3NSBMIDg2NSw0MDIgTCA3OTUsNDAwIFoiIC8+PHBhdGggaWQ9Im1hcC1jb3VudHJ5LWlyYWsiIGQ9Ik02MzMsMjQwIEwgNjQ4LDI0MSBMIDY0NiwyNTQgTCA2MzIsMjUxIFoiIC8+PHBhdGggaWQ9Im1hcC1jb3VudHJ5LWlyYW4iIGQ9Ik02NTQsMjM4 LCA2ODQsMjM1IEwgNjgwLDI2NCBMIDY1MSwyNjIgWiIgLz48cGF0aCBpZD0ibWFwLWNvdW50cnktaXJsYW5kYSIgZD0iTTQ2NSwxMzQgTCA0NzgsMTMx LCA0NzUsMTQ1 LAppZ3lIWE9kU3lIdVl6bmFlMVZQVyttTEt4ZVJPaHBIQVFTck4waWgyMEhtWW5sN3hEUzczT2V2QVNSK1oxWlExaHRjUXhvbkVOY25nWGJ1YXJweVNnR0FtaElwY0NKRDNaRDErRW12cU81UVpBK0pIcm9EcU5EM2FXS1dhQzJTcTFpNTVyY1FJREFRQUJvMVl3VkRBT0JnTlZIUThCQWY4RUJBTUNCNEF3RXdZRFZSMGxCQXd3Q2dZSUt3WUJCUVVIQXdRd0RBWURWUjBUQVFIL0JBSXdBREFmQmdOVkhTTUVHREFXZ0JRZVJhQWx0Wlhjekp0U1ZYd2NvWG9lWGJiN09qQU5CZ2txaGtpRzl3MEJBUTBGQUFPQ0FnRUFKZWRXTEdaS3VORUhIZHdLWjN5cVlOeEJOM3pFczdvWDNiWnM3Nng0NkhQWVR3cUZOWWpQbUQ1ZXM5eEh5djVtaHFxaUc2WXZ5dndDVzhKYkYzVTNmc05EYmduRDF5NWdBMjljTHphNmFsTjNLS0t4eXEvR3RXMkR1ZW0vM1dyZ0QyQmJydFZialBLbW9xb3RhRmcxTzJqa0JIUUtheGlQaDJtQkkrbE5tV3ZPMEZjMjF5emdPSm00dGtzRlR3cUgzTEhFaGNoNjVsVlNVcURJUVd2QW1sVlNGUHFqbk5DUXVLdFpOemh3eGlLV1JBbkdnSmtFVlcrUE5EcHFWRnVubStGZm5SQUNrdzk0NkNiNUt1aGppUXNWc3Nnakw2V0ZVOFdiTEx1R1pzQUh3OVpCM3VvZmlMVVJIWE5YTS9tVGV1NkFFbHRaWXN5MHQvaHk0bWRtMmcyN1RCTkpNRzRvdXNvc1ZhcmhPTGwzMVhlUzNYMkY0WGc3eCtPaE9Hem5oYUxEdzR3WStHVWI5SXBpamdQT2VSNy8zYmg1dExhNlRiOHZzYzhhWnc4VGF1eDJ1N3l1RTUxTitJdDIwUXQvTmU0dmVwSDczcDd3VDBMRmg4Rm1MbGkwVzZHS25ZRVhReUtnM0JOTEliOXFSaFZTYjY4dnhKWjFrcnhTZ1NkSy9rQ0huY1YvSWYzMFJPYjAzMy9sSjBScnEybk9Jd1VuUVBjT1RGdkE3eXplb1FzL0F1dHZGY1NtdDlSUngwVCt5NVFKUnh6Yk5LVGtnR3NHOVl3N2tSV1VUOXpTaEpDZW1VejBmTndEbWQzY2JWTnZ0WHo0dytlSFFwSU0wb1JRaTVYNUlTb3FrQXVQeUVYYXF2R0RHRVhNbjNiN2tUdHRiU28ySzgvem1vMVpCdWd3Z2dia01JSUV6S0FEQWdFQ0FoUVFJeDdzZ3k3Ukt6NktWM1BPUXowNWRuVjZ2REFOQmdrcWhraUc5dzBCQVFzRkFEQnRNUXN3Q1FZRFZRUUdFd0pCVlRFTU1Bb0dBMVVFQ0JNRFRsTlhNUTh3RFFZRFZRUUhFd1pUZVdSdVpYa3hFekFSQmdOVkJBb1RDa05oYm5aaElGQnliMlF4RURBT0JnTlZCQXNUQjFOcFoyNXBibWN4R0RBV0JnTlZCQU1URDFOcFoyNXBibWNnUTBFZ1VISnZaREFlRncweU5qQTJNREV3TlRNNE1qQmFGdzB5TmpBM01ERXdOVE00TlRCYU1DSXhJREFlQmdOVkJBTVRGMU5wWjI1cGJtY2dTVzUwWlhKdFpXUnBZWFJsSUVOQk1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBeWQ4bVBjTVZzVnpPS0lJM01DeDBVT3VTazBoWml3STRGUWFsN0lpeGE0Y2RLbVErOHZJZTFvZFlDZWdHY0s4SVhQZVo4Ri9yMDk1bGJIdmZEeGVwbURMS3dDVkdJMmU3WkdqSUNYbldtVXJadHkvbTNzdGM3RVVtaG9sVHlIcmQ5WnovSGNNL29Qem5JRXdPMHVkam9ROVd6c3R5b05YVzJHM29NSUZYWXJRVkcvL3Q3SDdhZWtjWkpZbjkzenRqRU1hd0pzQ3lNMnVyZ01IQ2h4bWF4b0pBcTFsb1JKY3k1cnY4TDJ3cnNRb0M0NjU2dVVkUzlNb1l5bTYzZVM0emZwR2o2cjRuRmE3aEF1YStGSk8zSmN1cUpSZzE3L1dabDRMbWNQc3RjOFdmUDNIbmNoYnN3THBjdk1SU3ExYWZyQng5UEpNWDlHdlNwc3hQRlp1eXJDWmRsekVyMUtBSk0vdGoxUUxKT3pnS0xrQ1FsZFhIbm5EU2xqdG5nNkRwQnZ0bXZFOW9EcGZsZlRRWTJPWUYzR3FSUVErZGptNDZYMlJHSHBLeE1ReGtqUWNwQWYrZG16RDJYV3dHVmJlMGV6ekt6RXI0VHFUamw4dGRzRE5UUmVINk4rOTlHZjBXclhVTVNvV2U4NjJMTTA0NGxlVGwxVFNMQVQwSkpXQVMxZkZsR2lQbE5QSEVid3pUalh1djRnZWtIMytQc3c5ellYYTZHTk9pQkcvekphVlNKK3M2amh5NWNoTnl0VFZuemdlRTZjeUZCL1RLVFlIL3BHelp2YnkwMHY1bXFieGxTMVplMUI5RlBYS2NmSDRnN1JWY3daUWh5bVo1VTlJNWJIL3VibFNlWDVlMjVrTXlJdmFvSEVjbWxQQ0pIUU1STjRCS1pCeW5tdEVDQXdFQUFhT0NBY1V3Z2dIQk1BNEdBMVVkRHdFQi93UUVBd0lCQmpBU0JnTlZIUk1CQWY4RUNEQUdBUUgvQWdFQU1CMEdBMVVkRGdRV0JCUWVSYUFsdFpYY3pKdFNWWHdjb1hvZVhiYjdPakFmQmdOVkhTTUVHREFXZ0JSS1hHMytkMUJvdldNcFlXVHRodUloeXdUakhUQ0Ixd1lJS3dZQkJRVUhBUUVFZ2Nvd2djY3dUQVlJS3dZQkJRVUhNQUdHUUdoMGRIQnpPaTh2Y0d0cExtTmhiblpoTFdsdWRHVnlibUZzTG1OdmJTOTJNUzl3YTJrdlkyRnVkbUV0Y0hKdlpDOXNNUzl6YVdkdWFXNW5MMjlqYzNBd2R3WUlLd1lCQlFVSE1BS0dhMmgwZEhCek9pOHZjR3RwTG1OaGJuWmhMV2x1ZEdWeWJtRnNMbU52YlM5Mk1TOXdhMmt2WTJGdWRtRXRjSEp2WkM5c01TOXphV2R1YVc1bkwybHpjM1ZsY2k4eFpHTTBOV000TkMwMFpqa3pMV1V4TUdVdE5HTXpOaTFsTjJSbFlXRXlOVFl6T1RJdlpHVnlNSUdBQmdOVkhSOEVlVEIzTUhXZ2M2QnhobTlvZEhSd2N6b3ZMM0JyYVM1allXNTJZUzFwYm5SbGNtNWhiQzVqYjIwdmRqRXZjR3RwTDJOaGJuWmhLNW5wY09MdzRVODVkbWNoY0UyeXZic0xScXlZTTROeDgrTUR5bkVrb2FMSXh5V3pvcE9YVHhkUVllZWpVR1ZwWkpaY2s3VGdmV3dtaGZtUmo1L3ZZbkxKVEIxTnRYWmk2cENaZjVlWTZZK2t3bnZEenhhZ2JMUVBiMTlDclhJamhqa1hmN08zMVNwMEUrRDArOWNldG1mRGY0SDFtZjZ3RTBDanREM2tBc2R0dnRVdklYSnFaMkdqbUVPZERseTRkVlgzbTJNVVVHampReWRtS2NwSlRNZ0hHSllKTTd1NCtrMmZhSC9vMnZIVGVKRTE4cXMzSXFTdGRiY3kwQjg5RUpBRjlPanFoRStoVkxvSjI3bDJoWC9aNjJ3SnduK2U5dnZtNnlITFduYXBmanVaQmdPM2NMUVhSeEluUGYwcDd1ZGhEUHBuYk1BSEtaQVE4TWpibHE3UG5hZ0RFeDlkOUJHSmNKa0dDNTRLQW9aWnk2cnVIc3JGaVhVeGdnZXZjT2E1bFdjSHhpZEhsRUVnZlJTd05DbjNLUmRDNlBLejVxS0xYMCtjU043L0w1OHZ2cTJqOG8xV2ZIb0VneXp6Z3ppRWhOWno0MEpmbzdSRDdjYkhuaVBFNnUxOFNsN3hnOWNuUldFQWgxOGNBeTR3NGwwaVFKR0hodlNPU2oxM0pURStEc09pSkt6dVNGMjRaRy9kNVdGUTFBTEd2KzFSNkdVWlcvN202Z2ZWRXNhUU9UZ1F6THI1bXh3VDcvK3hmQnNaQU5PZy9ody9kQThEOHc1UXRDcGk3alI3UXVMSHRwbk9oYXdIaFdsa2FxZzh2QjBZOEdYYnVrVkVDQUVHWWNPeVh3Wmh4TXVsVmJ3Q2lvaHZsc2ZvUyttdGRpR2pEYmR0MzlreW9aYnNuSWl2VzEyd3ZVV3BuVHpzZnhrZ0N5VmJGMVlPOTdZc2RibCt5OVR1dFVKT1pEVE1ybFpsU0VNbG0zdXJLMS9ZSmFPS3JydzhDdFBJT1dPc2N0TzBFU0lRczBUU3ZQN0lEM3ZaOCtYT05VdEpUY1Z3RFJJOXlrUmI5SmZ3ZFEwajhUeE1ERHNlSWF2c0E1Ymx5TGdNeTRuWmhnOWZZbk5WL0NkdXFKWWxJdGxvNDFjM1cwVmJrVEIzNzA3NFdCaXVUTWZHbTFYWWhYeDRvRXJtc0JjQ2p5cWQ3M0NLKytMVWtHbVFwREQyaE43a3dlZVJ6cGE4VTlyNWFpS3MyVi81Wm80U0hkOHk1MnJwUkdpWC95QjNjRnl6Ti9qUkxsSWhBc3g4ZVVsSmFWVnBablJjZGZxbEZSVmVTVmFzZWRnN2VkNlFTamVsR3dnK3U4NHY2YkM5UnYybFo5QW1ENDdlUmk5RDdoZ3NJNDBMK1k4R0kzWEZ5aTZJaGI1d0FqNmMrQ3o1Nlo3MVhlK3lldUs5dTlSdnFhQzRBYUpGQWpxQjhNUGJBV2dFa05yRlFIRzhORUtIby9lc3pCZ2ptTDhUZXh3eWkrS0w0YU1oS0tHSC92MzB6R3VjOEdIeTJYVDU4cHdYZzRPemlPdUdIOGw4bUF3Q1JxR2laYnBBcDE4Y2NuQWpXVEJzRWdIcHNsWmFob0o4TEpoTFdidGl6RXdhUVdJdTR5ajg3aG1RTW54Q1gxRmhMUkxaOGJPR2wzM1pWTzArWUxOZmF6SnVUdE9PQ1FESTRXc25sS2tqRC9rKllSNTNxZVRRT0RTYzhjZXVLZlpZMU5hS3RSNmVvNzE4d0FjVkxwejNXTk9uN3YwVmIwWXIxeTR3ckZGcTgrMFF4Wm5mMTlPSE9CNE0rbXh5Ynd4cUlHZ3NGUVg2dnN4Y2c3OCtOTFFPM2dmdmUvR2EzZVJjb2x2VXZOVjBRUjZkTVdYZTZVNlRaUVVMSnpKRlA2M2JibDFnYTlOY1NXODFpYnQ3WEMxZ0M1SThoa1c3ang2c0htRjhTMjU3N3VRK0Z6S2I1T2JmTUNBR2QvbjduUzdOaTJ3OG1SMmVrbDVTVzVlV2VGWG83RTg2dG1PWXU1MHhFMVpRWEc1Y1pjRFB3MW9ETlF6bGxtQ1BzendMMUwyVEdzUUFJT3diRjl4MGh1RG1paUN6QVBXM2V3L1VHa3hjV3ZDeTdZYnd1YjFVR05yZit6NE8rdW0zL0orWk1wWG82NmRUbDlRVEI4NHhhNGozbmZmcVdmcmsxVHlTYy9Qek5yMVEvWjFIVUI5VG1XZmorbnBLYmY4UGJ4blVyS1FwVnFXT0dNREh0eklENTNLcW9TOTJ3Q0tQMUZLeGhXcDJlZFEvSExPRHdRUUhGNVBDUDNMZ0RZYUQ0THk5WXRyWC94OVJFOWIvdUxvcjdLcks0cExLaXZLeTR1aVhybVJtck85ZzNFSFh3NTJVbGdDWUxMTHU4dDJ2WmJTZHRPaFRzNVQyQmFYOTl5WjFhGzk4c2c3L21KVlNVbGhqYzIwV3pkT2VlZVE4YVdFNlRQUXFGOXl2bllFQ0JZdmxIeGcyODZHd09iZjd2NzBOWnZlNkp0WmZaaU5ZTFV4SlBGWkEyOWZEUHZzdW9mbFl3dExZZ29KaEVHYnd6OG9iZWRTeVhhSTFXRDd5bDZKZXBQcmw2VklGZHR1Ty83WWE3SkJ0L2ZHS3hmQzNmTXVYckd5QU1uaWNxZWZFOW9wbXlpUXZVY3hsMnQ3MmU2WFU1LzRiczNmdFlhc0YwTSt0KzdCclRjVmJQY2I0WjRnU0RiTEk0NjBIWFZMb3NacXZYMnhnNkt3cXExTmVvcXFWOHZ1bE44d3JaUHRlUmh1ei96NzlDK3UvTU1jOUd6cU05VG00bE9SRVBCSFdsaDBYdFI4QS9CeG16MS84UzYwbUJrMUdJeTJkU0VzU2oxUWxlcTVidER4d2ZkbUhtNXJvU0V4cmZPekcwcSt1RFRPTCtoQzkrTCtkVUx0Unk2UGwrNVd5TmV2c3pXaFg1aDQ5R3VGYURQczcwRVhJb00zdEZYSmlBRmJ6bVJ0SFdjdVdOZ2JTR1NrNHpjUmp5b0FVVEJxRDZxaElkQ2g3WllBTEcvNzVMVTV5alpHeUFUUDk6S0ZSNnNPT3FxVnNtRWVzam9RM243ajF3NFRmTUtLbXhsN01zNTV4eU1aZG5mSERBOTROYmJKZzEzUzIxZEwwUzRJKytMY21yNEsvbnF1TG5WVjlWeUE1eUx6TGdWWTN4dXVqYVFVWFIxdGtNNzM3UHE3KzBXdXA1TkVHTUdyYTE5cmZYNjU3TGw0TENhQmtGd29xRGFWLzQ2TEl1RFNXcUpLYXJTWW92UmZ0blJ2azYva1F0UW5hTnBMODVXcHRRM2ZpdFByNFptd1Jibk5vYlVYR0VKYXF6R3hobGRPSHZYUWtGWnl3VVN6Rmx4Y1dKY1Z0d1ZpSzFyelJqb1IzS1JhNFYycjVaVFhsMmwrc1h5NzIwOGNGYkpaM3lzYmpSUk9IeFVadzdtaUdwWk5MTzByckphc1dnbWNuWWZ5T3BpRmZRK1FEK1NDNEcxYjZseEJuQW1qVjBRSE5TNkFjS1pPajFnNmZuVWhpWDczUGFXaVFkK2J4eWRPODdPUFdxOStOOExQempiNWNMV2hkSXZmdU9ub1hYOXlmUUVJRWZPQVorU2MvZU00RklKVHo5cmtkaFprVmNxQlRCc2xrU09TOWZhV3hpc0NBeEFiMzNUM2x1Ry9mK3pqeG04b2pmRFBNUU1BU2poL1ZvNnhxMHNIdFhycE9uNCtUb1E3SHpYKzVHcXRVWGNSRExpY0ZaV0IzcnJJNFE5Wnl6QTZ2R0hqdHlkcVdaZTRBcDBIZ1JCRXBCSUVUaG83UEVESXpjNDVYQzcyT0k2UEArbnhaeHJlM05CejRkUy9RRVFpVVVpNDcrWnpieDl4TmlZL01lVmpEL09RdjJ0bm9Va0FBTkFFeE5tUHRqWnVtcW9mSVdoWFI4MHZsQUFBK0tuVFEyVVZPU2RMUkJKODlXTHRtNXU2dW5qZ2JVKzlzYkVENFVHQUJ0KzFxUGlUd3ozM3AzTmE1cFRMRmZyUStLUUlYZTNSalVYMTNRaWh2Nmg1VHdnVEFRQkd6NXcweEpWMjRMRFI2dXlKTnQ0SVhvUVhIem41MnVrQnVoQVJqa29Bc2pHelowYjg5SEZSaTZCNTNTQ3RxYnJLRTNhTEREenJNZ0FoQUlReDZxa08waWd2Q2IzK2sxVy81eGxsUU9hLzRIZlNGQ2RXbUZTUklTVXIxblc5eUZ6eWwxdGViNThPeU9EYXhVTjNmVm5ZRjJPSVdvM01VU2QxSzQ2M1k3b2d4eVNBa0VHUmtjTVRmVXFPYlRsZUkwRXZRb1NSRXdPZXUyWGpHeFVEa2kxSVVBUVlOR1R3aUJHK2FWL3NzclI5eUthT04vM2IvUHB6QkJnMDF4dmkrTS9udlBBWkFJZFVjOVBqWnpZUFNRNVd1bXVQYjhqc2htS3EvOVR2cVl6Mi9SOGhkMXpuK1BGblU2L0dzS2syZ09lZjd1WG1kRWdYRGlRWU5tNWtrci9NV1o2YWtsWlZCNzBxRG9aRW12WFU2TS9mcXgyUUN4RVBJa1RNbVJiRENYVTUrMDZYdENwajF1TFV1L01mc3BEcHNWNjJpcnpzWWdBQWxhL1ZzMm1JTFB6THhFLy9tK2NBQVAwZnAzK3pHOEkxTlNVMXR1NU1NRm42NUZjZnRLY2ZvbTdadkJQL1B1WHFtekZFNkw0dDNqNWRrRU1CcnBwenRVOTFiblpXb2JIYURyMU1QZUFvZStCSjZZUC9YTlQ5ZExsQWlBaWo1MXlqenpoeXRyNmgxdHkxOVhiOFUrUE5UbSs1VUYrUW0xZkxEZlk5dGxYMExFc3M1b2xyNmpPeTBqTEtZUGcvSFMrbThwUjJiL0NRUmE2Z3o2ZTFKMTRXL3ZuRXkrV1hVenkzWnhraHowUVl0MlFtcEc1S3I2a1hBTTZmYWRJeklDY3FubnowM0dzcHJCdW5GVndxRUU2ZzArYk0wdS84T2NQamZ1dlNDYm5xNXhLVzd4SmwrdGhoQ1pOVTZCSWM4ZmFkSEdVQWpPUy85dVBWSTI1WmtuY2lwZmJvVlpHcGxIYnpUV05RZWZTMm1hbHRXVUZrQzEzTHkzdVpYTnc3dEVNWFFnV1ljZFVFeDFlSGlxb0JQTTZtcnAyOFJ0by9xcEtBT1BTSitkdmZLdXl4QmQ2UDRDUWFjL05pemNHMWgwMEFCTHJhMThuanYveW5DQUE3ZFFIaDhlRXlzMnJjODZvTmlBeUFFdlBSRTJFakpnMjc2K1kwcFRaeFZ3KzhCc0wrZWFQOGFwRmRtUHlPZE9TNG95ZTRucFc0NkNPMFF4ZXF2bW55b0pyLzdNMWxnTmpwOEowdi9zQXhDWUJ2VzJTU1VKajNoNlRQL2xWNVdkK0w5b0djNkQzL3h0aVUxU2wxUUtEcmxRbTRxMjFiUlo0aW95WlR6bTVlVHVRVG5udFJzUllvQmFCSXhNTEN2WUV4RXlQRkk1azlPTThJNmRtY3hJa2JlQ0pLd0RjWDNpTFVmNmw2ZzlURDgyNzZEMzRyaWxiZFBBZ0F1TTdqb1lpc1Nmbmg1QUNENHpWdGdzeUJBOTgvVlpwZTBGMmFBdUhkQXlFdzZhTzAzZmNGQVpEdTdHdndaTVArY1BURTFEY2xhY3c3ZUdBaGdLeEZUTDFxVUd5RXFrZUpFdnhUZWUrcUFXUlIzczBQUmtENy9PbDN2UVpjaUJEM2JPV2J3ZENWOFVPT0I4QWdHUUFRR2NDWWwzOVk5WmVaOGxhMDRHSFFwN1huSHZQcTA2VFdQZ0lIY1B2KzA2OG04WERSeEp3MlFKaWJ1VnpSc25BOUV1VHVPSFRvMGFqem4zV3Z5VmJ0Sit6YU8wVTM0LzB0bnowOHhoT1d3a1B3c3ludnRBN051dnpBME56djFFQTZKUXR5QkFDQ2J2bnNXUzlBQkJqK1ltcnFOeitkT3Z5b0FYaWVJNlN4QllTUWZ4NzdlTDU4d0dYVkFRQVA0YSttcjV1cmdXNVRlZHJXVFVtdGVrUkFzMmh6eVpvN1c4U29JZWw4R05zRkFuZC94cGFWYVNVSGQrM2I5cVNjY0lnUTlkYko5NElIM0NnaS9LbjI1azREOEpEakFFQTc0dTZmNnN0djVwRURuMGRUc3Y0MUl5WnUvczlIbjI1K0JYaWVRMW5TSzFzZTlPVUhYRDhCZ0llUjM1YThPd1NBNis3RCtXeE91NlpOanhBdzRaRk5wMi91bTU1NlA3M3VzMmZuSkNWUFhYN3VJUUNRai8xM3pvY2hBMUJDeDJldjh1UElSVWNRT1FLZ1M1eisyTG9hS1dXeERHVWdmNk5oL1RRNUFNQ3diMUwvZmNmRWhJZ0FuWm9BQUFhOW5IM3FwaUZ6WXp5L0pGeTNwNmEvZ0J4TTNuYnVNZC91S1MwZVJKMytrVzg3Y3dnQXQ1OTZvdVVYSE4vai9pcGkvUUVBSUdoRjdrTmEyWUt0eFI5RURBQzJ0TGFNNUkvUzcybzQyc0xKM1JvRUpRa1Nrb2NHNmFPanFuLzgvaUNBb0x6L2lYVi9LZ1dlSWt0NzU3N3BNOHcxZGtsMDFHVm5aaGtkK2NiUVViRVRmc3FIeGgzOUFRUHA2dGQxeTlhekh2Z04wZDVRMkU1UEdPR1ZzU1Y3emx0WGlEMzNNcUVyRzVCalFDcmY0aDZQY0N3SS9teTVjUQA0eEZ2VFpjRTFlNDZBcEk3VzViUmZjQkdKQk9vUlkrUFZUcG5LdlcvYi9td0E3WkRGRHh4L3VaU1hSQUFncVc5dEhoZXJrOHZrU3MyTmxwUDdVelBYeE9lRkRwSWpBMEtwYjZoWTJHZm5JZlFLaE43OG1uM1padWlCMzVBd2pjTFliaWZjZDkyMElyM0ZMVmhzbURHemc5eldUc0NRTUNZQ1NIemhuKzZhcEsvNTF6cnJBR0JMRzdwTXk5dUl5UUh4VTZzK2JKY3VuQ1Q1anJ3cXVXRlhwbUVNcVU0cmpJZ2x3Y25qZ2x3Y25qL2ZlOFhkd29PU2lwM3I3RFQwdUFxTHpqSnNUY1Y1M255anREZFJyR01lbzNZWDZzNmN1TkE0RXVuTFRvejNWLy9LVW5OU0FKaFdzTlI5cnBBMkhSZDV2WE5mZU9VTVdjV1VHVlA3U2ZITnNwbWdwWmkzekYrenU5cXM3QlFHQkxhN3FncmRCNzd2VFlJTGJPaWRqV0M0MlNiTkxDRWM0ZG03UGxUeTZVMTNsUEQxSXlFTEwrYj05NWMyY29RYW5hRTIzMnk4L2hjUk5IK3BlbkY5dGllUkdpSHJwYldSRXk1OUFBMkdWRWFjYkxEYzhkNnY2RElDRUN2K2gzNlNmYitZNklvLzIvS1RyUEZ2VUQxNS81WmVKdEZZVzk2NjlJWENjOVoyUVBBTFNXTHJzWExpSFJQcFY3MXBkN1lnQmJ1SnlSU0pCNC9YV09iVHZTQkJ4eTg3aDhleENham1WVWxXZlh0OVIwYUZNQkVhUjFkV2QyakxqcCtwbWY3QjF4L2RudzIyOFF0cVJNam95b2hjc05RaE5lbFA1OHFQdlJyb1JLa3UrdGoxVCtwZjNzVXFVakI1dmk2eVhmdSsvZTlVbXQ3TnFZb2w2K0hoUUpkbHcwLzlLaUZWM1lidnR3b3ZZck8xekFFZmNGejRoRWt2U1RuNGphOC8xSk84cEU4NmFkNmRXQ3M2N1lDUQA4dmFBM1RiNStKQWoxZXpLODUyODVPZnY1NHJqZ28rdjMyaFBqL062L1dFVitxZmVIVzdxdmVDT0ZvUW16cGgxOUw3WDlCZFd1REtFY1pRaEVraUlmbXJudTMrV1FNaitpMTFzZkE0VXIwRmE2MEVPSHlQQXBQalBteWlYSlhGRlRXV0VGVHpsZktxbVRiNXRYK3M3R0t1Q29BR1h2aUo3d01MN2pzNGdaQTBDWjhXOGJydHE0d3Q5UXMuNVZ0bHZoTktqNnQwTmRBRXFHWUFjTjduYnRCMEw5WnQ2VVVQREpUOFoyelNrS21iV0xmaTRGUWtGU2piby84WWV2R2hUdWNtdUN3alVRdExXK1FXdTZJR0hCQzY2VFZVbElsSXk2VENmL2s4OFFVV0x5K091dVYveTBKZ1Y0U1FJQTZnQU9BVG85dHBxNTVXZDNqOTc4TCt0US94UTc0V1NvSEFocDlLN2pRZmRQU1QxOHVscy9RdERkdXlqMzdlTlpIVGdaS01uKy90VlgzczJpb0lsZU1NLzIvaG9INTJhMUJZTkNDZ1pnMkVZUDBab3VUQUl3SHNqT01ic0pMNFhOWFRBeXRZQklEREJxemcyK0oxZnZsZ2cwOGdPN2VpUzJ3SDM3MXBNSHpzb3k3VHlWWkFaM0I0ZTNYRUl3dEsvS1NwNDFGYnRKRitxZHJObit2V2ZudmQxMjJhcUloNGF1S3paRWpUUWMrU1lGaUlSb09wYVVXUENiRVM3dGJSTmJUdTQrVmxCdXJDdzNCaWZyVHZ5bmdVRkk3TUw3cHhWLy9rVWE0M3F5RUJkcWtoSW5qYTdNWWdEYW01dy9WVngrMll5MnZFUGkwTDBaM2ZvUlE2c3BQdkpjZGNjUkNjUngzREo1OXJUaHZubGZmcFBMTXdaQW1EVFJLOFU1VUZ6WnZVWTc4UzRJb2h6Y0VCSTNiYko4NTdlRmlwakowOEpwMW9iOXBZM3JVUGV4WWsvQWtEdnZ5RThqVE8rVFZUZ0FjcU1aNGFnMzVIWDNaM1NuOHZVbi8xTGM4ZmZFOU42eG9hcktnbXd6Y0kxU3VQeGNVdFNaMzh4cTFBNWRHR0Z1MENmT1QrYnJ6aHlTelJrNzNWQzIrZGdKSy9DZDZTa2RnSUVqRFhhWlgzdjgxU29JMTU2dDR5NjNZUVFBbExIcGxseGsyTFZzTEE4WThsc24zMTc4Zngybm5WTUNodzRCbkxjVkdaZ3pKb2Eya3pmOUswVmJ1aUJTR0R4bzFqQnJhajRhNWlmNE5Sdy9jcUlVZWt3V0FJOUYvZVB0VWFGR010aVoydGI3ZDFrUUVMUEYzR2k4ZFRrNmtxR1lJUVlvTGxLbGdDSVBnSlNKemIrZ0pSRFZWVFZ2NEtNTlhaQXh2MGszeFRTY3pKQU5IYWF4bFd6Y2t3M0FnOVNiM1VFbUFhZ3k3V1dnSDVGN0ZnYUFjQUZrSS8zY1FXR0dtbnFyU1dCZDlnUXhwckNrWHZTb2VkWnFuSkRWQytIeWJoL3ZQVkRSZWhOQU1WM0VraW01MzFSeU1hTUNDbzRlVFFQZ29SZUNwUW0rU3dhdk1HTHM0TzNWL01CNDFYU0I5MHlJUmJQWm1IL2lYQTd0SWw4WVA5aDlwcHN6NzNBYjFKZmZHdXdqWEVBWEJNWUZ6NStteWFxSW1LQ1hDci9lQnNCanIrUktNK0orRjdRSytKR1JRcCtkY3R0THBCNGFHVjlhS2xNRkRMdW43cXZ2cTdyMCt2UGlpUEhHd203ZVNDSmEyWURNM093Sld0QUZHUVB0NklVUmJudDRzbEIyYU5kSjRJalVOckMvWjBqNzVLNmtqZTU2Y2Q3R2J0c2ovUUdHNTU0T3JTbTB5Q1V1WlB6Q1A0NS92cVFMRTBwRTlhMkJLeSs2RnJVRHprdTQvR0ZOZlE0RUFPM1FaVC90TzdCbjJ3K3ZUUUtBUG81OGUzZjlHTkE5VTdFbXFjOFBLK2dSQ0FBQThkVFRYNXJ4YzFUYkZJYldRRkErbWZwV055cE5BZ0J3TU9Ub092OEJFQWZYTjJpVUxnZ01kSEVMcHdmWkt3clBwUnhpd0JHcFQvT2ZVQ2I2S2NEMFBydnIrVGV6QjBLdURDVUlsQUVEd3JHdlMvNzJ0K2VMTHI1aUlHTytTNWZ1K0l1anUrc0t4d3NEUTF2ck15QUNxRWEvZTlwU3N1R2xhN3dCT0ZuZmg5VDYvYmdwQmpnT25qajFndGNBQy9SR0htYWYrR1lJWE9TVUZnVEFrU3RTMzlaMzRWU09DOERCaURPZmEzOWIwb1VCSDNyenJYSG1mWnYyWlFEeWpQYkQ2eEFmVmxhUGxQRTJ6V0IvNjhEUy9KakU3ZUJmL2VEdEZFL2wwYWJhUHMxQVlBeDhaejFPUGwxT3U1KzJxMEpUcDZWUmZ6WGdBVUNtTWN4YVBKYnQyYmd6SDdpK3NKcmJnMDFReVJob1p0NVVkYkJtZ0JoSHpXQ1ViTEcvOE9uNlZSVk9wNnVWenc2Qk1TQzZZUStOVFA5NEwrbEJramR4QllYbDl5eGdkK0FCZ2VEMDIwZUVDSm5iTm1VRFQvdk5oNGEvbi9aeGl2KzljeHUrKzlGeTJlT2oyb0lYdzU5Wm9Nd3RLQzNOcVhhN25hYVdKWTQxaHJFTHg1aldyV2hvSndHOE0zQlN6R3ZqTmkvUDZmR3ByUU1MaUN6Z2tYbTJ6Qk1IczZGZmsvc3g0TzJRaGpodS8zLzJkMWE3OWZLQWsyRGs5U045TlQ1ZTh2cGErbWx6TFZTRlllU3NzWDdWdi95WWhqM1pLRVJnNDUrWmtMOThlMTJmUHUzbEFpTFR4a0cyR2ZxWExBQ2crZWl1OHUyZkgrckp5Zk9YQkVna0FNSUZEQWsweDcydwn" class="max-h-[360px] w-full object-contain" alt="World Map">
+            <div class="w-full flex justify-center items-center p-4 bg-transparent border border-outline-variant/5 relative aspect-[1300/780] max-w-4xl mx-auto">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTMwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDk3NC44OCA1ODUuMDAwMDA1IiBoZWlnaHQ9Ijc4MCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48bWV0YWRhdGE+PGMycGE6bWFuaWZlc3QgeG1sbnM6YzJwYT0iaHR0cDovL2MycGEub3JnL21hbmlmZXN0Ij5BQUJDSEdwMWJXSUFBQUFlYW5WdFpHTXljR0VBRVFBUWdBQUFxZ0E0bTNFRFl6SndZUUFBQUVIMmFuVnRZZ0FBQUVkcWRXMWtZekp0WVFBUkFCQ0FBQUNxQURpYmNRTjFjbTQ2WXpKd1lUb3lPRGRsWVRBNU1pMDVaVFJqTFRRMU1tRXRZakpqWkMwMk5EUXlZamczTjJVeU16UUFBQUFCN..." class="w-full h-full object-contain" alt="World Map">
                 <div id="map-markers-layer" class="absolute inset-0 pointer-events-none"></div>
             </div>
         </div>
@@ -354,32 +341,6 @@
     let realClients = []; let realSessions = []; let realSales = []; let realPayments = []; let realProjects = [];
     const TARIFAS = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
 
-    const PAISES_MUNDO = [
-        "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán",
-        "Bahamas", "Bangladés", "Barbados", "Baréin", "Bélgica", "Belice", "Benín", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Bután",
-        "Cabo Verde", "Camboya", "Camerún", "Canadá", "Catar", "República Centroafricana", "Chad", "República Checa", "Chile", "China", "Chipre", "Colombia", "Comoras", "República del Congo", "República Democrática del Congo", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba",
-        "Dinamarca", "Dominica", "República Dominicana",
-        "Ecuador", "Egipto", "El Salvador", "Emiratos Árabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "España", "Estados Unidos", "Estonia", "Etiopía",
-        "Filipinas", "Finlandia", "Fiyi", "Francia",
-        "Gabón", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea-Bisáu", "Guinea Ecuatorial",
-        "Haití", "Honduras", "Hungría",
-        "India", "Indonesia", "Irak", "Irán", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomón", "Israel", "Italia",
-        "Jamaica", "Japón", "Jordania",
-        "Kazajistán", "Kenia", "Kirguistán", "Kiribati", "Kuwait",
-        "Laos", "Lesoto", "Letonia", "Líbano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo",
-        "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Mal\u00ed", "Malta", "Marruecos", "Mauricio", "Mauritania", "México", "Micronesia", "Moldavia", "Mónaco", "Mongolia", "Montenegro", "Mozambique",
-        "Namibia", "Nauru", "Nepal", "Nicaragua", "Níger", "Nigeria", "Noruega", "Nueva Zelanda",
-        "Omán",
-        "Países Bajos", "Pakistán", "Palaos", "Palestina", "Panamá", "Papúa Nueva Guinea", "Paraguay", "Perú", "Polonia", "Portugal",
-        "Reino Unido", "Ruanda", "Rumania", "Rusia",
-        "Samoa", "San Cristóbal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucía", "Santo Tomé y Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudáfrica", "Sudán", "Sudán del Sur", "Suecia", "Suiza", "Surinam",
-        "Tailandia", "Taiwán", "Tanzania", "Tayikistán", "Togo", "Tonga", "Trinidad y Tobago", "Túnez", "Turkmenistán", "Turquía", "Tuvalu",
-        "Ucrania", "Uganda", "Uruguay", "Uzbekistán",
-        "Vanuatu", "Ciudad del Vaticano", "Venezuela", "Vietnam",
-        "Yemen", "Yibuti",
-        "Zambia", "Zimbabue"
-    ];
-
     function abrirFichaCliente(idCliente) {
         const c = realClients.find(client => client.ID_Cliente === idCliente);
         if (!c) return;
@@ -446,6 +407,7 @@
 
     function toggleMobileSidebar() { document.getElementById('kova-sidebar').classList.toggle('-translate-x-full'); }
 
+    // Sincronización nativa de desplegables
     function populateDropdowns() {
         document.querySelectorAll('.select-clientes-dinamico').forEach(select => {
             select.innerHTML = '<option value="">Selecciona un artista...</option>' + realClients.map(c => `<option value="${c.ID_Cliente}" data-nombre="${c.Nombre_Completo}" data-pais="${c.País || c.Pais || 'España'}">${c.Nombre_Completo}</option>`).join('');
@@ -492,7 +454,7 @@
 
     function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
 
-    /* RENDER DASHBOARD ACTUALIZADO CON CHINCHETAS FIJAS */
+    /* RENDER DASHBOARD ACTUALIZADO CON CHINCHETAS OPERATIVAS MAQUETADAS */
     function renderDashboard() {
         let totalRecaudado = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
         const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
@@ -506,23 +468,23 @@
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
-        // COORDENADAS FIJAS AJUSTADAS EXACTAMENTE A LAS PROPORCIONES DE TU NUEVO MAPAMUNDI-CRM
+        // AJUSTE PRECIOS DE CHINCHETAS SOBRE TU MAPAMUNDI-CRM (RELATIVO 100% AL CONTENEDOR SEGURO)
         const COORDENADAS_PAISES = {
-            "espana": { top: "35%", left: "47.2%" },
-            "estados unidos": { top: "33%", left: "21.5%" },
-            "mexico": { top: "44%", left: "19.5%" },
-            "colombia": { top: "56%", left: "28%" },
-            "argentina": { top: "79%", left: "32.5%" },
-            "brasil": { top: "60%", left: "35.5%" },
-            "reino unido": { top: "25%", left: "45.8%" },
-            "francia": { top: "29%", left: "47.5%" },
-            "alemania": { top: "27%", left: "49.5%" },
-            "italie": { top: "32%", left: "50.5%" },
-            "italia": { top: "32%", left: "50.5%" },
-            "paises bajos": { top: "26%", left: "48.5%" },
-            "portugal": { top: "36%", left: "45.8%" },
-            "australia": { top: "74%", left: "84.5%" },
-            "japon": { top: "37%", left: "82%" }
+            "espana": { top: "30.5%", left: "47.2%" },
+            "estados unidos": { top: "27.5%", left: "21.5%" },
+            "mexico": { top: "42.5%", left: "19.5%" },
+            "colombia": { top: "58.5%", left: "28%" },
+            "argentina": { top: "86.5%", left: "32.5%" },
+            "brasil": { top: "63.5%", left: "35.5%" },
+            "reino unido": { top: "18.5%", left: "45.8%" },
+            "francia": { top: "22.5%", left: "47.5%" },
+            "alemania": { top: "20.5%", left: "49.5%" },
+            "italie": { top: "26.5%", left: "50.5%" },
+            "italia": { top: "26.5%", left: "50.5%" },
+            "paises bajos": { top: "19.5%", left: "48.5%" },
+            "portugal": { top: "31.5%", left: "45.8%" },
+            "australia": { top: "79.5%", left: "84.5%" },
+            "japon": { top: "31.5%", left: "82%" }
         };
 
         const markersLayer = document.getElementById('map-markers-layer');
