@@ -545,10 +545,12 @@
                 const pos = COORDENADAS_PAISES[pais];
                 if (pos) {
                     markersLayer.innerHTML += `
-                        <div class="absolute w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_8px_#a1fa49] -translate-x-1/2 -translate-y-1/2 animate-pulse z-20" 
-                             style="top: ${pos.top}; left: ${pos.left};">
-                        </div>
-                    `;
+    <div 
+        class="absolute w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_8px_#a1fa49] -translate-x-1/2 -translate-y-1/2 animate-pulse z-20" 
+        style="top: ${pos.top}; left: ${pos.left};"
+        title="${pais}"
+    ></div>
+`;
                 }
             });
         }
