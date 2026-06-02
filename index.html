@@ -118,6 +118,29 @@
             text-align: center;
             transition: opacity 0.5s ease; 
         }
+
+        /* Bloque contenedor del mapa con proporciones fijas e inmune a deformaciones */
+        .map-wrapper-fixed {
+            position: relative;
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            aspect-ratio: 1000 / 510;
+        }
+        .map-wrapper-fixed svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .map-wrapper-fixed path {
+            fill: #dbd8d0;
+            stroke: #ede9e1;
+            stroke-width: 0.6px;
+            transition: fill 0.3s ease;
+        }
+        .map-wrapper-fixed path.client-active {
+            fill: #a1fa49 !important;
+        }
     </style>
 </head>
 <body class="font-body-main text-on-surface antialiased">
@@ -196,9 +219,43 @@
                     <span class="w-2.5 h-2.5 rounded-full bg-[#a1fa49] inline-block"></span> ÁREAS CONQUISTADAS
                 </span>
             </div>
-            <div class="w-full flex justify-center items-center p-4 bg-transparent border border-outline-variant/5 relative aspect-[1300/780] max-w-4xl mx-auto">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTMwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDk3NC44OCA1ODUuMDAwMDA1IiBoZWlnaHQ9Ijc4MCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48bWV0YWRhdGE+PGMycGE6bWFuaWZlc3QgeG1sbnM6YzJwYT0iaHR0cDovL2MycGEub3JnL21hbmlmZXN0Ij5BQUJDSEdwMWJXSUFBQUFlYW5WdFpHTXljR0VBRVFBUWdBQUFxZ0E0bTNFRFl6SndZUUFBQUVIMmFuVnRZZ0FBQUVkcWRXMWtZekp0WVFBUkFCQ0FBQUNxQURpYmNRTjFjbTQ2WXpKd1lUb3lPRGRsWVRBNU1pMDVaVFJqTFRRMU1tRXRZakpqWkMwMk5EUXlZamczTjJVeU16UUFBQUFCN..." class="w-full h-full object-contain" alt="World Map">
-                <div id="map-markers-layer" class="absolute inset-0 pointer-events-none"></div>
+            <div class="w-full overflow-hidden p-2">
+                <div class="map-wrapper-fixed" id="world-svg-holder">
+                    <svg class="w-full h-full" viewBox="0 0 1000 510" xmlns="http://www.w3.org/2000/svg">
+                        <g id="world-map-shapes">
+                            <path id="map-country-canada" d="M110,60 L290,55 L330,130 L270,160 L130,150 Z" />
+                            <path id="map-country-estados-unidos" d="M120,155 L270,162 L295,220 L140,235 Z" />
+                            <path id="map-country-mexico" d="M145,238 L200,230 L220,300 L170,295 Z" />
+                            <path id="map-country-cuba" d="M225,235 L245,236 L240,242 L222,240 Z" />
+                            <path id="map-country-colombia" d="M230,305 L265,300 L258,340 L225,330 Z" />
+                            <path id="map-country-venezuela" d="M268,300 L305,295 L300,325 L262,328 Z" />
+                            <path id="map-country-ecuador" d="M215,332 L230,330 L225,350 L212,348 Z" />
+                            <path id="map-country-peru" d="M220,355 L255,345 L245,420 L210,390 Z" />
+                            <path id="map-country-bolivia" d="M250,385 L290,380 L298,430 L252,435 Z" />
+                            <path id="map-country-chile" d="M242,425 L258,422 L245,500 L232,500 Z" />
+                            <path id="map-country-paraguay" d="M292,420 L315,415 L310,445 L290,440 Z" />
+                            <path id="map-country-uruguay" d="M305,455 L325,450 L320,475 L302,470 Z" />
+                            <path id="map-country-argentina" d="M260,438 L290,435 L300,480 L275,505 Z" />
+                            <path id="map-country-brasil" d="M268,305 L340,320 L375,380 L315,448 L260,375 Z" />
+                            <path id="map-country-espana" d="M450,175 L475,172 L470,195 L445,192 Z" />
+                            <path id="map-country-portugal" d="M438,176 L448,175 L443,194 L435,192 Z" />
+                            <path id="map-country-francia" d="M465,145 L485,142 L490,168 L460,172 Z" />
+                            <path id="map-country-reino-unido" d="M452,115 L470,112 L465,140 L448,138 Z" />
+                            <path id="map-country-alemania" d="M488,132 L508,130 L512,152 L490,156 Z" />
+                            <path id="map-country-italia" d="M495,165 L508,162 L518,195 L502,198 Z" />
+                            <path id="map-country-paises-bajos" d="M482,125 L492,124 L494,134 L485,135 Z" />
+                            <path id="map-country-marruecos" d="M440,198 L465,199 L460,220 L435,215 Z" />
+                            <path id="map-country-argelia" d="M462,222 L505,225 L500,270 L455,260 Z" />
+                            <path id="map-country-egipto" d="M565,230 L600,228 L602,265 L562,262 Z" />
+                            <path id="map-country-sudafrica" d="M550,440 L590,438 L585,495 L545,480 Z" />
+                            <path id="map-country-rusia" d="M530,50 L930,40 L860,170 L550,175 Z" />
+                            <path id="map-country-china" d="M730,195 L850,185 L875,270 L750,275 Z" />
+                            <path id="map-country-india" d="M700,255 L745,250 L760,315 L720,320 Z" />
+                            <path id="map-country-japon" d="M900,180 L920,178 L910,240 L890,235 Z" />
+                            <path id="map-country-australia" d="M840,410 L940,400 L960,480 L850,490 Z" />
+                        </g>
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -341,6 +398,32 @@
     let realClients = []; let realSessions = []; let realSales = []; let realPayments = []; let realProjects = [];
     const TARIFAS = { "Sesion Pro": 200, "Single Pro": 350, "KOVA Signature": 500, "Recording": 200 };
 
+    const PAISES_MUNDO = [
+        "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán",
+        "Bahamas", "Bangladés", "Barbados", "Baréin", "Bélgica", "Belice", "Benín", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Bután",
+        "Cabo Verde", "Camboya", "Camerún", "Canadá", "Catar", "República Centroafricana", "Chad", "República Checa", "Chile", "China", "Chipre", "Colombia", "Comoras", "República del Congo", "República Democrática del Congo", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba",
+        "Dinamarca", "Dominica", "República Dominicana",
+        "Ecuador", "Egipto", "El Salvador", "Emiratos Árabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "España", "Estados Unidos", "Estonia", "Etiopía",
+        "Filipinas", "Finlandia", "Fiyi", "Francia",
+        "Gabón", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea-Bisáu", "Guinea Ecuatorial",
+        "Haití", "Honduras", "Hungría",
+        "India", "Indonesia", "Irak", "Irán", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomón", "Israel", "Italia",
+        "Jamaica", "Japón", "Jordania",
+        "Kazajistán", "Kenia", "Kirguistán", "Kiribati", "Kuwait",
+        "Laos", "Lesoto", "Letonia", "Líbano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo",
+        "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Malí", "Malta", "Marruecos", "Mauricio", "Mauritania", "México", "Micronesia", "Moldavia", "Mónaco", "Mongolia", "Montenegro", "Mozambique",
+        "Namibia", "Nauru", "Nepal", "Nicaragua", "Níger", "Nigeria", "Noruega", "Nueva Zelanda",
+        "Omán",
+        "Países Bajos", "Pakistán", "Palaos", "Palestina", "Panamá", "Papúa Nueva Guinea", "Paraguay", "Perú", "Polonia", "Portugal",
+        "Reino Unido", "Ruanda", "Rumania", "Rusia",
+        "Samoa", "San Cristóbal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucía", "Santo Tomé y Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudáfrica", "Sudán", "Sudán del Sur", "Suecia", "Suiza", "Surinam",
+        "Tailandia", "Taiwán", "Tanzania", "Tayikistán", "Togo", "Tonga", "Trinidad y Tobago", "Túnez", "Turkmenistán", "Turquía", "Tuvalu",
+        "Ucrania", "Uganda", "Uruguay", "Uzbekistán",
+        "Vanuatu", "Ciudad del Vaticano", "Venezuela", "Vietnam",
+        "Yemen", "Yibuti",
+        "Zambia", "Zimbabue"
+    ];
+
     function abrirFichaCliente(idCliente) {
         const c = realClients.find(client => client.ID_Cliente === idCliente);
         if (!c) return;
@@ -407,7 +490,6 @@
 
     function toggleMobileSidebar() { document.getElementById('kova-sidebar').classList.toggle('-translate-x-full'); }
 
-    // Sincronización nativa de desplegables
     function populateDropdowns() {
         document.querySelectorAll('.select-clientes-dinamico').forEach(select => {
             select.innerHTML = '<option value="">Selecciona un artista...</option>' + realClients.map(c => `<option value="${c.ID_Cliente}" data-nombre="${c.Nombre_Completo}" data-pais="${c.País || c.Pais || 'España'}">${c.Nombre_Completo}</option>`).join('');
@@ -454,7 +536,7 @@
 
     function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
 
-    /* RENDER DASHBOARD ACTUALIZADO CON CHINCHETAS OPERATIVAS MAQUETADAS */
+    /* RENDER DASHBOARD NATIVO: CONTROL GEOGRÁFICO INTELIGENTE */
     function renderDashboard() {
         let totalRecaudado = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
         const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
@@ -468,51 +550,34 @@
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
-        // AJUSTE PRECIOS DE CHINCHETAS SOBRE TU MAPAMUNDI-CRM (RELATIVO 100% AL CONTENEDOR SEGURO)
-        const COORDENADAS_PAISES = {
-            "espana": { top: "30.5%", left: "47.2%" },
-            "estados unidos": { top: "27.5%", left: "21.5%" },
-            "mexico": { top: "42.5%", left: "19.5%" },
-            "colombia": { top: "58.5%", left: "28%" },
-            "argentina": { top: "86.5%", left: "32.5%" },
-            "brasil": { top: "63.5%", left: "35.5%" },
-            "reino unido": { top: "18.5%", left: "45.8%" },
-            "francia": { top: "22.5%", left: "47.5%" },
-            "alemania": { top: "20.5%", left: "49.5%" },
-            "italie": { top: "26.5%", left: "50.5%" },
-            "italia": { top: "26.5%", left: "50.5%" },
-            "paises bajos": { top: "19.5%", left: "48.5%" },
-            "portugal": { top: "31.5%", left: "45.8%" },
-            "australia": { top: "79.5%", left: "84.5%" },
-            "japon": { top: "31.5%", left: "82%" }
-        };
+        // SISTEMA DE ILUMINACIÓN DE PAÍSES NATIVOS DIRECTO SOBRE EL SVG LOCAL
+        document.querySelectorAll('#world-map-shapes path').forEach(path => path.classList.remove('client-active'));
+        
+        realClients.forEach(c => {
+            const paisCliente = (c.País || c.Pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
+            if (paisCliente) {
+                let idTarget = `map-country-${paisCliente.replace(/\s+/g, '-')}`;
+                if (paisCliente === 'espana') idTarget = 'map-country-espana';
+                if (paisCliente === 'estados unidos') idTarget = 'map-country-estados-unidos';
+                if (paisCliente === 'paises bajos') idTarget = 'map-country-paises-bajos';
+                if (paisCliente === 'reino unido') idTarget = 'map-country-reino-unido';
+                if (paisCliente === 'arabia saudita') idTarget = 'map-country-arabia';
+                if (paisCliente === 'afganistan') idTarget = 'map-country-afganistan';
 
-        const markersLayer = document.getElementById('map-markers-layer');
-        if (markersLayer) {
-            markersLayer.innerHTML = ''; // Limpieza de renders anteriores
-            
-            // Extrae los países únicos de tus clientes cargados en Sheets
-            const paisesActivos = [...new Set(realClients.map(c => (c.País || c.Pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))];
-            
-            paisesActivos.forEach(pais => {
-                const pos = COORDENADAS_PAISES[pais];
-                if (pos) {
-                    // Inyecta la chincheta brillante en su sitio exacto
-                    markersLayer.innerHTML += `
-                        <div class="absolute w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_8px_#a1fa49] -translate-x-1/2 -translate-y-1/2 animate-pulse" 
-                             style="top: ${pos.top}; left: ${pos.left};">
-                        </div>
-                    `;
+                const pathElement = document.getElementById(idTarget);
+                if (pathElement) {
+                    pathElement.classList.add('client-active');
                 }
-            });
-        }
+            }
+        });
 
-        // Renderizado de Listas Operativas en Dos Columnas (Micro vs Macro)
+        // Renderizar Columna Izquierda: Acciones Prioritarias
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
             const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
             return `<li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4"><div class="flex flex-col gap-1"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL')}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span></div><span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span></li>`;
         }).join('');
             
+        // Renderizar Columna Derecha: Proyectos en Marcha
         document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 4).map(p => `<li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${p.Nombre_Cliente || 'ARTISTA'} / <span class="font-mono text-xs text-technical-label">${p.ID_Pedido}</span></span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-widest">${p.Servicio || 'ESTUDIO'}</span></li>`).join('');
     }
 
