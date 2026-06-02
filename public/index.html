@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>KOVA RS // SYSTEM v1.0</title>
+    <title>KOVA RS // SYSTEM v3.0</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -119,7 +119,6 @@
             transition: opacity 0.5s ease; 
         }
 
-        /* Contenedor adaptativo blindado para evitar deformaciones del mapa PNG */
         .map-container-responsive {
             position: relative;
             width: 100%;
@@ -180,7 +179,6 @@
             <div class="active-tab-line"></div>
         </header>
         
-        <!-- Fila de KPIs Principales Actualizada (Suma de Pedidos/Vendido) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 border-b border-outline-variant/10 pb-10">
             <div>
                 <p class="font-label-caps text-[10px] sm:text-xs text-technical-label uppercase mb-2">Total Vendido (Pedidos)</p>
@@ -200,7 +198,6 @@
             </div>
         </div>
 
-        <!-- El Mapa del Mundo Real "Estilo Metallica" -->
         <div class="mb-14 bg-surface-container/20 border border-outline-variant/10 p-6 sm:p-8">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest text-[11px]">KOVA GLOBAL EXPANSION // CLIENT MAP</h3>
@@ -209,14 +206,11 @@
                 </span>
             </div>
             <div class="map-container-responsive">
-                <!-- Imagen mapeada de tu carpeta pública en GitHub -->
                 <img src="/world-map-kova.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="World Map">
-                <!-- Capa absoluta para clavar las chinchetas sobre las proporciones reales -->
                 <div id="map-markers-layer" class="absolute inset-0 z-10"></div>
             </div>
         </div>
 
-        <!-- Distribución Operativa Inferior de 2 Columnas Estrictas -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 max-w-full">
             <div>
                 <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Acciones Prioritarias</h3>
@@ -229,13 +223,11 @@
         </div>
     </section>
 
-    <!-- DIRECTORIO -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-directorio">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">DIRECTORIO</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-lead-drawer')"><span class="material-symbols-outlined">add</span> ADD LEAD</button></header>
         <div class="overflow-x-auto border-b border-outline-variant/10 pb-4"><table class="w-full text-left min-w-[600px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID</th><th class="py-4">Nombre / Artista</th><th class="py-4">Contacto</th><th class="py-4">País</th><th class="py-4">Status</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="clients-table-body"></tbody></table></div>
     </section>
 
-    <!-- GESTIÓN DE PROYECTOS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-proyectos">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10">
             <div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">GESTIÓN DE PROYECTOS</h2><div class="active-tab-line"></div></div>
@@ -251,19 +243,16 @@
         </div>
     </section>
 
-    <!-- SESIONES Y ACCIONES -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-tareas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-12 sm:mb-16"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">SESIONES Y ACCIONES</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-session-drawer')"><span class="material-symbols-outlined">add</span> PROGRAMAR ACCIÓN</button></header>
         <div class="space-y-0 divide-y divide-outline-variant/20" id="sessions-list-container"></div>
     </section>
 
-    <!-- REGISTRO DE PEDIDOS -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-orders">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">REGISTRO DE PEDIDOS</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-order-drawer')"><span class="material-symbols-outlined">add</span> ADD ORDER</button></header>
         <div class="overflow-x-auto"><table class="w-full text-left min-w-[750px]"><thead class="font-label-caps text-[11px] uppercase text-on-surface-variant/60"><tr><th class="py-4">ID Pedido</th><th class="py-4">ID Cliente</th><th class="py-4">Artista / Proyecto</th><th class="py-4">Servicio</th><th class="py-4">Deadline</th><th class="py-4">Vía Pago</th><th class="py-4 text-right font-medium">Monto Total (+IVA)</th><th class="py-4 text-right">Acción</th></tr></thead><tbody class="font-technical-data text-xs" id="orders-table-body"></tbody></table></div>
     </section>
 
-    <!-- BILLING -->
     <section class="p-4 sm:p-10 hidden animate-in fade-in duration-500" id="panel-ventas">
         <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10"><div><h2 class="font-headline-lg text-xl sm:text-headline-lg uppercase tracking-wider text-primary mb-2">FACTURACIÓN Y CAJA</h2><div class="active-tab-line"></div></div><button class="w-full sm:w-auto border border-primary px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary hover:text-surface transition-colors flex items-center justify-center gap-2" onclick="toggleDrawer('add-payment-drawer')"><span class="material-symbols-outlined">add</span> REGISTRAR PAGO</button></header>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-outline-variant/20 mb-8 pb-8">
@@ -277,60 +266,6 @@
 
 <div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="drawer-overlay" onclick="closeAllDrawers()"></div>
 
-<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="view-lead-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">FICHA ARTISTA <span id="view-lead-id-title" class="font-mono text-technical-label"></span></h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarClienteExistente(event)">
-        <input type="hidden" name="edit_client_id"/>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="edit_client_nombre" required type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_telefono" type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="edit-client-pais-select" name="edit_client_pais" required></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_email" required type="email"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_social" type="text"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">ACTUALIZAR DATOS</button>
-    </form>
-</aside>
-    
-<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-lead-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre" required type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" required type="email"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="social" placeholder="@username" type="text"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">REGISTRAR EN DIRECTORIO</button>
-    </form>
-</aside>
-
-<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-project-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA CANCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarProyectoTrack(event)">
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre de la Canción / Track</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre_proyecto" required type="text" placeholder="ej: ALMOST EVERYTHING"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista / Cliente</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm select-clientes-dinamico" name="artista_select" onchange="filtrarPedidosPorArtista(this.value)" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Vincular a Pedido Comercial (Opcional)</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="project-pedido-select" name="id_pedido"><option value="">Sin pedido comercial (Amor al arte / Track Propio)</option></select></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">CREAR CANCIÓN EN SISTEMA</button>
-    </form>
-</aside>
-
-<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-session-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">PROGRAMAR ACCIÓN</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarSesionProyectos(event)">
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Tipo de Seguimiento</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-tipo" name="tipo_accion" onchange="toggleWorkflowInputs(this.value)" required><option value="Sesion de Mezcla">Sesión de Mezcla / Estudio (Suma Horas)</option><option value="Seguimiento Comercial">Seguimiento Comercial / Cliente (Sin Horas)</option></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Seleccionar Canción / Track Activo</label><select class="w-full border-b border-outline-variant focus:ring-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm text-primary" id="select-proyectos-sesion" name="id_proyecto" required></select><input type="hidden" name="id_cliente"/><input type="hidden" name="nombre_cliente"/><input type="hidden" name="id_pedido"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción del Trabajo / Hito</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="session-descripcion" name="tarea_descripcion" placeholder="ej: Primera Mix o Revisión de Feedback" required type="text"/></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Fecha Límite / Ejecución</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="fecha_limite" required type="date"/></div>
-        <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">AGENDAR EN PROYECTO</button>
-    </form>
-</aside>
-
-<aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="edit-session-drawer">
-    <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">EDITAR SESIÓN <span id="edit-session-id-title" class="font-mono text-technical-label"></span></h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
-    <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="actualizarSesionExistente(event)"><input type="hidden" name="edit_sess_id_tarea"/><input type="hidden" name="edit_sess_id_cliente"/><input type="hidden" name="edit_sess_nombre_cliente"/><input type="hidden" name="edit_sess_horas"/><input type="hidden" name="edit_sess_estado"/><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Artista Vinculado</label><input class="w-full border-b border-outline-variant bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm opacity-60" id="edit-session-artista-display" readonly type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Reasignar a Canción / Track</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" id="edit-select-proyectos-sesion" name="edit_sess_id_pedido" required></select></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Descripción de la Tarea / Fase</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_sess_descripcion" required type="text"/></div><div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nueva Fecha Límite</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" name="edit_sess_fecha_limite" required type="date"/></div><button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">GUARDAR CAMBIOS</button></form>
-</aside>
-
-<!-- DRAWER DE REGISTRO DE PEDIDOS CON MULTIPLICADOR Y CAMPOS DINÁMICOS -->
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-order-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">REGISTRAR PEDIDO</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarPedido(event)">
@@ -350,12 +285,10 @@
                 <option value="Servicio Personalizado">Servicio Personalizado (Manual)</option>
             </select>
         </div>
-        <!-- Casilla de texto para detallar si seleccionas Servicio Personalizado -->
         <div class="space-y-1 hidden animate-in fade-in duration-300" id="wrapper-servicio-custom">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Especificar Servicio Personalizado</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm uppercase" name="servicio_custom" placeholder="ej: EP PRODUCCIÓN COMPLETA / ARREGLOS" type="text"/>
         </div>
-        <!-- Casilla de cantidad multiplicadora de temas -->
         <div class="space-y-1">
             <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Cantidad (Nº de Temas)</label>
             <input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-mono text-sm" id="order-cantidad-input" name="cantidad" type="number" value="1" min="1" oninput="calcularImpuestosDinamicos()"/>
@@ -468,7 +401,6 @@
         } catch (e) { console.error("Sync Error Inicial:", e); }
     }
 
-    // Navegación estructural del CRM
     function switchPanel(panelId) {
         document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
         document.getElementById(`panel-${panelId}`).classList.remove('hidden');
@@ -521,9 +453,18 @@
         }).join('');
     }
 
-    function syncDatosProyectoEdicion(select) { const option = select.options[select.selectedIndex]; const form = select.closest('form'); if (select.value) { form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid) || ''; form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || ''; document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || ''; } }
+    // Reactivada la función de sincronización de nombre solicitada por el ReferenceError de consola
+    function syncNombreCliente(select) { 
+        const option = select.options[select.selectedIndex]; 
+        if (select.value) { 
+            const form = select.closest('form'); 
+            form.querySelector('input[name="id_cliente"]').value = select.value; 
+            form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-nombre') || ''; 
+        } 
+        calcularImpuestosDinamicos(); 
+    }
+
     function toggleWorkflowInputs(value) { const descInput = document.getElementById('session-descripcion'); descInput.placeholder = value === "Seguimiento Comercial" ? "ej: Enviar mezcla preliminar / revisión feedback" : "ej: Primera Mix / Masterización final"; }
-    function syncNombreCliente(select) { const option = select.options[select.selectedIndex]; if (select.value) { const form = select.closest('form'); form.querySelector('input[name="id_cliente"]').value = select.value; form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-nombre') || ''; } calcularImpuestosDinamicos(); }
     
     function tarifaEstudio(select) { 
         const wrapperPrecio = document.getElementById('wrapper-precio-manual');
@@ -563,32 +504,32 @@
         notice.classList.remove('hidden');
         
         if (pais === "España") {
-            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(baseTotal * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(baseTotal * 1.21).toFixed(2)}€</b>`;
+            notice.innerHTML = `Base Estudio (${canvas} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(baseTotal * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(baseTotal * 1.21).toFixed(2)}€</b>`;
         } else {
-            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${baseTotal.toFixed(2)}€</b>`;
+            notice.innerHTML = `Base Estudio (${canvas} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${baseTotal.toFixed(2)}€</b>`;
         }
     }
 
     function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
 
-    /* RENDER DASHBOARD ACTUALIZADO Y SEGURO (MÉTRICAS DE TOTAL VENDIDO ACUMULADO) */
+    /* RENDER DASHBOARD ACTUALIZADO Y SEGURO (CON FILTRADO OPERATIVO DE TOTAL VENDIDO ACUMULADO) */
     function renderDashboard() {
-        let totalVendidoAcumulado = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
+        let totalVendidoBruto = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
         const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
 
-        // Cambiado: Ahora suma el volumen bruto contratado de todos los pedidos (Vendido) en lugar del dinero cobrado
-        realSales.forEach(s => totalVendidoAcumulado += (parseFloat(s.Monto_Total) || 0));
+        // Modificado: Ahora suma el dinero total acumulado de las ventas de todos los pedidos
+        realSales.forEach(s => totalVendidoBruto += (parseFloat(s.Monto_Total) || 0));
         realSales.forEach(s => { if (s.Fecha_Pedido) { const fPed = new Date(s.Fecha_Pedido); if (!isNaN(fPed.getTime()) && fPed.getMonth() === mesActual && fPed.getFullYear() === anoActual) pedidosUltimoMes++; } });
         realClients.forEach(c => { if (c.Fecha_Registro) { const fReg = new Date(c.Fecha_Registro); if (!isNaN(fReg.getTime()) && fReg.getMonth() === mesActual && fReg.getFullYear() === anoActual) clientesNuevosMes++; } });
 
-        document.getElementById('dash-facturacion').innerText = `€${totalVendidoAcumulado.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
+        document.getElementById('dash-facturacion').innerText = `€${totalVendidoBruto.toLocaleString('es-ES', {minimumFractionDigits: 2})}`;
         document.getElementById('dash-total-pedidos').innerText = totalPedidosContador;
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
-        // MATRIZ DE COORDENADAS RECALIBRADAS SOBRE TU PLANTILLA PNG OPERATIVA EN GITHUB
+        // MATRIZ DE COORDENADAS FIJAS AJUSTADAS SOBRE TU RUTA /WORLD-MAP-KOVA.PNG EN GITHUB PUBLIC
         const COORDENADAS_PAISES = {
-            "espana": { top: "32.5%", left: "48.2%", label: "España" },
+            "espana": { top: "35.2%", left: "48.2%", label: "España" },
             "aruba": { top: "49.4%", left: "22.8%", label: "Aruba" },
             "estados unidos": { top: "33.0%", left: "16.8%", label: "Estados Unidos" },
             "mexico": { top: "45.0%", left: "18.8%", label: "México" },
@@ -651,7 +592,7 @@
             });
         }
 
-        // Renderizado de Listas Operarias
+        // Renderizado de Listas Operativas
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
             const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
             return `<li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4"><div class="flex flex-col gap-1"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL')}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span></div><span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span></li>`;
