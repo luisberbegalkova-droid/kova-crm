@@ -653,22 +653,19 @@
                 const pos = COORDENADAS_PAISES[pais];
                 if (!pos) return;
 
-                // 2. COMPROBACIÓN REALSALES: Buscamos si algún cliente de este país tiene un pedido
-                const tienePedidoCerrado = realClients.some(c => {
+                // NUEVA LÓGICA: ¿Hay al menos un artista en este país con estatus 'CLIENTE'?
+                const esCliente = realClients.some(c => {
                     const esMismoPais = normalizarPais(c.País || c.Pais || c.pais) === pais;
-                    const tieneVenta = realSales.some(s => String(s.ID_Cliente) === String(c.ID_Cliente));
-                    return esMismoPais && tieneVenta;
+                    return esMismoPais && (c.Estado_Lead === 'CLIENTE');
                 });
 
-                // 3. ASIGNACIÓN DINÁMICA DE COLOR SEGÚN STATUS COMMERCIAL
-                // Si tiene pedido -> Verde Corporativo. Si es lead puro -> Ámbar Eléctrico.
-                const colorHex = tienePedidoCerrado ? '#a1fa49' : '#f59e0b'; 
-                const shadowStyle = tienePedidoCerrado ? 'shadow-[0_0_10px_#a1fa49]' : 'shadow-[0_0_10px_#f59e0b]';
+                // ASIGNACIÓN DE COLOR: Verde para CLIENTE, Ámbar para POTENCIAL/otros
+                const colorHex = esCliente ? '#a1fa49' : '#f59e0b'; 
+                const shadowStyle = esCliente ? 'shadow-[0_0_10px_#a1fa49]' : 'shadow-[0_0_10px_#f59e0b]';
 
                 const label = pos.label || pais;
                 markersLayer.innerHTML += `
                     <div class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group pointer-events-auto cursor-pointer" style="top: ${pos.top}; left: ${pos.left};" title="${label}">
-                        <!-- Aplicamos las variables dinámicas de color y sombra -->
                         <div class="relative w-3 h-3 rounded-full ${shadowStyle}" style="background-color: ${colorHex};">
                             <span class="absolute inset-0 rounded-full opacity-50 animate-ping" style="background-color: ${colorHex};"></span>
                         </div>
