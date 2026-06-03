@@ -653,13 +653,12 @@
                 const pos = COORDENADAS_PAISES[pais];
                 if (!pos) return;
 
-                // LÓGICA REFORZADA: Busca explícitamente el estatus 'CLIENTE' en la ficha del lead
+                // FORZAMOS LA COMPARACIÓN: Eliminamos tildes, espacios y pasamos a minúsculas en AMBOS lados
                 const esCliente = realClients.some(c => {
-                    const esMismoPais = normalizarPais(c.País || c.Pais || c.pais) === pais;
-                    return esMismoPais && (c.Estado_Lead === 'CLIENTE');
+                    const paisClienteNormalizado = String(c.País || c.Pais || c.pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    return paisClienteNormalizado === pais && String(c.Estado_Lead).trim().toUpperCase() === 'CLIENTE';
                 });
 
-                // ASIGNACIÓN DE COLOR: Verde (#a1fa49) si es 'CLIENTE', Ámbar (#f59e0b) si es cualquier otra cosa (Potencial, etc.)
                 const colorHex = esCliente ? '#a1fa49' : '#f59e0b'; 
                 const shadowStyle = esCliente ? 'shadow-[0_0_10px_#a1fa49]' : 'shadow-[0_0_10px_#f59e0b]';
 
