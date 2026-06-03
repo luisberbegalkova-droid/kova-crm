@@ -283,12 +283,24 @@
 <aside class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-surface z-[70] translate-x-full transition-transform duration-500 ease-in-out border-l border-outline-variant/40 p-6 sm:p-10 flex flex-col" id="add-lead-drawer">
     <header class="flex justify-between items-center mb-12"><h2 class="font-headline-lg text-lg uppercase tracking-wider">NUEVA ARTISTA</h2><button class="material-symbols-outlined p-2" onclick="closeAllDrawers()">close</button></header>
     <form class="space-y-8 flex-1 overflow-y-auto pr-2" onsubmit="guardarCliente(event)">
+        <!-- Nombre: Obligatorio -->
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Nombre Completo</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main uppercase text-sm" name="nombre" required type="text"/></div>
+        
+        <!-- Teléfono: Opcional -->
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Teléfono</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="telefono" type="text"/></div>
+        
+        <!-- País: Obligatorio -->
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">País</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm shadow-none" id="lead-pais-select" name="pais" required></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
-        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" required type="email"/></div>
+        
+        <!-- Rol: Obligatorio (aquí estaba el fallo) -->
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="rol" required><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
+        
+        <!-- Email: Opcional -->
+        <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="email" type="email"/></div>
+        
+        <!-- Redes Sociales: Opcional -->
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="social" placeholder="@username" type="text"/></div>
+        
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">REGISTRAR EN DIRECTORIO</button>
     </form>
 </aside>
