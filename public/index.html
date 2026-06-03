@@ -276,6 +276,14 @@
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Rol / Especialidad</label><select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_rol"><option value="Vocalista">Vocalista</option><option value="Guitarrista">Guitarrista</option><option value="Baterista">Baterista</option><option value="Bajista">Bajista</option><option value="Productor">Productor</option></select></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Email Contacto</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_email" required type="email"/></div>
         <div class="space-y-1"><label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Redes Sociales</label><input class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_social" type="text"/></div>
+        <div class="space-y-1">
+        <label class="font-label-caps text-[11px] uppercase text-on-surface-variant/60">Status del Artista</label>
+        <select class="w-full border-b border-outline-variant focus:border-primary border-t-0 border-x-0 bg-transparent px-0 py-2 focus:ring-0 font-body-main text-sm" name="edit_client_status">
+            <option value="POTENCIAL">Potencial</option>
+            <option value="CLIENTE">Cliente</option>
+            <option value="NO POTENCIAL">No Potencial</option>
+        </select>
+        </div>
         <button class="w-full bg-primary text-surface font-label-caps text-xs py-4 tracking-widest" type="submit">ACTUALIZAR DATOS</button>
     </form>
 </aside>
@@ -434,15 +442,27 @@
         form.elements['edit_client_rol'].value = c.Rol_Musical || 'Vocalista';
         form.elements['edit_client_email'].value = c.Email || '';
         form.elements['edit_client_social'].value = c.Redes_Sociales || '';
+        form.elements['edit_client_status'].value = c.Estado_Lead || 'POTENCIAL';
         toggleDrawer('view-lead-drawer');
     }
 
     function actualizarClienteExistente(e) {
-        e.preventDefault(); const f = new FormData(e.target);
-        // CORREGIDO: Cambiamos 'Pais:' por 'País:' para que haga match con la columna de la base de datos
-        ejecutarPost({ sheet: "Clientes_Leads", action: "UPDATE", ID_Cliente: f.get('edit_client_id'), Nombre_Completo: f.get('edit_client_nombre').toUpperCase(), Telefono: f.get('edit_client_telefono'), País: f.get('edit_client_pais'), Rol_Musical: f.get('edit_client_rol'), Email: f.get('edit_client_email'), Redes_Sociales: f.get('edit_client_social') }, 'directorio');
-        e.target.reset();
-    }
+    e.preventDefault(); const f = new FormData(e.target);
+    ejecutarPost({ 
+        sheet: "Clientes_Leads", 
+        action: "UPDATE", 
+        ID_Cliente: f.get('edit_client_id'), 
+        Nombre_Completo: f.get('edit_client_nombre').toUpperCase(), 
+        Telefono: f.get('edit_client_telefono'), 
+        País: f.get('edit_client_pais'), // Asegurado con tilde
+        Rol_Musical: f.get('edit_client_rol'), 
+        Email: f.get('edit_client_email'), 
+        Redes_Sociales: f.get('edit_client_social'),
+        // Añadimos el nuevo campo:
+        Estado_Lead: f.get('edit_client_status') 
+    }, 'directorio');
+    e.target.reset();
+}
 
     function cargarPaisesEnSelect() {
         const select = document.getElementById('lead-pais-select');
