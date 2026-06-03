@@ -427,7 +427,8 @@
 
     function actualizarClienteExistente(e) {
         e.preventDefault(); const f = new FormData(e.target);
-        ejecutarPost({ sheet: "Clientes_Leads", action: "UPDATE", ID_Cliente: f.get('edit_client_id'), Nombre_Completo: f.get('edit_client_nombre').toUpperCase(), Telefono: f.get('edit_client_telefono'), Pais: f.get('edit_client_pais'), Rol_Musical: f.get('edit_client_rol'), Email: f.get('edit_client_email'), Redes_Sociales: f.get('edit_client_social') }, 'directorio');
+        // CORREGIDO: Cambiamos 'Pais:' por 'País:' para que haga match con la columna de la base de datos
+        ejecutarPost({ sheet: "Clientes_Leads", action: "UPDATE", ID_Cliente: f.get('edit_client_id'), Nombre_Completo: f.get('edit_client_nombre').toUpperCase(), Telefono: f.get('edit_client_telefono'), País: f.get('edit_client_pais'), Rol_Musical: f.get('edit_client_rol'), Email: f.get('edit_client_email'), Redes_Sociales: f.get('edit_client_social') }, 'directorio');
         e.target.reset();
     }
 
