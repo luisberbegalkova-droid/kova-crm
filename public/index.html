@@ -207,7 +207,7 @@
             </div>
             <div class="map-container-responsive">
                 <img src="/world-map-kova.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="World Map">
-                <div id="map-markers-layer" class="absolute inset-0 z-20 pointer-events-none"></div>
+                <div id="map-markers-layer" class="absolute inset-0 z-20"></div>
             </div>
         </div>
 
@@ -545,7 +545,7 @@
 
         // COORDENADAS RECALIBRADAS SOBRE LAS PROPORCIONES EXACTAS DE TU NUEVA IMAGEN PNG EN GITHUB
         const COORDENADAS_PAISES = {
-            "espana": { top: "35.2%", left: "48.2%", label: "España" },
+            "espana": { top: "32.5%", left: "43.5%", label: "España" },
             "aruba": { top: "49.4%", left: "22.8%", label: "Aruba" },
             "estados unidos": { top: "33.0%", left: "16.8%", label: "Estados Unidos" },
             "mexico": { top: "45.0%", left: "18.8%", label: "México" },
@@ -579,18 +579,22 @@
             const paisesActivos = [...new Set(realClients.map(c => c.País || c.Pais || c.pais || '').filter(Boolean).map(normalizarPais))];
 
             paisesActivos.forEach(pais => {
-                const pos = COORDENADAS_PAISES[pais];
-                if (!pos) return;
-                const label = pos.label || pais;
+                const pos = COORDENADAS_PAISES[pais];[cite: 3]
+                if (!pos) return;[cite: 3]
+
+                const label = pos.label || pais;[cite: 3]
                 markersLayer.innerHTML += `
-                    <div class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group" style="top: ${pos.top}; left: ${pos.left};" title="${label}">
-                        <div class="relative w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_10px_#a1fa49]">
-                            <span class="absolute inset-0 rounded-full bg-[#a1fa49] opacity-50 animate-ping"></span>
+                    <!-- Añadimos 'pointer-events-auto' al contenedor del punto -->
+                    <div class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group pointer-events-auto cursor-pointer" style="top: ${pos.top}; left: ${pos.left};" title="${label}">
+                        <div class="relative w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_10px_#a1fa49]">[cite: 3]
+                            <span class="absolute inset-0 rounded-full bg-[#a1fa49] opacity-50 animate-ping"></span>[cite: 3]
                         </div>
-                        <div class="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap bg-primary text-surface px-2 py-1 text-[9px] font-technical-data uppercase tracking-widest opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                        
+                        <!-- Ajuste de visibilidad interactiva: de invisible a visible en hover -->
+                        <div class="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap bg-primary text-surface px-2 py-1 text-[9px] font-technical-data uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md border border-outline-variant/10">
                             ${label}
                         </div>
-                    </div>`;
+                    </div>`;[cite: 3]
             });
         }
 
