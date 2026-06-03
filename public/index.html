@@ -445,6 +445,22 @@
         form.elements['edit_client_status'].value = c.Estado_Lead || 'POTENCIAL';
         toggleDrawer('view-lead-drawer');
     }
+    
+    function buscadorGlobal(query) {
+        const term = query.toLowerCase();
+        if (term.length < 2) return; // Esperamos al menos 2 letras
+    
+        // Buscamos en clientes, proyectos y pedidos
+        const resultados = [
+            ...realClients.filter(c => c.Nombre_Completo.toLowerCase().includes(term)).map(c => ({ tipo: 'CLIENTE', label: c.Nombre_Completo, id: c.ID_Cliente })),
+            ...realSales.filter(s => s.ID_Pedido.toLowerCase().includes(term) || s.Nombre_Cliente.toLowerCase().includes(term)).map(s => ({ tipo: 'PEDIDO', label: s.ID_Pedido + ' - ' + s.Nombre_Cliente, id: s.ID_Pedido })),
+            ...realProjects.filter(p => p.Nombre_Proyecto.toLowerCase().includes(term)).map(p => ({ tipo: 'PROYECTO', label: p.Nombre_Proyecto, id: p.ID_Proyecto }))
+        ];
+    
+        // AQUÍ MOSTRARÍAS LOS RESULTADOS:
+        // Podríamos inyectar una lista absoluta justo debajo del buscador que, 
+        // al hacer click, ejecute: switchPanel('panel-correspondiente'); abrirFicha(id);
+    }
 
     function actualizarClienteExistente(e) {
     e.preventDefault(); const f = new FormData(e.target);
