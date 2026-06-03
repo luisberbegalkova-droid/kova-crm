@@ -168,7 +168,15 @@
 </nav>
 
 <header class="hidden xl:flex fixed top-0 right-0 left-[280px] h-20 bg-surface/95 backdrop-blur-sm border-b border-outline-variant/20 px-10 items-center justify-between z-40">
-    <div class="flex items-center gap-6 flex-1"><span class="material-symbols-outlined text-on-surface-variant">search</span><input class="bg-transparent border-none focus:ring-0 font-technical-data text-technical-data w-1/2 uppercase tracking-wider" placeholder="BUSCAR ARTISTA O SESIÓN..." type="text"/></div>
+    <div class="flex items-center gap-6 flex-1 relative">
+        <span class="material-symbols-outlined text-on-surface-variant">search</span>
+        <input class="bg-transparent border-none focus:ring-0 font-technical-data text-technical-data w-1/2 uppercase tracking-wider" 
+               placeholder="BUSCAR ARTISTA O SESIÓN..." 
+               type="text" 
+               oninput="buscadorGlobal(this.value)"/>
+        
+        <div id="search-results" class="absolute top-16 left-0 w-1/3 bg-surface border border-outline-variant shadow-lg z-50"></div>
+    </div>
 </header>
 
 <main class="xl:ml-[280px] pt-16 xl:pt-20 min-h-screen">
@@ -447,19 +455,35 @@
     }
     
     function buscadorGlobal(query) {
-        const term = query.toLowerCase();
-        if (term.length < 2) return; // Esperamos al menos 2 letras
+    const term = query.toLowerCase();
+    const container = document.getElementById('search-results');
     
-        // Buscamos en clientes, proyectos y pedidos
-        const resultados = [
-            ...realClients.filter(c => c.Nombre_Completo.toLowerCase().includes(term)).map(c => ({ tipo: 'CLIENTE', label: c.Nombre_Completo, id: c.ID_Cliente })),
-            ...realSales.filter(s => s.ID_Pedido.toLowerCase().includes(term) || s.Nombre_Cliente.toLowerCase().includes(term)).map(s => ({ tipo: 'PEDIDO', label: s.ID_Pedido + ' - ' + s.Nombre_Cliente, id: s.ID_Pedido })),
-            ...realProjects.filter(p => p.Nombre_Proyecto.toLowerCase().includes(term)).map(p => ({ tipo: 'PROYECTO', label: p.Nombre_Proyecto, id: p.ID_Proyecto }))
-        ];
-    
-        // AQUÍ MOSTRARÍAS LOS RESULTADOS:
-        // Podríamos inyectar una lista absoluta justo debajo del buscador que, 
-        // al hacer click, ejecute: switchPanel('panel-correspondiente'); abrirFicha(id);
+    if (term.length < 2) {
+        container.innerHTML = ''; // Limpiamos si borras el texto
+        return; 
+    }
+
+    const resultados = [
+        ...realClients.filter(c => c.Nombre_Completo.toLowerCase().includes(term)).map(c => ({ tipo: 'CLIENTE', label: c.Nombre_Completo, id: c.ID_Cliente })),
+        ...realSales.filter(s => s.ID_Pedido.toLowerCase().includes(term) || s.Nombre_Cliente.toLowerCase().includes(term)).map(s => ({ tipo: 'PEDIDO', label: s.ID_Pedido + ' - ' + s.Nombre_Cliente, id: s.ID_Pedido })),
+        ...realProjects.filter(p => p.Nombre_Proyecto.toLowerCase().includes(term)).map(p => ({ tipo: 'PROYECTO', label: p.Nombre_Proyecto, id: p.ID_Proyecto }))
+    ];
+
+    // Pintamos los resultados
+    container.innerHTML = resultados.map(res => `
+        <div class="p-4 hover:bg-surface-container cursor-pointer border-b border-outline-variant/10 text-[11px] font-technical-data uppercase" 
+             onclick="ejecutarAccionBusqueda('${res.tipo}', '${res.id}')">
+            <span class="text-primary font-bold">[${res.tipo}]</span> ${res.label}
+        </div>
+    `).join('');
+    }
+
+    // Función que ejecuta la navegación al hacer clic
+    function ejecutarAccionBusqueda(tipo, id) {
+        document.getElementById('search-results').innerHTML = ''; // Limpiamos
+        if (tipo === 'CLIENTE') { switchPanel('directorio'); abrirFichaCliente(id); }
+        if (tipo === 'PEDIDO') { switchPanel('orders'); /* aquí podrías abrir el editor de pedido si quieres */ }
+        if (tipo === 'PROYECTO') { switchPanel('proyectos'); }
     }
 
     function actualizarClienteExistente(e) {
