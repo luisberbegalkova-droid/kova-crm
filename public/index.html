@@ -612,20 +612,35 @@
         if (markersLayer) {
             markersLayer.innerHTML = '';
             const normalizarPais = (pais) => String(pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            // 1. Extraemos los países únicos de la lista de clientes
             const paisesActivos = [...new Set(realClients.map(c => c.País || c.Pais || c.pais || '').filter(Boolean).map(normalizarPais))];
 
             paisesActivos.forEach(pais => {
                 const pos = COORDENADAS_PAISES[pais];
                 if (!pos) return;
 
+                // 2. COMPROBACIÓN REALSALES: Buscamos si algún cliente de este país tiene un pedido
+                const tienePedidoCerrado = realClients.some(c => {
+                    const esMismoPais = normalizarPais(c.País || c.Pais || c.pais) === pais;
+                    const tieneVenta = realSales.some(s => String(s.ID_Cliente) === String(c.ID_Cliente));
+                    return esMismoPais && tieneVenta;
+                });
+
+                // 3. ASIGNACIÓN DINÁMICA DE COLOR SEGÚN STATUS COMMERCIAL
+                // Si tiene pedido -> Verde Corporativo. Si es lead puro -> Ámbar Eléctrico.
+                const colorHex = tienePedidoCerrado ? '#a1fa49' : '#f59e0b'; 
+                const shadowStyle = tienePedidoCerrado ? 'shadow-[0_0_10px_#a1fa49]' : 'shadow-[0_0_10px_#f59e0b]';
+
                 const label = pos.label || pais;
                 markersLayer.innerHTML += `
                     <div class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group pointer-events-auto cursor-pointer" style="top: ${pos.top}; left: ${pos.left};" title="${label}">
-                        <div class="relative w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_10px_#a1fa49]">
-                            <span class="absolute inset-0 rounded-full bg-[#a1fa49] opacity-50 animate-ping"></span>
+                        <!-- Aplicamos las variables dinámicas de color y sombra -->
+                        <div class="relative w-3 h-3 rounded-full ${shadowStyle}" style="background-color: ${colorHex};">
+                            <span class="absolute inset-0 rounded-full opacity-50 animate-ping" style="background-color: ${colorHex};"></span>
                         </div>
                         <div class="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap bg-primary text-surface px-2 py-1 text-[9px] font-technical-data uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md border border-outline-variant/10">
-                            ${label}
+                            ${label} ${tienePedidoCerrado ? '• CLIENTE' : '• LEAD'}
                         </div>
                     </div>`;
             });
