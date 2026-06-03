@@ -720,7 +720,34 @@
     async function borrarFilaDirecta(sheetName, idKeyName, idValue, viewToRefresh) { if (!confirm(`¿Confirmas que deseas eliminar de forma definitiva el registro ${idValue}?`)) return; const payload = { sheet: sheetName, action: "DELETE" }; payload[idKeyName] = idValue; try { await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }); await sincronizarCoreKova(); switchPanel(viewToRefresh); } catch (e) { console.error(e); } }
     async function ejecutarPost(payload, nextView) { try { closeAllDrawers(); await fetch(API_URL, { method: 'POST', redirect: "follow", headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }); await sincronizarCoreKova(); switchPanel(nextView); } catch (e) { console.error(e); } }
 
-    function guardarCliente(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Clientes_Leads", Nombre_Completo: f.get('nombre').toUpperCase(), Telefono: f.get('telefono') || "", Pais: f.get('pais'), Email: f.get('email'), Redes_Sociales: f.get('social') || "", Rol_Musical: f.get('rol'), Notas_Anotaciones: f.get('notes') || "", Estado_Lead: 'Potencial', Fecha_Registro: new Date().toISOString().split('T')[0] }, 'directorio'); e.target.reset(); }
+    function guardarCliente(e) { 
+        e.preventDefault(); 
+        const f = new FormData(e.target); 
+        
+        // --- AQUÍ ESTÁ LA LÓGICA DE AUTOMATIZACIÓN ---
+        let telRaw = f.get('telefono') || "";
+        let telFormateado = telRaw;
+        
+        // Si el usuario escribió un número y no empieza por '+', le añadimos la comilla y el '+'
+        if (telRaw.trim() !== "" && !telRaw.startsWith("'+")) {
+            telFormateado = "'+ " + telRaw.trim();
+        }
+        // ----------------------------------------------
+
+        ejecutarPost({ 
+            sheet: "Clientes_Leads", 
+            Nombre_Completo: f.get('nombre').toUpperCase(), 
+            Telefono: telFormateado, // Enviamos el teléfono ya formateado
+            Pais: f.get('pais'), 
+            Email: f.get('email') || "", 
+            Redes_Sociales: f.get('social') || "", 
+            Rol_Musical: f.get('rol'), 
+            Estado_Lead: 'POTENCIAL', 
+            Fecha_Registro: new Date().toISOString().split('T')[0] 
+        }, 'directorio'); 
+        
+        e.target.reset(); 
+    }
     function guardarSesionProyectos(e) { e.preventDefault(); const f = new FormData(e.target); ejecutarPost({ sheet: "Tareas_Seguimiento", action: "SAVE", ID_Cliente: f.get('id_cliente'), Nombre_Cliente: f.get('nombre_cliente'), ID_Pedido: f.get('id_proyecto'), Tarea_Descripcion: `[${f.get('tipo_accion')}] ${f.get('tarea_descripcion')}`, Fecha_Limite: f.get('fecha_limite'), Estado_Tarea: 'Pendiente', Horas_Dedicadas: 0 }, 'tareas'); e.target.reset(); }
     
     function guardarPedido(e) { 
