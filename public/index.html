@@ -653,12 +653,13 @@
                 const pos = COORDENADAS_PAISES[pais];
                 if (!pos) return;
 
-                // FORZAMOS LA COMPARACIÓN: Eliminamos tildes, espacios y pasamos a minúsculas en AMBOS lados
-                const esCliente = realClients.some(c => {
-                    const paisClienteNormalizado = String(c.País || c.Pais || c.pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                    return paisClienteNormalizado === pais && String(c.Estado_Lead).trim().toUpperCase() === 'CLIENTE';
-                });
-
+                // NUEVA LÓGICA: Contamos cuántos leads hay en este país
+                const leadsEnPais = realClients.filter(c => normalizarPais(c.País || c.Pais || c.pais) === pais);
+                const count = leadsEnPais.length;
+                
+                // Determinamos si alguno de ellos es cliente para el color
+                const esCliente = leadsEnPais.some(c => String(c.Estado_Lead).trim().toUpperCase() === 'CLIENTE');
+                
                 const colorHex = esCliente ? '#a1fa49' : '#f59e0b'; 
                 const shadowStyle = esCliente ? 'shadow-[0_0_10px_#a1fa49]' : 'shadow-[0_0_10px_#f59e0b]';
 
@@ -669,7 +670,7 @@
                             <span class="absolute inset-0 rounded-full opacity-50 animate-ping" style="background-color: ${colorHex};"></span>
                         </div>
                         <div class="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap bg-primary text-surface px-2 py-1 text-[9px] font-technical-data uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md border border-outline-variant/10">
-                            ${label}
+                            ${label}, ${count}
                         </div>
                     </div>`;
             });
