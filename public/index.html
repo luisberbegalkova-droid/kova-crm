@@ -207,7 +207,7 @@
             </div>
             <div class="map-container-responsive">
                 <img src="/world-map-kova.png" class="absolute inset-0 w-full h-full object-contain opacity-90" alt="World Map">
-                <div id="map-markers-layer" class="absolute inset-0 z-10"></div>
+                <div id="map-markers-layer" class="absolute inset-0 z-20 pointer-events-none"></div>
             </div>
         </div>
 
@@ -474,6 +474,16 @@
 
     function toggleMobileSidebar() { document.getElementById('kova-sidebar').classList.toggle('-translate-x-full'); }
 
+    function syncNombreCliente(select) { 
+        const option = select.options[select.selectedIndex]; 
+        if (select.value) { 
+            const form = select.closest('form'); 
+            form.querySelector('input[name="id_cliente"]').value = select.value; 
+            form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-nombre') || ''; 
+        } 
+        calcularImpuestosDinamicos(); 
+    }
+
     function populateDropdowns() {
         document.querySelectorAll('.select-clientes-dinamico').forEach(select => {
             select.innerHTML = '<option value="">Selecciona un artista...</option>' + realClients.map(c => `<option value="${c.ID_Cliente}" data-nombre="${c.Nombre_Completo}" data-pais="${c.País || c.Pais || 'España'}">${c.Nombre_Completo}</option>`).join('');
@@ -506,65 +516,20 @@
         }).join('');
     }
 
-    function syncNombreCliente(select) { 
-        const option = select.options[select.selectedIndex]; 
-        if (select.value) { 
-            const form = select.closest('form'); 
-            form.querySelector('input[name="id_cliente"]').value = select.value; 
-            form.querySelector('input[name="nombre_cliente"]').value = option.getAttribute('data-nombre') || ''; 
-        } 
-        calcularImpuestosDinamicos(); 
-    }
-
+    function syncDatosProyectoEdicion(select) { const option = select.options[select.selectedIndex]; const form = select.closest('form'); if (select.value) { form.querySelector('input[name="edit_sess_id_cliente"]').value = option.getAttribute('data-clientid') || ''; form.querySelector('input[name="edit_sess_nombre_cliente"]').value = option.getAttribute('data-clientname') || ''; document.getElementById('edit-session-artista-display').value = option.getAttribute('data-clientname') || ''; } }
     function toggleWorkflowInputs(value) { const descInput = document.getElementById('session-descripcion'); descInput.placeholder = value === "Seguimiento Comercial" ? "ej: Enviar mezcla preliminar / revisión feedback" : "ej: Primera Mix / Masterización final"; }
-    
-    function tarifaEstudio(select) { 
-        const wrapperPrecio = document.getElementById('wrapper-precio-manual');
-        const wrapperServicio = document.getElementById('wrapper-servicio-custom');
-        const inputMonto = document.getElementById('order-monto-input');
-        if (select.value === "Servicio Personalizado") { 
-            wrapperPrecio.classList.remove('hidden'); 
-            wrapperServicio.classList.remove('hidden');
-            inputMonto.value = ""; 
-            inputMonto.focus(); 
-        } else { 
-            wrapperPrecio.classList.add('hidden'); 
-            wrapperServicio.classList.add('hidden');
-            inputMonto.value = TARIFAS[select.value] || 0; 
-        } 
-        calcularImpuestosDinamicos(); 
-    }
+    function tarifaEstudio(select) { const wrapperPrecio = document.getElementById('wrapper-precio-manual'); const wrapperServicio = document.getElementById('wrapper-servicio-custom'); const inputMonto = document.getElementById('order-monto-input'); if (select.value === "Servicio Personalizado") { wrapperPrecio.classList.remove('hidden'); wrapperServicio.classList.remove('hidden'); inputMonto.value = ""; inputMonto.focus(); } else { wrapperPrecio.classList.add('hidden'); wrapperServicio.classList.add('hidden'); inputMonto.value = TARIFAS[select.value] || 0; } calcularImpuestosDinamicos(); }
 
     function calcularImpuestosDinamicos() {
-        const orderSelect = document.querySelector('#add-order-drawer select[name="artista_select"]'); 
-        const serviceSelect = document.querySelector('#add-order-drawer select[name="servicio"]'); 
-        const inputMonto = document.getElementById('order-monto-input'); 
-        const inputCantidad = document.getElementById('order-cantidad-input');
-        const notice = document.getElementById('iva-tax-notice');
-        
+        const orderSelect = document.querySelector('#add-order-drawer select[name="artista_select"]'); const serviceSelect = document.querySelector('#add-order-drawer select[name="servicio"]'); const inputMonto = document.getElementById('order-monto-input'); const inputCantidad = document.getElementById('order-cantidad-input'); const notice = document.getElementById('iva-tax-notice');
         if (!orderSelect || orderSelect.selectedIndex <= 0 || !serviceSelect || serviceSelect.value === "") { notice.classList.add('hidden'); return; }
-        
-        const pais = orderSelect.options[orderSelect.selectedIndex].getAttribute('data-pais'); 
-        const cantidad = parseInt(inputCantidad.value) || 1;
-        
-        let precioBaseUnitario = parseFloat(inputMonto.value) || 0;
-        if (serviceSelect.value !== "Servicio Personalizado") {
-            precioBaseUnitario = TARIFAS[serviceSelect.value] || 0;
-        }
-        
-        const baseTotal = precioBaseUnitario * cantidad;
-        notice.classList.remove('hidden');
-        
-        if (pais === "España") {
-            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(baseTotal * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(baseTotal * 1.21).toFixed(2)}€</b>`;
-        } else {
-            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${baseTotal.toFixed(2)}€</b>`;
-        }
+        const pais = orderSelect.options[orderSelect.selectedIndex].getAttribute('data-pais'); const cantidad = parseInt(inputCantidad.value) || 1; let precioBaseUnitario = parseFloat(inputMonto.value) || 0; if (serviceSelect.value !== "Servicio Personalizado") { precioBaseUnitario = TARIFAS[serviceSelect.value] || 0; } const baseTotal = precioBaseUnitario * cantidad; notice.classList.remove('hidden');
+        if (pais === "España") { notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(baseTotal * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(baseTotal * 1.21).toFixed(2)}€</b>`; } else { notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${baseTotal.toFixed(2)}€</b>`; }
     }
 
     function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
 
-    /* RENDER DASHBOARD ACTUALIZADO CON CHINCHETAS CALIBRADAS PARA EL MAPA PNG */
+    /* RENDER DASHBOARD: INTEGRACIÓN CON CHINCHETAS Y MÉTRICA DE TOTAL VENDIDO */
     function renderDashboard() {
         let totalVendidoBruto = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
         const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
@@ -578,26 +543,56 @@
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
-        // MAPA INTELIGENTE NATIVO: ENCIENDE LOS PAÍSES ACTIVOS EN TU VERDE CORPORATIVO
-        document.querySelectorAll('#world-map-shapes path').forEach(path => path.classList.remove('client-active'));
-        
-        realClients.forEach(c => {
-            const paisCliente = (c.País || c.Pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
-            if (paisCliente) {
-                let idTarget = `map-country-${paisCliente.replace(/\s+/g, '-')}`;
-                if (paisCliente === 'espana') idTarget = 'map-country-espana';
-                if (paisCliente === 'estados unidos') idTarget = 'map-country-estados-unidos';
-                if (paisCliente === 'paises bajos') idTarget = 'map-country-paises-bajos';
-                if (paisCliente === 'reino unido') idTarget = 'map-country-reino-unido';
-                if (paisCliente === 'arabia saudita') idTarget = 'map-country-arabia';
-                if (paisCliente === 'afganistan') idTarget = 'map-country-afganistan';
+        // COORDENADAS RECALIBRADAS SOBRE LAS PROPORCIONES EXACTAS DE TU NUEVA IMAGEN PNG EN GITHUB
+        const COORDENADAS_PAISES = {
+            "espana": { top: "35.2%", left: "48.2%", label: "España" },
+            "aruba": { top: "49.4%", left: "22.8%", label: "Aruba" },
+            "estados unidos": { top: "33.0%", left: "16.8%", label: "Estados Unidos" },
+            "mexico": { top: "45.0%", left: "18.8%", label: "México" },
+            "colombia": { top: "57.0%", left: "27.4%", label: "Colombia" },
+            "venezuela": { top: "53.5%", left: "28.7%", label: "Venezuela" },
+            "argentina": { top: "82.5%", left: "31.7%", label: "Argentina" },
+            "brasil": { top: "62.0%", left: "35.3%", label: "Brasil" },
+            "chile": { top: "78.0%", left: "29.2%", label: "Chile" },
+            "peru": { top: "64.0%", left: "28.2%", label: "Perú" },
+            "reino unido": { top: "26.0%", left: "44.8%", label: "Reino Unido" },
+            "francia": { top: "30.2%", left: "46.2%", label: "Francia" },
+            "alemania": { top: "28.8%", left: "47.5%", label: "Alemania" },
+            "italia": { top: "34.6%", left: "48.7%", label: "Italia" },
+            "paises bajos": { top: "27.5%", left: "46.8%", label: "Países Bajos" },
+            "portugal": { top: "34.0%", left: "44.7%", label: "Portugal" },
+            "marruecos": { top: "38.4%", left: "45.3%", label: "Marruecos" },
+            "argelia": { top: "42.0%", left: "48.4%", label: "Argelia" },
+            "egipto": { top: "43.5%", left: "52.5%", label: "Egipto" },
+            "rusia": { top: "24.5%", left: "65.0%", label: "Rusia" },
+            "china": { top: "42.5%", left: "72.0%", label: "China" },
+            "india": { top: "51.5%", left: "66.8%", label: "India" },
+            "japon": { top: "39.8%", left: "83.0%", label: "Japón" },
+            "corea del sur": { top: "41.0%", left: "80.6%", label: "Corea del Sur" },
+            "australia": { top: "74.5%", left: "81.0%", label: "Australia" }
+        };
 
-                const pathElement = document.getElementById(idTarget);
-                if (pathElement) {
-                    pathElement.classList.add('client-active');
-                }
-            }
-        });
+        const markersLayer = document.getElementById('map-markers-layer');
+        if (markersLayer) {
+            markersLayer.innerHTML = '';
+            const normalizarPais = (pais) => String(pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const paisesActivos = [...new Set(realClients.map(c => c.País || c.Pais || c.pais || '').filter(Boolean).map(normalizarPais))];
+
+            paisesActivos.forEach(pais => {
+                const pos = COORDENADAS_PAISES[pais];
+                if (!pos) return;
+                const label = pos.label || pais;
+                markersLayer.innerHTML += `
+                    <div class="absolute -translate-x-1/2 -translate-y-1/2 z-30 group" style="top: ${pos.top}; left: ${pos.left};" title="${label}">
+                        <div class="relative w-3 h-3 bg-[#a1fa49] rounded-full shadow-[0_0_10px_#a1fa49]">
+                            <span class="absolute inset-0 rounded-full bg-[#a1fa49] opacity-50 animate-ping"></span>
+                        </div>
+                        <div class="absolute left-1/2 top-5 -translate-x-1/2 whitespace-nowrap bg-primary text-surface px-2 py-1 text-[9px] font-technical-data uppercase tracking-widest opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                            ${label}
+                        </div>
+                    </div>`;
+            });
+        }
 
         // Renderizado de Listas Operativas
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
@@ -682,13 +677,61 @@
         calcularImpuestosDinamicos(); 
     }
 
+    function toggleWorkflowInputs(value) { const descInput = document.getElementById('session-descripcion'); descInput.placeholder = value === "Seguimiento Comercial" ? "ej: Enviar mezcla preliminar / revisión feedback" : "ej: Primera Mix / Masterización final"; }
+    
+    function tarifaEstudio(select) { 
+        const wrapperPrecio = document.getElementById('wrapper-precio-manual');
+        const wrapperServicio = document.getElementById('wrapper-servicio-custom');
+        const inputMonto = document.getElementById('order-monto-input');
+        if (select.value === "Servicio Personalizado") { 
+            wrapperPrecio.classList.remove('hidden'); 
+            wrapperServicio.classList.remove('hidden');
+            inputMonto.value = ""; 
+            inputMonto.focus(); 
+        } else { 
+            wrapperPrecio.classList.add('hidden'); 
+            wrapperServicio.classList.add('hidden');
+            inputMonto.value = TARIFAS[select.value] || 0; 
+        } 
+        calcularImpuestosDinamicos(); 
+    }
+
+    function calcularImpuestosDinamicos() {
+        const orderSelect = document.querySelector('#add-order-drawer select[name="artista_select"]'); 
+        const serviceSelect = document.querySelector('#add-order-drawer select[name="servicio"]'); 
+        const inputMonto = document.getElementById('order-monto-input'); 
+        const inputCantidad = document.getElementById('order-cantidad-input');
+        const notice = document.getElementById('iva-tax-notice');
+        
+        if (!orderSelect || orderSelect.selectedIndex <= 0 || !serviceSelect || serviceSelect.value === "") { notice.classList.add('hidden'); return; }
+        
+        const pais = orderSelect.options[orderSelect.selectedIndex].getAttribute('data-pais'); 
+        const cantidad = parseInt(inputCantidad.value) || 1;
+        
+        let precioBaseUnitario = parseFloat(inputMonto.value) || 0;
+        if (serviceSelect.value !== "Servicio Personalizado") {
+            precioBaseUnitario = TARIFAS[serviceSelect.value] || 0;
+        }
+        
+        const baseTotal = precioBaseUnitario * cantidad;
+        notice.classList.remove('hidden');
+        
+        if (pais === "España") {
+            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(baseTotal * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(baseTotal * 1.21).toFixed(2)}€</b>`;
+        } else {
+            notice.innerHTML = `Base Estudio (${cantidad} x ${precioBaseUnitario}€): <b>${baseTotal.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${pais})</b><br>Total Contrato: <b>${baseTotal.toFixed(2)}€</b>`;
+        }
+    }
+
+    function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
+
     function abrirEditorPedido(idPedido) {
         const o = realSales.find(order => order.ID_Pedido === idPedido); if (!o) return;
         document.getElementById('edit-order-id-title').innerText = `#${o.ID_Pedido}`; const form = document.querySelector('#edit-order-drawer form');
         form.elements['edit_id_pedido'].value = o.ID_Pedido; form.elements['edit_id_cliente'].value = o.ID_Cliente; form.elements['edit_nombre_cliente'].value = o.Nombre_Cliente; document.getElementById('edit-order-artista').value = o.Nombre_Cliente;
         const servicioUpper = (o.Servicio || "").toUpperCase();
         if (["SESION PRO", "SINGLE PRO", "KOVA SIGNATURE", "RECORDING"].includes(servicioUpper)) { form.elements['edit_servicio'].value = servicioUpper; document.getElementById('wrapper-precio-manual-edit').classList.add('hidden'); } else { form.elements['edit_servicio'].value = "SERVICIO PERSONALIZADO"; document.getElementById('wrapper-precio-manual-edit').classList.remove('hidden'); }
-        const artista = realClients.find(c => c.ID_Cliente === o.ID_Cliente); const baseCalculada = (artista ? (artista.País || artista.Pais) : 'España') === "España" ? (parseFloat(o.Monto_Total) || 0) / 1.21 : parseFloat(o.Monto_Total) || 0;
+        const artistObj = realClients.find(c => c.ID_Cliente === o.ID_Cliente); const baseCalculada = (artistObj ? (artistObj.País || artistObj.Pais) : 'España') === "España" ? (parseFloat(o.Monto_Total) || 0) / 1.21 : parseFloat(o.Monto_Total) || 0;
         document.getElementById('edit-order-monto-input').value = baseCalculada.toFixed(2); form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
         const formaPagoActual = o.Forma_Pago || '100% a entrega'; const customWrapper = document.getElementById('wrapper-forma-pago-custom-edit'); const customInput = customWrapper.querySelector('input');
         if (["100% a entrega", "50% anticipado + 50% a entrega"].includes(formaPagoActual)) { form.elements['edit_forma_pago'].value = formaPagoActual; customWrapper.classList.add('hidden'); customInput.value = ""; } else { form.elements['edit_forma_pago'].value = "Otro"; customWrapper.classList.remove('hidden'); customInput.value = formaPagoActual; }
@@ -696,10 +739,10 @@
     }
 
     function tarifaEstudioEdicion(select) { const wrapper = document.getElementById('wrapper-precio-manual-edit'); const input = document.getElementById('edit-order-monto-input'); if (select.value === "SERVICIO PERSONALIZADO") { wrapper.classList.remove('hidden'); input.value = ""; input.focus(); } else { wrapper.classList.add('hidden'); input.value = TARIFAS[select.value.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())] || TARIFAS[select.value] || 0; } calcularImpuestosEdicion(); }
-    function calcularImpuestosEdicion() { const idCliente = document.querySelector('#edit-order-drawer input[name="edit_id_cliente"]').value; const artista = realClients.find(c => c.ID_Cliente === idCliente); const input = document.getElementById('edit-order-monto-input'); const notice = document.getElementById('iva-tax-notice-edit'); const base = parseFloat(input.value) || 0; notice.classList.remove('hidden'); notice.innerHTML = (artista ? (artista.País || artista.Pais) : 'España') === "España" ? `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>` : `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${artista ? (artista.País || artista.Pais) : 'España'})</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`; }
+    function calcularImpuestosEdicion() { const idCliente = document.querySelector('#edit-order-drawer input[name="edit_id_cliente"]').value; const artistObj = realClients.find(c => c.ID_Cliente === idCliente); const input = document.getElementById('edit-order-monto-input'); const notice = document.getElementById('iva-tax-notice-edit'); const base = parseFloat(input.value) || 0; notice.classList.remove('hidden'); notice.innerHTML = (artistObj ? (artistObj.País || artistObj.Pais) : 'España') === "España" ? `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>` : `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${artistObj ? (artistObj.País || artistObj.Pais) : 'España'})</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`; }
 
     function actualizarPedido(e) {
-        e.preventDefault(); const f = new FormData(e.target); const idCliente = f.get('edit_id_cliente'); const artista = realClients.find(c => c.ID_Cliente === idCliente); let base = parseFloat(f.get('edit_monto_base')) || 0; if ((artista ? (artista.País || artista.Pais) : 'España') === "España") base = base * 1.21;
+        e.preventDefault(); const f = new FormData(e.target); const idCliente = f.get('edit_id_cliente'); const artistObj = realClients.find(c => c.ID_Cliente === idCliente); let base = parseFloat(f.get('edit_monto_base')) || 0; if ((artistObj ? (artistObj.País || artistObj.Pais) : 'España') === "España") base = base * 1.21;
         ejecutarPost({ sheet: "Ventas_Pedidos", action: "UPDATE", ID_Pedido: f.get('edit_id_pedido'), ID_Cliente: idCliente, Nombre_Cliente: f.get('edit_nombre_cliente'), Service: f.get('edit_servicio').toUpperCase(), Monto_Total: base.toFixed(2), Deadline: f.get('edit_deadline'), Forma_Pago: f.get('edit_forma_pago') === "Otro" ? (f.get('edit_forma_pago_custom') || "Otro") : f.get('edit_forma_pago') }, 'orders');
         e.target.reset(); document.getElementById('wrapper-forma-pago-custom-edit').classList.add('hidden');
     }
