@@ -598,7 +598,7 @@
 
     function manejarFormaPagoCustom(select, targetWrapperId) { const wrapper = document.getElementById(targetWrapperId); const customInput = wrapper.querySelector('input'); if (select.value === "Otro") { wrapper.classList.remove('hidden'); customInput.required = true; customInput.focus(); } else { wrapper.classList.add('hidden'); customInput.required = false; customInput.value = ""; } }
 
-    /* RENDER DASHBOARD: INTEGRACIÓN CON CHINCHETAS Y MÉTRICA DE TOTAL VENDIDO */
+    /* RENDER DASHBOARD RECONSTRUIDO CON SINTAXIS ASOCIATIVA BLINDADA */
     function renderDashboard() {
         let totalVendidoBruto = 0; let totalPedidosContador = realSales.length; let pedidosUltimoMes = 0; let clientesNuevosMes = 0;
         const ahora = new Date(); const mesActual = ahora.getMonth(); const anoActual = ahora.getFullYear();
@@ -612,14 +612,15 @@
         document.getElementById('dash-pedidos-mes').innerText = pedidosUltimoMes;
         document.getElementById('dash-clientes-mes').innerText = clientesNuevosMes;
 
+        // OBJETO DE COORDENADAS REESTRUCTURADO Y CERRADO CORRECTAMENTE
         const COORDENADAS_PAISES = {
-            "espana": { top: "35.2%", left: "48.2%", label: "España" },
+            "espana": { top: "32.5%", left: "43.5%", label: "España" },
             "aruba": { top: "49.4%", left: "22.8%", label: "Aruba" },
             "estados unidos": { top: "33.0%", left: "16.8%", label: "Estados Unidos" },
             "mexico": { top: "45.0%", left: "18.8%", label: "México" },
             "colombia": { top: "57.0%", left: "27.4%", label: "Colombia" },
             "venezuela": { top: "53.5%", left: "28.7%", label: "Venezuela" },
-            "argentina": { top: "80.0%", left: "31.7%", label: "Argentina" },
+            "argentina": { top: "82.5%", left: "31.7%", label: "Argentina" },
             "brasil": { top: "62.0%", left: "35.3%", label: "Brasil" },
             "chile": { top: "78.0%", left: "29.2%", label: "Chile" },
             "peru": { top: "64.0%", left: "28.2%", label: "Perú" },
@@ -627,7 +628,7 @@
             "francia": { top: "30.2%", left: "46.2%", label: "Francia" },
             "alemania": { top: "28.8%", left: "47.5%", label: "Alemania" },
             "italia": { top: "34.6%", left: "48.7%", label: "Italia" },
-            "paises bajos": { top: "27.5%", left: "46.8%", label: "Países Bajos" },
+            "paises bajos": { top: "25%", left: "46.3%", label: "Países Bajos" },
             "portugal": { top: "34.0%", left: "44.7%", label: "Portugal" },
             "marruecos": { top: "38.4%", left: "45.3%", label: "Marruecos" },
             "argelia": { top: "42.0%", left: "48.4%", label: "Argelia" },
@@ -644,13 +645,21 @@
         if (markersLayer) {
             markersLayer.innerHTML = '';
             const normalizarPais = (pais) => String(pais || '').toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            // 1. Extraemos los países únicos de la lista de clientes
             const paisesActivos = [...new Set(realClients.map(c => c.País || c.Pais || c.pais || '').filter(Boolean).map(normalizarPais))];
 
             paisesActivos.forEach(pais => {
                 const pos = COORDENADAS_PAISES[pais];
                 if (!pos) return;
 
-                const esCliente = realClients.some(c => normalizarPais(c.País || c.Pais || c.pais) === pais && c.Estado_Lead === 'CLIENTE');
+                // LÓGICA REFORZADA: Busca explícitamente el estatus 'CLIENTE' en la ficha del lead
+                const esCliente = realClients.some(c => {
+                    const esMismoPais = normalizarPais(c.País || c.Pais || c.pais) === pais;
+                    return esMismoPais && (c.Estado_Lead === 'CLIENTE');
+                });
+
+                // ASIGNACIÓN DE COLOR: Verde (#a1fa49) si es 'CLIENTE', Ámbar (#f59e0b) si es cualquier otra cosa (Potencial, etc.)
                 const colorHex = esCliente ? '#a1fa49' : '#f59e0b'; 
                 const shadowStyle = esCliente ? 'shadow-[0_0_10px_#a1fa49]' : 'shadow-[0_0_10px_#f59e0b]';
 
@@ -667,6 +676,7 @@
             });
         }
 
+        // Renderizado de Listas Operativas
         document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
             const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
             return `<li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4"><div class="flex flex-col gap-1"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL')}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span></div><span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span></li>`;
