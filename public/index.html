@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>KOVA RS // SYSTEM v2.2</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
@@ -234,14 +235,18 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 max-w-full">
-            <div>
-                <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Acciones Prioritarias</h3>
-                <ul class="space-y-8 sm:space-y-10" id="dash-acciones-list"></ul>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-full">
+            <div class="bg-surface-container/20 border border-outline-variant/10 p-6 sm:p-8 flex flex-col">
+                <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Crecimiento Acumulado Pedidos</h3>
+                <div class="relative w-full aspect-video flex-1 sm:min-h-[250px]">
+                    <canvas id="chart-pedidos-mensuales"></canvas>
+                </div>
             </div>
-            <div>
-                <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Proyectos en Marcha</h3>
-                <ul class="space-y-6 sm:space-y-8" id="dash-proyectos-list"></ul>
+            <div class="bg-surface-container/20 border border-outline-variant/10 p-6 sm:p-8 flex flex-col">
+                <h3 class="font-label-caps text-technical-label uppercase tracking-widest border-b pb-4 mb-6 sm:mb-8 text-[11px]">Servicios Más Contratados</h3>
+                <div class="relative w-full aspect-square flex-1 sm:max-h-[250px] sm:mx-auto">
+                    <canvas id="chart-servicios"></canvas>
+                </div>
             </div>
         </div>
     </section>
@@ -731,13 +736,94 @@
             });
         }
 
-        // Renderizado de Listas Operativas
-        document.getElementById('dash-acciones-list').innerHTML = realSessions.filter(s => s.Estado_Tarea !== 'Completada').slice(0, 4).map(t => {
-            const projObj = realProjects.find(proj => proj.ID_Proyecto === t.ID_Pedido);
-            return `<li class="flex items-start justify-between group border-b border-outline-variant/5 pb-4"><div class="flex flex-col gap-1"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${t.Tarea_Descripcion || ''}</span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-wider">TRACK: <span class="text-primary font-bold">${projObj ? projObj.Nombre_Proyecto : (t.ID_Pedido || 'GENERAL')}</span> — ${t.Nombre_Cliente || 'DESCONOCIDO'}</span></div><span class="material-symbols-outlined text-primary/20 group-hover:text-primary transition-colors cursor-pointer self-center" onclick="switchPanel('tareas')">arrow_forward</span></li>`;
-        }).join('');
-            
-        document.getElementById('dash-proyectos-list').innerHTML = realSales.slice(0, 4).map(p => `<li class="flex flex-col gap-1 border-b border-outline-variant/5 pb-4"><span class="font-body-main text-primary text-sm sm:text-base font-medium">${p.Nombre_Cliente || 'ARTISTA'} / <span class="font-mono text-xs text-technical-label">${p.ID_Pedido}</span></span><span class="font-technical-data text-[10px] sm:text-[11px] text-technical-label uppercase tracking-widest">${p.Servicio || 'ESTUDIO'}</span></li>`).join('');
+        // Renderizado de Gráficos (Chart.js)
+        const mesesNombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        let ventasMensuales = Array(12).fill(0);
+        let serviciosCount = {};
+
+        realSales.forEach(s => {
+            if (s.Fecha_Pedido) {
+                const f = new Date(s.Fecha_Pedido);
+                if (!isNaN(f.getTime()) && f.getFullYear() === anoActual) {
+                    ventasMensuales[f.getMonth()] += (parseFloat(s.Monto_Total) || 0);
+                }
+            }
+            const serv = s.Servicio ? s.Servicio.toUpperCase() : 'DESCONOCIDO';
+            serviciosCount[serv] = (serviciosCount[serv] || 0) + 1;
+        });
+
+        // Convertir a acumulado
+        for (let i = 1; i < ventasMensuales.length; i++) {
+            ventasMensuales[i] += ventasMensuales[i - 1];
+        }
+
+        if (window.chartPedidos) window.chartPedidos.destroy();
+        const ctxPedidos = document.getElementById('chart-pedidos-mensuales').getContext('2d');
+        window.chartPedidos = new Chart(ctxPedidos, {
+            type: 'line',
+            data: {
+                labels: mesesNombres,
+                datasets: [{
+                    label: 'Total Acumulado (€)',
+                    data: ventasMensuales,
+                    backgroundColor: '#a1fa49',
+                    borderColor: '#a1fa49',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#a1fa49',
+                    pointBorderColor: '#a1fa49',
+                    pointBorderWidth: 1,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                    fill: false,
+                    tension: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: false },
+                        ticks: { color: '#000000', font: { family: 'JetBrains Mono', size: 10 } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#000000', font: { family: 'JetBrains Mono', size: 10 } }
+                    }
+                }
+            }
+        });
+
+        if (window.chartServicios) window.chartServicios.destroy();
+        const ctxServicios = document.getElementById('chart-servicios').getContext('2d');
+        window.chartServicios = new Chart(ctxServicios, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(serviciosCount),
+                datasets: [{
+                    data: Object.values(serviciosCount),
+                    backgroundColor: ['#000000', '#a1fa49', '#ede9e1', '#87dc2c', '#c7c6c6', '#747878'],
+                    borderColor: '#ede9e1',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#000000', font: { family: 'JetBrains Mono', size: 10 }, padding: 15, usePointStyle: true }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
     }
 
     function renderClientsTable(data) {
