@@ -817,17 +817,62 @@
     function guardarPago(e) { e.preventDefault(); const f = new FormData(e.target); const ped = realSales.find(s => s.ID_Pedido === f.get('id_pedido')); ejecutarPost({ sheet: "Pagos_Registro", ID_Pedido: f.get('id_pedido'), Nombre_Cliente: ped ? ped.Nombre_Cliente : 'Desconocido', Cantidad_Pagada: f.get('cantidad_pagada'), Fecha_Pago: new Date().toISOString().split('T')[0] }, 'ventas'); e.target.reset(); }
 
     function abrirEditorPedido(idPedido) {
-        const o = realSales.find(order => order.ID_Pedido === idPedido); if (!o) return;
-        document.getElementById('edit-order-id-title').innerText = `#${o.ID_Pedido}`; const form = document.querySelector('#edit-order-drawer form');
-        form.elements['edit_id_pedido'].value = o.ID_Pedido; form.elements['edit_id_cliente'].value = o.ID_Cliente; form.elements['edit_nombre_cliente'].value = o.Nombre_Cliente; document.getElementById('edit-order-artista').value = o.Nombre_Cliente;
-        const servicioUpper = (o.Servicio || "").toUpperCase();
-        if (["SESION PRO", "SINGLE PRO", "KOVA SIGNATURE", "RECORDING"].includes(servicioUpper)) { form.elements['edit_servicio'].value = servicioUpper; document.getElementById('wrapper-precio-manual-edit').classList.add('hidden'); } else { form.elements['edit_servicio'].value = "SERVICIO PERSONALIZADO"; document.getElementById('wrapper-precio-manual-edit').classList.remove('hidden'); }
-        const artistObj = realClients.find(c => c.ID_Cliente === o.ID_Cliente); const baseCalculada = (artistObj ? (artistObj.País || artistObj.Pais) : 'España') === "España" ? (parseFloat(o.Monto_Total) || 0) / 1.21 : parseFloat(o.Monto_Total) || 0;
-        document.getElementById('edit-order-monto-input').value = baseCalculada.toFixed(2); form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
-        const formaPagoActual = o.Forma_Pago || '100% a entrega'; const customWrapper = document.getElementById('wrapper-forma-pago-custom-edit'); const customInput = customWrapper.querySelector('input');
-        if (["100% a entrega", "50% anticipado + 50% a entrega"].includes(formaPagoActual)) { form.elements['edit_forma_pago'].value = formaPagoActual; customWrapper.classList.add('hidden'); customInput.value = ""; } else { form.elements['edit_forma_pago'].value = "Otro"; customWrapper.classList.remove('hidden'); customInput.value = formaPagoActual; }
-        calcularImpuestosEdicion(); toggleDrawer('edit-order-drawer');
+    // Forzamos la comparación a String para evitar errores de tipo
+    const o = realSales.find(order => String(order.ID_Pedido) === String(idPedido)); 
+    
+    if (!o) {
+        console.error("Pedido no encontrado. ID buscado:", idPedido, "Datos disponibles:", realSales);
+        return;
     }
+
+    document.getElementById('edit-order-id-title').innerText = `#${o.ID_Pedido}`; 
+    const form = document.querySelector('#edit-order-drawer form');
+    
+    // Carga básica de datos
+    form.elements['edit_id_pedido'].value = o.ID_Pedido; 
+    form.elements['edit_id_cliente'].value = o.ID_Cliente; 
+    form.elements['edit_nombre_cliente'].value = o.Nombre_Cliente; 
+    document.getElementById('edit-order-artista').value = o.Nombre_Cliente;
+    
+    // Gestión del selector de servicios
+    const servicioUpper = (o.Servicio || "").toUpperCase();
+    const selectServicio = form.elements['edit_servicio'];
+    const wrapperManual = document.getElementById('wrapper-precio-manual-edit');
+    
+    if (["SESION PRO", "SINGLE PRO", "KOVA SIGNATURE", "RECORDING"].includes(servicioUpper)) { 
+        selectServicio.value = servicioUpper; 
+        wrapperManual.classList.add('hidden'); 
+    } else { 
+        selectServicio.value = "SERVICIO PERSONALIZADO"; 
+        wrapperManual.classList.remove('hidden'); 
+    }
+    
+    // Cálculo de impuestos y fechas
+    const artistObj = realClients.find(c => String(c.ID_Cliente) === String(o.ID_Cliente)); 
+    const pais = artistObj ? (artistObj.País || artistObj.Pais) : 'España';
+    const baseCalculada = (pais === "España") ? (parseFloat(o.Monto_Total) || 0) / 1.21 : parseFloat(o.Monto_Total) || 0;
+    
+    document.getElementById('edit-order-monto-input').value = baseCalculada.toFixed(2); 
+    form.elements['edit_deadline'].value = o.Deadline ? o.Deadline.split('T')[0] : '';
+    
+    // Gestión de forma de pago
+    const formaPagoActual = o.Forma_Pago || '100% a entrega'; 
+    const customWrapper = document.getElementById('wrapper-forma-pago-custom-edit'); 
+    const customInput = customWrapper.querySelector('input');
+    
+    if (["100% a entrega", "50% anticipado + 50% a entrega"].includes(formaPagoActual)) { 
+        form.elements['edit_forma_pago'].value = formaPagoActual; 
+        customWrapper.classList.add('hidden'); 
+        customInput.value = ""; 
+    } else { 
+        form.elements['edit_forma_pago'].value = "Otro"; 
+        customWrapper.classList.remove('hidden'); 
+        customInput.value = formaPagoActual; 
+    }
+    
+    calcularImpuestosEdicion(); 
+    toggleDrawer('edit-order-drawer');
+}
 
     function tarifaEstudioEdicion(select) { const wrapper = document.getElementById('wrapper-precio-manual-edit'); const input = document.getElementById('edit-order-monto-input'); if (select.value === "SERVICIO PERSONALIZADO") { wrapper.classList.remove('hidden'); input.value = ""; input.focus(); } else { wrapper.classList.add('hidden'); input.value = TARIFAS[select.value.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())] || TARIFAS[select.value] || 0; } calcularImpuestosEdicion(); }
     function calcularImpuestosEdicion() { const idCliente = document.querySelector('#edit-order-drawer input[name="edit_id_cliente"]').value; const artistObj = realClients.find(c => c.ID_Cliente === idCliente); const input = document.getElementById('edit-order-monto-input'); const notice = document.getElementById('iva-tax-notice-edit'); const base = parseFloat(input.value) || 0; notice.classList.remove('hidden'); notice.innerHTML = (artistObj ? (artistObj.País || artistObj.Pais) : 'España') === "España" ? `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa IVA (21%): <b>${(base * 0.21).toFixed(2)}€</b><br>Total Contrato: <b>${(base * 1.21).toFixed(2)}€</b>` : `Base Estudio: <b>${base.toFixed(2)}€</b><br>Tasa: <b>Exento de IVA (${artistObj ? (artistObj.País || artistObj.Pais) : 'España'})</b><br>Total Contrato: <b>${base.toFixed(2)}€</b>`; }
